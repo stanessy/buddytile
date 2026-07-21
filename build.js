@@ -389,10 +389,10 @@ const ballparkBody = `
     <div>
       <h1>60-SECOND BALLPARK PRICE</h1>
       <hr class="gold-bar" />
-      <p class="lead">Get a rough <strong>labor &amp; installation</strong> range for your project right now — no phone call, no waiting. <strong>Finish materials — tile, grout, shower fixtures — are not included</strong>, because those swing thousands of dollars with your selections. It's a ballpark, not a bid: the real price comes from a <strong>free in-home estimate</strong>.</p>
+      <p class="lead">Get a rough installation estimate in 60 seconds.<br /><span style="font-size:16px;color:var(--stone);">Finish materials (tile, grout, fixtures) aren't included — they depend on your selections. Your exact price comes with a free in-home estimate.</span></p>
       <div id="ballpark-gate" class="hero-card gate-card">
-        <h3>UNLOCK THE BALLPARK TOOL</h3>
-        <p class="hero-card-sub">Tell us who to send the numbers to — takes 10 seconds, and we'll text or email your ballpark so you don't lose it.</p>
+        <h3>WHERE SHOULD WE SEND YOUR ESTIMATE?</h3>
+        <p class="hero-card-sub">Takes 10 seconds — we'll text or email it to you.</p>
         <form class="lead-form hero-lead" id="ballpark-gate-form">
           <input name="name" placeholder="Your name *" required maxlength="120" class="full" />
           <input name="phone" type="tel" placeholder="Phone" maxlength="30" />
@@ -403,9 +403,9 @@ const ballparkBody = `
           <input name="humanCheck" inputmode="numeric" autocomplete="off" placeholder="?" required />
         </label>
       </div>
-          <button class="btn full" type="submit">Show My Ballpark Tool</button>
+          <button class="btn full" type="submit">Get My Estimate</button>
           <p class="form-status" hidden></p>
-          <p class="form-note" style="color:var(--stone);">Phone or email — one is enough. No spam, no selling your info.</p>
+          <p class="form-note" style="color:var(--stone);">Phone or email — one is enough.</p>
         </form>
       </div>
       <div id="ballpark-tool" hidden>
@@ -431,17 +431,16 @@ const ballparkBody = `
         </fieldset>
       </form>
       <div class="ballpark-result" id="ballpark-result">
-        <div class="labor-badge">LABOR &amp; INSTALLATION ONLY</div>
+        <div class="labor-badge">INSTALLATION ONLY</div>
         <div class="range" id="ballpark-range">$—</div>
-        <p class="note"><strong>${BALLPARK.laborOnly}</strong></p>
-        <p class="note">${BALLPARK.disclaimerShort}</p>
+        <p class="note"><strong>${BALLPARK.laborOnly}</strong> ${BALLPARK.disclaimerShort}</p>
       </div>
       </div>
     </div>
     <div>
       <div class="hero-card" id="ballpark-book" style="position:sticky;top:90px;" hidden>
         <h3>MAKE IT A REAL NUMBER</h3>
-        <p class="hero-card-sub">Like the range, <span id="ballpark-firstname">friend</span>? A free in-home visit turns it into an exact written price — same day.</p>
+        <p class="hero-card-sub">Like the range, <span id="ballpark-firstname">friend</span>? Get your exact written price — free, same day.</p>
         <button class="btn full" id="ballpark-book-btn" type="button">Book My Free Estimate</button>
         <p class="form-status" id="ballpark-book-status" hidden></p>
         <p class="form-note" style="color:var(--stone);">Your ballpark details come with it — no re-explaining.</p>
