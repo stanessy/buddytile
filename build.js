@@ -473,5 +473,8 @@ fs.writeFileSync(
     .join('\n')}\n</urlset>\n`
 );
 fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${SITE.domain}/sitemap.xml\n`);
+// GitHub Pages: custom domain + skip Jekyll processing
+fs.writeFileSync(path.join(OUT, 'CNAME'), 'buddytile.com\n');
+fs.writeFileSync(path.join(OUT, '.nojekyll'), '');
 
-console.log(`Built ${urls.length} pages → site/`);
+console.log(`Built ${urls.length} pages → docs/`);
