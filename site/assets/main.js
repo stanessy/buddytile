@@ -1,6 +1,11 @@
 // Lead form → Buddy Built CRM (division: Buddy Tile). Zero dependencies.
 (function () {
-  var API_BASE = window.BT_API_BASE || 'https://buddybuilt.com';
+  // Local previews talk to the dev platform; the live site talks to production.
+  var API_BASE =
+    window.BT_API_BASE ||
+    (location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+      ? 'http://localhost:5001'
+      : 'https://buddybuilt.com');
   var TILE_DIVISION_ID = 1;
 
   document.querySelectorAll('form.lead-form').forEach(function (form) {
