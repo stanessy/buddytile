@@ -1,4 +1,28 @@
 // Lead form → Buddy Built CRM (division: Buddy Tile). Zero dependencies.
+
+// ---- Human check: tiny math question bots that blind-POST can't answer ------
+(function () {
+  document.querySelectorAll('.human-check').forEach(function (box) {
+    var a = 2 + Math.floor(Math.random() * 7);
+    var b = 2 + Math.floor(Math.random() * 7);
+    box.querySelector('.hc-q').textContent = a + ' + ' + b;
+    box.dataset.answer = String(a + b);
+  });
+})();
+
+function passesHumanCheck(form, statusEl) {
+  var box = form.querySelector('.human-check');
+  if (!box) return true;
+  var given = (form.querySelector('input[name=humanCheck]').value || '').trim();
+  if (given === box.dataset.answer) return true;
+  if (statusEl) {
+    statusEl.hidden = false;
+    statusEl.style.color = '#C0392B';
+    statusEl.textContent = 'That math answer doesn\'t look right — one more try!';
+  }
+  return false;
+}
+
 (function () {
   // Local previews talk to the dev platform; the live site talks to production.
   var API_BASE =
@@ -14,6 +38,7 @@
       e.preventDefault();
       var status = form.querySelector('.form-status');
       var btn = form.querySelector('button[type=submit]');
+      if (!passesHumanCheck(form, status)) return;
       var f = new FormData(form);
       var description = [f.get('projectType'), f.get('description')].filter(Boolean).join(' — ');
       // Ballpark form: attach the calculator selections + range
@@ -176,6 +201,7 @@
     var f = new FormData(gateForm);
     var status = gateForm.querySelector('.form-status');
     if (f.get('website')) return; // honeypot
+    if (!passesHumanCheck(gateForm, status)) return;
     if (!f.get('phone') && !f.get('email')) {
       status.hidden = false;
       status.style.color = '#C0392B';

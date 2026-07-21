@@ -58,6 +58,11 @@ const leadForm = (context) => `
       </select>
       <textarea name="description" placeholder="Tell us about the project…" maxlength="3000"></textarea>
       <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" />
+      <div class="human-check full">
+        <label>Quick human check: what is <span class="hc-q">…</span>?
+          <input name="humanCheck" inputmode="numeric" autocomplete="off" placeholder="?" required />
+        </label>
+      </div>
       <button class="btn" type="submit">Get My Free Estimate</button>
       <p class="form-status" hidden></p>
       <p class="form-note">We reply the same business day. Your info never gets sold — you're a neighbor, not a lead.</p>
@@ -168,6 +173,11 @@ const homeBody = `
           <option>Repair / regrout</option>
         </select>
         <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" />
+        <div class="human-check full">
+        <label>Quick human check: what is <span class="hc-q">…</span>?
+          <input name="humanCheck" inputmode="numeric" autocomplete="off" placeholder="?" required />
+        </label>
+      </div>
         <button class="btn full" type="submit">Get My Free Estimate</button>
         <p class="form-status" hidden></p>
       </form>
@@ -388,6 +398,11 @@ const ballparkBody = `
           <input name="phone" type="tel" placeholder="Phone" maxlength="30" />
           <input name="email" type="email" placeholder="Email" maxlength="200" />
           <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" />
+          <div class="human-check full">
+        <label>Quick human check: what is <span class="hc-q">…</span>?
+          <input name="humanCheck" inputmode="numeric" autocomplete="off" placeholder="?" required />
+        </label>
+      </div>
           <button class="btn full" type="submit">Show My Ballpark Tool</button>
           <p class="form-status" hidden></p>
           <p class="form-note" style="color:var(--stone);">Phone or email — one is enough. No spam, no selling your info.</p>

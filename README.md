@@ -17,6 +17,14 @@ sitemap.xml, robots.txt. Fonts and images are self-hosted. Deploy = serve `site/
 - `npm run build` — regenerate `site/`
 - `npm run preview` — build + serve at http://localhost:4300
 
+## Spam protection
+
+Three layers, no third-party scripts: hidden honeypot field (bots fill it, humans
+can't see it), a visible math human-check on every form (randomized per load,
+validated client-side), and the platform API's rate limiter. If spam ever gets
+past this at scale, the upgrade path is Cloudflare Turnstile in front of the
+same forms.
+
 ## Before launch
 
 - Replace `WA reg #PENDING · OR CCB #PENDING` in `src/data.js` (legally required in ads)
