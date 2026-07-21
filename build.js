@@ -379,7 +379,7 @@ const ballparkBody = `
     <div>
       <h1>60-SECOND BALLPARK PRICE</h1>
       <hr class="gold-bar" />
-      <p class="lead">Get a rough range for your project right now — no phone call, no waiting. It's a ballpark, not a bid: tile choices, prep surprises, and layout all move the number, which is why the real price comes from a <strong>free in-home estimate</strong>.</p>
+      <p class="lead">Get a rough <strong>labor &amp; installation</strong> range for your project right now — no phone call, no waiting. <strong>Finish materials — tile, grout, shower fixtures — are not included</strong>, because those swing thousands of dollars with your selections. It's a ballpark, not a bid: the real price comes from a <strong>free in-home estimate</strong>.</p>
       <div id="ballpark-gate" class="hero-card gate-card">
         <h3>UNLOCK THE BALLPARK TOOL</h3>
         <p class="hero-card-sub">Tell us who to send the numbers to — takes 10 seconds, and we'll text or email your ballpark so you don't lose it.</p>
@@ -404,10 +404,10 @@ const ballparkBody = `
         <label data-for="floor backsplash" hidden>Approximate square feet
           <input type="number" name="sqft" min="10" max="1000" value="60" />
         </label>
-        <label>Tile grade
+        <label>Installation complexity <span class="label-note">(your tile — we just install it)</span>
           <select name="grade">
-            <option value="standard">Standard porcelain / ceramic</option>
-            <option value="premium">Premium — large format, stone, zellige</option>
+            <option value="standard">Standard install — porcelain / ceramic</option>
+            <option value="premium">Complex install — large format, stone, mosaic patterns</option>
           </select>
         </label>
         <fieldset>
@@ -416,7 +416,9 @@ const ballparkBody = `
         </fieldset>
       </form>
       <div class="ballpark-result" id="ballpark-result">
+        <div class="labor-badge">LABOR &amp; INSTALLATION ONLY</div>
         <div class="range" id="ballpark-range">$—</div>
+        <p class="note"><strong>${BALLPARK.laborOnly}</strong></p>
         <p class="note">${BALLPARK.disclaimerShort}</p>
       </div>
       </div>

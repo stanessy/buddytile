@@ -152,6 +152,7 @@ const TRUST = [
 // book. A ballpark is not an estimate: real numbers come from the in-home visit.
 const BALLPARK = {
   disclaimerShort: 'Ballpark only — not a quote. Every bathroom hides surprises; your real number comes from a free in-home estimate.',
+  laborOnly: 'LABOR & INSTALLATION ONLY — finish materials (tile, grout, shower fixtures) are NOT included. Those vary widely with your selections, and we price them with you at the in-home estimate.',
   projects: [
     {
       key: 'shower',

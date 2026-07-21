@@ -113,7 +113,7 @@
     var high = Math.round((base * cfg.rangeHigh) / 10000) * 10000;
     var rangeText = money(low) + ' – ' + money(high);
     document.getElementById('ballpark-range').textContent = rangeText + ' ballpark';
-    window.__ballparkSummary = parts.join(', ') + ' → ' + rangeText;
+    window.__ballparkSummary = parts.join(', ') + ' → ' + rangeText + ' (labor only, finish materials excluded)';
   }
 
   form.addEventListener('input', compute);
