@@ -13,7 +13,7 @@ const SITE = {
   accent: '#F6B015',
   navy: '#1C2E44',
   legalLine:
-    'Buddy Tile is a registered trade name of Buddy Built LLC · WA reg #PENDING · OR CCB #PENDING',
+    'Buddy Tile is a registered trade name of Buddy Built LLC · WA reg #BUDDYBL746MO · OR CCB #PENDING',
   serviceAreaBlurb: 'Serving Vancouver, Portland, and the surrounding metro — Washington and Oregon.',
 };
 
