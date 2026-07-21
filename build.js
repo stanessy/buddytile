@@ -38,7 +38,7 @@ const leadForm = (context) => `
   <div class="container">
     <h2>GET YOUR FREE ESTIMATE</h2>
     <hr class="gold-bar" />
-    <p style="max-width:36em;color:rgba(255,255,255,0.85);">Two minutes now, a priced-on-the-spot in-home estimate this week. No pressure, no card fees, ever.</p>
+    <p style="max-width:36em;color:rgba(255,255,255,0.85);">Two minutes now, an in-home visit this week, and your written estimate the same day. No pressure, no card fees, ever.</p>
     <form class="lead-form" data-context="${esc(context)}">
       <input name="name" placeholder="Your name *" required maxlength="120" />
       <input name="phone" placeholder="Phone" maxlength="30" />
@@ -148,14 +148,14 @@ const homeBody = `
     <div>
       <h1>THE TILE SHOWER YOU<br/>KEEP PUTTING OFF?</h1>
       <hr class="gold-bar" />
-      <p class="lead">We build it in days, not months. Custom tile showers, bathroom floors, and backsplashes across Vancouver WA and Portland OR — priced on the spot, approved from your phone.</p>
+      <p class="lead">We build it in days, not months. Custom tile showers, bathroom floors, and backsplashes across Vancouver WA and Portland OR — same-day estimates, approved from your phone.</p>
       <div class="chips">
         <span>Family Owned</span><span>Licensed &amp; Bonded</span><span>No card fees</span><span>Craftsmanship guaranteed</span>
       </div>
     </div>
     <div class="hero-card">
       <h3>GET A FREE IN-HOME ESTIMATE</h3>
-      <p class="hero-card-sub">Priced on the spot, before we leave your driveway.</p>
+      <p class="hero-card-sub">We measure in person — your written estimate arrives the same day.</p>
       <form class="lead-form hero-lead" data-context="hero">
         <input name="name" placeholder="Your name *" required maxlength="120" class="full" />
         <input name="phone" placeholder="Phone" maxlength="30" />
@@ -273,7 +273,7 @@ const cityPage = (c) => `
       <hr class="gold-bar" />
       <p class="lead">Custom tile showers, bathroom floors, backsplashes, and heated floors for ${c.name} homeowners. ${esc(c.blurb)}</p>
       <ul class="tick-list">
-        <li>Free in-home estimates in ${c.name} — priced before we leave</li>
+        <li>Free in-home visits in ${c.name} — written estimate the same day</li>
         <li>Licensed, bonded &amp; insured in Washington and Oregon</li>
         <li>Schluter-system waterproofing on every shower, flood-tested</li>
         <li>Approve your estimate online; watch daily progress photos</li>
@@ -307,7 +307,7 @@ const aboutBody = `
       <h1>ONE COMPANY. EXPERTS IN EVERY TRADE.</h1>
       <hr class="gold-bar" />
       <p class="lead">Buddy Tile is the tile division of Buddy Built — a family of home-service brands built on one idea: hire the company, not a stranger from a lead site.</p>
-      <p>Every Buddy crew works to one standard, carries one warranty, and answers to one phone number. Your estimator sketches your Tile Plan in your bathroom, prices it on the spot, and the crew that shows up builds exactly what you approved — with photos of the waterproofing before it disappears behind tile.</p>
+      <p>Every Buddy crew works to one standard, carries one warranty, and answers to one phone number. Your estimator sketches your Tile Plan in your bathroom, sends your written estimate the same day, and the crew that shows up builds exactly what you approved — with photos of the waterproofing before it disappears behind tile.</p>
       <p>Need glass, plumbing, or flooring alongside the tile? That's the point of the family — one call brings the right Buddy trade, and everything lands on a single estimate.</p>
       <p><a class="btn" href="#estimate">Get My Free Estimate</a></p>
     </div>

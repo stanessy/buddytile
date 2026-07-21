@@ -134,7 +134,7 @@ const CITIES = [
 
 const STEPS = [
   { title: 'Request an estimate', body: 'Two minutes online or one phone call. Tell us the room and what you have in mind.' },
-  { title: 'In-home estimate, priced on the spot', body: 'We measure, sketch your Tile Plan, and price it before we leave — no "we\'ll get back to you."' },
+  { title: 'In-home visit, same-day estimate', body: 'We measure and sketch your Tile Plan in your bathroom — your written estimate lands in your inbox the same day.' },
   { title: 'Approve from your phone', body: 'Your estimate arrives by email. Review the scope and approve online in one tap — or sign a paper copy if you prefer.' },
   { title: 'We build it', body: 'Licensed crews, daily progress photos, and a final walkthrough you sign off on. The invoice only comes after you\'re happy.' },
 ];
@@ -142,7 +142,7 @@ const STEPS = [
 const TRUST = [
   { title: 'Family Owned & Operated', body: 'A local family company — the owner answers the phone, not a call center.' },
   { title: 'Craftsmanship Guaranteed', body: 'Tile set to TCNA standards over flood-tested waterproofing — and we photograph the work you never see.' },
-  { title: 'Free In-Home Estimates', body: 'Priced on the spot, approved online.' },
+  { title: 'Free In-Home Estimates', body: 'Your written estimate the same day, approved online.' },
   { title: 'No Card Fees. Ever.', body: 'Pay however you like — we never add a processing fee.' },
   { title: 'Licensed, Bonded & Insured', body: 'Registered in Washington and Oregon.' },
   { title: 'One Warranty. One Number.', body: 'A Buddy Built company — the warranty outlives any one crew.' },
