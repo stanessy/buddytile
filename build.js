@@ -158,7 +158,7 @@ const homeBody = `
       <p class="hero-card-sub">We measure in person — your written estimate arrives the same day.</p>
       <form class="lead-form hero-lead" data-context="hero">
         <input name="name" placeholder="Your name *" required maxlength="120" class="full" />
-        <input name="phone" placeholder="Phone" maxlength="30" />
+        <input name="phone" type="tel" placeholder="Phone *" required maxlength="30" />
         <select name="projectType">
           <option value="">Project…</option>
           <option>Tile shower remodel</option>
@@ -412,7 +412,7 @@ const ballparkBody = `
         <p class="hero-card-sub">Like the range? A free in-home estimate turns it into an exact price — measured, sketched, and signed off by you.</p>
         <form class="lead-form hero-lead" data-context="ballpark" data-ballpark="1">
           <input name="name" placeholder="Your name *" required maxlength="120" class="full" />
-          <input name="phone" placeholder="Phone" maxlength="30" />
+          <input name="phone" type="tel" placeholder="Phone *" required maxlength="30" />
           <input name="email" type="email" placeholder="Email" maxlength="200" />
           <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" />
           <button class="btn full" type="submit">Book My Free Estimate</button>
