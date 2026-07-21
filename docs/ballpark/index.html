@@ -46,11 +46,11 @@
       <p class="lead">Get a rough installation estimate in 60 seconds.<br /><span style="font-size:16px;color:var(--stone);">Finish materials (tile, grout, fixtures) aren't included — they depend on your selections. Your exact price comes with a free in-home estimate.</span></p>
       <div id="ballpark-gate" class="hero-card gate-card">
         <h3>WHERE SHOULD WE SEND YOUR ESTIMATE?</h3>
-        <p class="hero-card-sub">Takes 10 seconds — we'll text or email it to you.</p>
+        <p class="hero-card-sub">Takes 10 seconds — we'll email it to you.</p>
         <form class="lead-form hero-lead" id="ballpark-gate-form">
           <input name="name" placeholder="Your name *" required maxlength="120" class="full" />
-          <input name="phone" type="tel" placeholder="Phone" maxlength="30" />
-          <input name="email" type="email" placeholder="Email" maxlength="200" />
+          <input name="email" type="email" placeholder="Email *" required maxlength="200" />
+          <input name="phone" type="tel" placeholder="Phone (optional)" maxlength="30" />
           <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" />
           <div class="human-check full">
         <label>Quick human check: what is <span class="hc-q">…</span>?
@@ -59,7 +59,7 @@
       </div>
           <button class="btn full" type="submit">Get My Estimate</button>
           <p class="form-status" hidden></p>
-          <p class="form-note" style="color:var(--stone);">Phone or email — one is enough.</p>
+          <p class="form-note" style="color:var(--stone);">No spam — just your estimate.</p>
         </form>
       </div>
       <div id="ballpark-tool" hidden>

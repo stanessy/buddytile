@@ -77,7 +77,9 @@ function passesHumanCheck(form, statusEl) {
         })
         .catch(function (err) {
           status.style.color = '#FFB4A2';
-          status.textContent = (err && err.message) || 'Something went wrong — call us instead!';
+          status.innerHTML =
+            ((err && err.message) || 'Something went wrong.') +
+            ' Call <a href="tel:+13608996336" style="color:inherit;font-weight:700;">(360) 899-6336</a> or email <a href="mailto:hello@buddytile.com" style="color:inherit;font-weight:700;">hello@buddytile.com</a>.';
         })
         .finally(function () {
           btn.disabled = false;
@@ -202,12 +204,7 @@ function passesHumanCheck(form, statusEl) {
     var status = gateForm.querySelector('.form-status');
     if (f.get('website')) return; // honeypot
     if (!passesHumanCheck(gateForm, status)) return;
-    if (!f.get('phone') && !f.get('email')) {
-      status.hidden = false;
-      status.style.color = '#C0392B';
-      status.textContent = 'A phone number or email — just one — and the tool opens.';
-      return;
-    }
+
     contact = { name: f.get('name'), phone: f.get('phone'), email: f.get('email') };
     try { localStorage.setItem('bt_contact', JSON.stringify(contact)); } catch (e) { /* ignore */ }
     unlock();

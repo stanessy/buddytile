@@ -10,9 +10,9 @@ the separate [buddybuilt](https://github.com/stanessy/buddybuilt) repo.
 ## Stack
 
 Zero-dependency static site generator: `node build.js` renders `src/data.js`
-(all copy/services/cities) through `build.js` templates into `site/` —
+(all copy/services/cities) through `build.js` templates into `docs/` (served by GitHub Pages) —
 HTML with per-page meta, canonical, OpenGraph, JSON-LD (LocalBusiness/Service),
-sitemap.xml, robots.txt. Fonts and images are self-hosted. Deploy = serve `site/`.
+sitemap.xml, robots.txt. Fonts and images are self-hosted. Deploy = push; GitHub Pages serves `docs/` from main.
 
 - `npm run build` — regenerate `site/`
 - `npm run preview` — build + serve at http://localhost:4300
