@@ -9,6 +9,7 @@
   var TILE_DIVISION_ID = 1;
 
   document.querySelectorAll('form.lead-form').forEach(function (form) {
+    if (form.id === 'ballpark-gate-form') return; // the gate has its own handler
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var status = form.querySelector('.form-status');
@@ -118,4 +119,90 @@
   form.addEventListener('input', compute);
   form.addEventListener('change', compute);
   compute();
+})();
+
+
+// ---- Ballpark gate: contact unlocks the tool; the lead always gets captured -
+(function () {
+  var gate = document.getElementById('ballpark-gate');
+  var tool = document.getElementById('ballpark-tool');
+  var bookCard = document.getElementById('ballpark-book');
+  if (!gate || !tool) return;
+
+  var API_BASE =
+    window.BT_API_BASE ||
+    (location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+      ? 'http://localhost:5001'
+      : 'https://buddybuilt.com');
+  var submitted = false;
+  var contact = null;
+  try {
+    contact = JSON.parse(localStorage.getItem('bt_contact') || 'null');
+  } catch (e) { /* ignore */ }
+
+  function unlock() {
+    gate.hidden = true;
+    tool.hidden = false;
+    bookCard.hidden = false;
+    var fn = document.getElementById('ballpark-firstname');
+    if (fn && contact && contact.name) fn.textContent = contact.name.split(' ')[0];
+  }
+
+  function sendLead(kind, keepalive) {
+    if (submitted || !contact) return Promise.resolve();
+    submitted = true;
+    var summary = window.__ballparkSummary || 'opened the tool, no configuration';
+    return fetch(API_BASE + '/api/public/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      keepalive: !!keepalive,
+      body: JSON.stringify({
+        name: contact.name,
+        phone: contact.phone || undefined,
+        email: contact.email || undefined,
+        description: kind + ' — ' + summary,
+        divisionId: 1,
+        source: 'buddytile.com ballpark',
+      }),
+    }).catch(function () { submitted = false; });
+  }
+
+  // Returning visitor with saved contact skips the gate
+  if (contact && contact.name && (contact.phone || contact.email)) unlock();
+
+  var gateForm = document.getElementById('ballpark-gate-form');
+  gateForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = new FormData(gateForm);
+    var status = gateForm.querySelector('.form-status');
+    if (f.get('website')) return; // honeypot
+    if (!f.get('phone') && !f.get('email')) {
+      status.hidden = false;
+      status.style.color = '#C0392B';
+      status.textContent = 'A phone number or email — just one — and the tool opens.';
+      return;
+    }
+    contact = { name: f.get('name'), phone: f.get('phone'), email: f.get('email') };
+    try { localStorage.setItem('bt_contact', JSON.stringify(contact)); } catch (e) { /* ignore */ }
+    unlock();
+  });
+
+  // One-click booking with the full configuration attached
+  var bookBtn = document.getElementById('ballpark-book-btn');
+  bookBtn.addEventListener('click', function () {
+    var status = document.getElementById('ballpark-book-status');
+    status.hidden = false;
+    status.style.color = 'var(--navy)';
+    status.textContent = 'Booking…';
+    sendLead('BALLPARK BOOKING REQUEST', false).then(function () {
+      status.style.color = '#1E8449';
+      status.textContent = "You're booked for a call! We'll reach out the same business day. 🐶";
+      bookBtn.disabled = true;
+    });
+  });
+
+  // They gave contact but left without booking — capture the lead anyway
+  window.addEventListener('pagehide', function () {
+    if (contact && !submitted && !tool.hidden) sendLead('BALLPARK BROWSED (did not book)', true);
+  });
 })();

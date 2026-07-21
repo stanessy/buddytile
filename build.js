@@ -380,6 +380,20 @@ const ballparkBody = `
       <h1>60-SECOND BALLPARK PRICE</h1>
       <hr class="gold-bar" />
       <p class="lead">Get a rough range for your project right now — no phone call, no waiting. It's a ballpark, not a bid: tile choices, prep surprises, and layout all move the number, which is why the real price comes from a <strong>free in-home estimate</strong>.</p>
+      <div id="ballpark-gate" class="hero-card gate-card">
+        <h3>UNLOCK THE BALLPARK TOOL</h3>
+        <p class="hero-card-sub">Tell us who to send the numbers to — takes 10 seconds, and we'll text or email your ballpark so you don't lose it.</p>
+        <form class="lead-form hero-lead" id="ballpark-gate-form">
+          <input name="name" placeholder="Your name *" required maxlength="120" class="full" />
+          <input name="phone" type="tel" placeholder="Phone" maxlength="30" />
+          <input name="email" type="email" placeholder="Email" maxlength="200" />
+          <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" />
+          <button class="btn full" type="submit">Show My Ballpark Tool</button>
+          <p class="form-status" hidden></p>
+          <p class="form-note" style="color:var(--stone);">Phone or email — one is enough. No spam, no selling your info.</p>
+        </form>
+      </div>
+      <div id="ballpark-tool" hidden>
       <form id="ballpark-form" class="ballpark-form">
         <label>What are we building?
           <select name="project">${BALLPARK.projects.map((p) => `<option value="${p.key}">${p.label}</option>`).join('')}</select>
@@ -405,20 +419,15 @@ const ballparkBody = `
         <div class="range" id="ballpark-range">$—</div>
         <p class="note">${BALLPARK.disclaimerShort}</p>
       </div>
+      </div>
     </div>
     <div>
-      <div class="hero-card" style="position:sticky;top:90px;">
+      <div class="hero-card" id="ballpark-book" style="position:sticky;top:90px;" hidden>
         <h3>MAKE IT A REAL NUMBER</h3>
-        <p class="hero-card-sub">Like the range? A free in-home estimate turns it into an exact price — measured, sketched, and signed off by you.</p>
-        <form class="lead-form hero-lead" data-context="ballpark" data-ballpark="1">
-          <input name="name" placeholder="Your name *" required maxlength="120" class="full" />
-          <input name="phone" type="tel" placeholder="Phone *" required maxlength="30" />
-          <input name="email" type="email" placeholder="Email" maxlength="200" />
-          <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" />
-          <button class="btn full" type="submit">Book My Free Estimate</button>
-          <p class="form-status" hidden></p>
-          <p class="form-note" style="color:var(--stone);">Your ballpark details come with it — no re-explaining.</p>
-        </form>
+        <p class="hero-card-sub">Like the range, <span id="ballpark-firstname">friend</span>? A free in-home visit turns it into an exact written price — same day.</p>
+        <button class="btn full" id="ballpark-book-btn" type="button">Book My Free Estimate</button>
+        <p class="form-status" id="ballpark-book-status" hidden></p>
+        <p class="form-note" style="color:var(--stone);">Your ballpark details come with it — no re-explaining.</p>
       </div>
     </div>
   </div>

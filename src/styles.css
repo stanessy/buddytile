@@ -279,3 +279,6 @@ section.alt { background: var(--warm); }
   line-height: 1;
 }
 .ballpark-result .note { color: var(--stone); font-size: 13px; margin: 8px 0 0; }
+
+
+.gate-card { max-width: 520px; box-shadow: 0 8px 30px rgba(8, 22, 40, 0.12); border: 1px solid var(--line); }
