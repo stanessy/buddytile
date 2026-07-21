@@ -15,6 +15,10 @@
       var btn = form.querySelector('button[type=submit]');
       var f = new FormData(form);
       var description = [f.get('projectType'), f.get('description')].filter(Boolean).join(' — ');
+      // Ballpark form: attach the calculator selections + range
+      if (form.dataset.ballpark && window.__ballparkSummary) {
+        description = 'BALLPARK REQUEST — ' + window.__ballparkSummary;
+      }
 
       btn.disabled = true;
       status.hidden = false;
@@ -54,4 +58,64 @@
         });
     });
   });
+})();
+
+
+// ---- 60-second ballpark calculator ----------------------------------------
+(function () {
+  var form = document.getElementById('ballpark-form');
+  var cfg = window.BT_BALLPARK;
+  if (!form || !cfg) return;
+
+  var money = function (cents) {
+    return '$' + Math.round(cents / 100).toLocaleString('en-US');
+  };
+
+  function compute() {
+    var f = new FormData(form);
+    var projectKey = f.get('project');
+    var project = cfg.projects.find(function (p) { return p.key === projectKey; });
+    if (!project) return;
+
+    // show/hide inputs for the chosen project
+    form.querySelectorAll('label[data-for]').forEach(function (l) {
+      l.hidden = l.dataset.for.split(' ').indexOf(projectKey) === -1;
+    });
+
+    var base = 0;
+    var parts = [project.label];
+    if (project.sizes) {
+      var size = project.sizes.find(function (s) { return s.key === f.get('size'); }) || project.sizes[0];
+      base = size.base;
+      parts.push(size.label);
+    } else {
+      var sqft = Math.max(10, Math.min(1000, Number(f.get('sqft')) || 0));
+      base = Math.max(project.minCents, sqft * project.perSqftCents);
+      parts.push(sqft + ' SF');
+    }
+
+    if (f.get('grade') === 'premium') {
+      base = Math.round(base * cfg.premiumTileMultiplier);
+      parts.push('premium tile');
+    }
+
+    var extras = f.getAll('extra');
+    extras.forEach(function (key) {
+      var x = cfg.extras.find(function (e) { return e.key === key; });
+      if (x) {
+        base += x.cents;
+        parts.push(x.label);
+      }
+    });
+
+    var low = Math.round((base * cfg.rangeLow) / 10000) * 10000;
+    var high = Math.round((base * cfg.rangeHigh) / 10000) * 10000;
+    var rangeText = money(low) + ' – ' + money(high);
+    document.getElementById('ballpark-range').textContent = rangeText + ' ballpark';
+    window.__ballparkSummary = parts.join(', ') + ' → ' + rangeText;
+  }
+
+  form.addEventListener('input', compute);
+  form.addEventListener('change', compute);
+  compute();
 })();

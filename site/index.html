@@ -29,6 +29,7 @@
     <nav class="site-nav">
       <a class="hide-m" href="/#services">Services</a>
       <a class="hide-m" href="/#service-area">Service Area</a>
+      <a class="hide-m" href="/ballpark/">Ballpark Price</a>
       <a class="hide-m" href="/about/">About</a>
       <a class="phone-link" href="tel:3608996336">(360) 899-6336</a>
       <a class="btn" href="#estimate">Free Estimate</a>
@@ -38,13 +39,34 @@
 
 <div class="hero">
   <div class="bg" style="background-image:url('/assets/img/hero-shower.jpg')"></div>
-  <div class="container">
-    <h1>THE TILE SHOWER YOU<br/>KEEP PUTTING OFF?</h1>
-    <hr class="gold-bar" />
-    <p class="lead">We build it in days, not months. Custom tile showers, bathroom floors, and backsplashes across Vancouver WA and Portland OR — priced on the spot, approved from your phone.</p>
-    <p style="margin-top:26px;"><a class="btn" href="#estimate">Get My Free Estimate</a></p>
-    <div class="chips">
-      <span>Licensed &amp; Bonded</span><span>No card fees</span><span>Online approval</span><span>Daily progress photos</span>
+  <div class="container hero-grid">
+    <div>
+      <h1>THE TILE SHOWER YOU<br/>KEEP PUTTING OFF?</h1>
+      <hr class="gold-bar" />
+      <p class="lead">We build it in days, not months. Custom tile showers, bathroom floors, and backsplashes across Vancouver WA and Portland OR — priced on the spot, approved from your phone.</p>
+      <div class="chips">
+        <span>Family Owned</span><span>Licensed &amp; Bonded</span><span>No card fees</span><span>Craftsmanship guaranteed</span>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h3>GET A FREE IN-HOME ESTIMATE</h3>
+      <p class="hero-card-sub">Priced on the spot, before we leave your driveway.</p>
+      <form class="lead-form hero-lead" data-context="hero">
+        <input name="name" placeholder="Your name *" required maxlength="120" class="full" />
+        <input name="phone" placeholder="Phone" maxlength="30" />
+        <select name="projectType">
+          <option value="">Project…</option>
+          <option>Tile shower remodel</option>
+          <option>Bathroom floor / wall tile</option>
+          <option>Kitchen backsplash</option>
+          <option>Heated floors</option>
+          <option>Repair / regrout</option>
+        </select>
+        <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" />
+        <button class="btn full" type="submit">Get My Free Estimate</button>
+        <p class="form-status" hidden></p>
+      </form>
+      <p class="hero-card-alt">Just want a rough number first? <a href="/ballpark/">Try the 60-second ballpark tool →</a></p>
     </div>
   </div>
 </div>
@@ -109,8 +131,8 @@
   <div class="container">
     <h2>WHY HOMEOWNERS PICK BUDDY</h2>
     <hr class="gold-bar" />
-    <div class="grid cols-4">
-      <div><h3>FREE IN-HOME ESTIMATES</h3><p style="color:var(--stone);margin:0;">Priced on the spot, approved online.</p></div><div><h3>NO CARD FEES. EVER.</h3><p style="color:var(--stone);margin:0;">Pay however you like — we never add a processing fee.</p></div><div><h3>LICENSED, BONDED & INSURED</h3><p style="color:var(--stone);margin:0;">Registered in Washington and Oregon.</p></div><div><h3>ONE WARRANTY. ONE NUMBER.</h3><p style="color:var(--stone);margin:0;">A Buddy Built company — the warranty outlives any one crew.</p></div>
+    <div class="grid cols-3">
+      <div><h3>FAMILY OWNED & OPERATED</h3><p style="color:var(--stone);margin:0;">A local family company — the owner answers the phone, not a call center.</p></div><div><h3>CRAFTSMANSHIP GUARANTEED</h3><p style="color:var(--stone);margin:0;">Tile set to TCNA standards over flood-tested waterproofing — and we photograph the work you never see.</p></div><div><h3>FREE IN-HOME ESTIMATES</h3><p style="color:var(--stone);margin:0;">Priced on the spot, approved online.</p></div><div><h3>NO CARD FEES. EVER.</h3><p style="color:var(--stone);margin:0;">Pay however you like — we never add a processing fee.</p></div><div><h3>LICENSED, BONDED & INSURED</h3><p style="color:var(--stone);margin:0;">Registered in Washington and Oregon.</p></div><div><h3>ONE WARRANTY. ONE NUMBER.</h3><p style="color:var(--stone);margin:0;">A Buddy Built company — the warranty outlives any one crew.</p></div>
     </div>
   </div>
 </section>
@@ -178,6 +200,7 @@
     </div>
   </div>
 </footer>
+<script src="/assets/ballpark-config.js"></script>
 <script src="/assets/main.js" defer></script>
 </body>
 </html>

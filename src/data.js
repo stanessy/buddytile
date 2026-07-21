@@ -140,10 +140,54 @@ const STEPS = [
 ];
 
 const TRUST = [
+  { title: 'Family Owned & Operated', body: 'A local family company — the owner answers the phone, not a call center.' },
+  { title: 'Craftsmanship Guaranteed', body: 'Tile set to TCNA standards over flood-tested waterproofing — and we photograph the work you never see.' },
   { title: 'Free In-Home Estimates', body: 'Priced on the spot, approved online.' },
   { title: 'No Card Fees. Ever.', body: 'Pay however you like — we never add a processing fee.' },
   { title: 'Licensed, Bonded & Insured', body: 'Registered in Washington and Oregon.' },
   { title: 'One Warranty. One Number.', body: 'A Buddy Built company — the warranty outlives any one crew.' },
 ];
 
-module.exports = { SITE, SERVICES, CITIES, STEPS, TRUST };
+// Ballpark calculator pricing — customer-facing RANGES, derived from the price
+// book. A ballpark is not an estimate: real numbers come from the in-home visit.
+const BALLPARK = {
+  disclaimerShort: 'Ballpark only — not a quote. Every bathroom hides surprises; your real number comes from a free in-home estimate.',
+  projects: [
+    {
+      key: 'shower',
+      label: 'Tile shower (walls + pan)',
+      unit: 'shower size',
+      sizes: [
+        { key: 'small', label: 'Small (tub-to-shower, ~60 SF)', base: 620000 },
+        { key: 'medium', label: 'Medium (walk-in, ~85 SF)', base: 820000 },
+        { key: 'large', label: 'Large / curbless (~110+ SF)', base: 1050000 },
+      ],
+    },
+    {
+      key: 'floor',
+      label: 'Bathroom floor tile',
+      unit: 'square feet',
+      perSqftCents: 1600,
+      minCents: 90000,
+    },
+    {
+      key: 'backsplash',
+      label: 'Kitchen backsplash',
+      unit: 'square feet',
+      perSqftCents: 2800,
+      minCents: 75000,
+    },
+  ],
+  extras: [
+    { key: 'niche', label: 'Recessed niche', cents: 27500 },
+    { key: 'bench', label: 'Built-in bench', cents: 60000 },
+    { key: 'heated', label: 'Heated floor', cents: 96600 },
+    { key: 'glass', label: 'Glass shower door', cents: 180000 },
+    { key: 'demo', label: 'Demo & haul away existing', cents: 63000 },
+  ],
+  premiumTileMultiplier: 1.18, // large format / stone bumps labor + materials
+  rangeLow: 0.9,
+  rangeHigh: 1.2,
+};
+
+module.exports = { SITE, SERVICES, CITIES, STEPS, TRUST, BALLPARK };

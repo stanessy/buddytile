@@ -5,7 +5,7 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { SITE, SERVICES, CITIES, STEPS, TRUST } = require('./src/data');
+const { SITE, SERVICES, CITIES, STEPS, TRUST, BALLPARK } = require('./src/data');
 
 const OUT = path.join(__dirname, 'site');
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -25,6 +25,7 @@ const header = `
     <nav class="site-nav">
       <a class="hide-m" href="/#services">Services</a>
       <a class="hide-m" href="/#service-area">Service Area</a>
+      <a class="hide-m" href="/ballpark/">Ballpark Price</a>
       <a class="hide-m" href="/about/">About</a>
       <a class="phone-link" href="tel:${SITE.phone.replace(/[^0-9+]/g, '')}">${SITE.phone}</a>
       <a class="btn" href="#estimate">Free Estimate</a>
@@ -96,6 +97,7 @@ const footer = `
     </div>
   </div>
 </footer>
+<script src="/assets/ballpark-config.js"></script>
 <script src="/assets/main.js" defer></script>`;
 
 const page = ({ url, title, description, jsonLd, body }) => `<!doctype html>
@@ -142,13 +144,34 @@ const businessLd = (extra = {}) => ({
 const homeBody = `
 <div class="hero">
   <div class="bg" style="background-image:url('/assets/img/hero-shower.jpg')"></div>
-  <div class="container">
-    <h1>THE TILE SHOWER YOU<br/>KEEP PUTTING OFF?</h1>
-    <hr class="gold-bar" />
-    <p class="lead">We build it in days, not months. Custom tile showers, bathroom floors, and backsplashes across Vancouver WA and Portland OR — priced on the spot, approved from your phone.</p>
-    <p style="margin-top:26px;"><a class="btn" href="#estimate">Get My Free Estimate</a></p>
-    <div class="chips">
-      <span>Licensed &amp; Bonded</span><span>No card fees</span><span>Online approval</span><span>Daily progress photos</span>
+  <div class="container hero-grid">
+    <div>
+      <h1>THE TILE SHOWER YOU<br/>KEEP PUTTING OFF?</h1>
+      <hr class="gold-bar" />
+      <p class="lead">We build it in days, not months. Custom tile showers, bathroom floors, and backsplashes across Vancouver WA and Portland OR — priced on the spot, approved from your phone.</p>
+      <div class="chips">
+        <span>Family Owned</span><span>Licensed &amp; Bonded</span><span>No card fees</span><span>Craftsmanship guaranteed</span>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h3>GET A FREE IN-HOME ESTIMATE</h3>
+      <p class="hero-card-sub">Priced on the spot, before we leave your driveway.</p>
+      <form class="lead-form hero-lead" data-context="hero">
+        <input name="name" placeholder="Your name *" required maxlength="120" class="full" />
+        <input name="phone" placeholder="Phone" maxlength="30" />
+        <select name="projectType">
+          <option value="">Project…</option>
+          <option>Tile shower remodel</option>
+          <option>Bathroom floor / wall tile</option>
+          <option>Kitchen backsplash</option>
+          <option>Heated floors</option>
+          <option>Repair / regrout</option>
+        </select>
+        <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" />
+        <button class="btn full" type="submit">Get My Free Estimate</button>
+        <p class="form-status" hidden></p>
+      </form>
+      <p class="hero-card-alt">Just want a rough number first? <a href="/ballpark/">Try the 60-second ballpark tool →</a></p>
     </div>
   </div>
 </div>
@@ -202,7 +225,7 @@ const homeBody = `
   <div class="container">
     <h2>WHY HOMEOWNERS PICK BUDDY</h2>
     <hr class="gold-bar" />
-    <div class="grid cols-4">
+    <div class="grid cols-3">
       ${TRUST.map((t) => `<div><h3>${t.title.toUpperCase()}</h3><p style="color:var(--stone);margin:0;">${t.body}</p></div>`).join('')}
     </div>
   </div>
@@ -302,6 +325,7 @@ fs.mkdirSync(path.join(OUT, 'assets'), { recursive: true });
 fs.cpSync(path.join(__dirname, 'assets'), path.join(OUT, 'assets'), { recursive: true });
 fs.copyFileSync(path.join(__dirname, 'src/styles.css'), path.join(OUT, 'assets/styles.css'));
 fs.copyFileSync(path.join(__dirname, 'src/main.js'), path.join(OUT, 'assets/main.js'));
+fs.writeFileSync(path.join(OUT, 'assets/ballpark-config.js'), `window.BT_BALLPARK = ${JSON.stringify(BALLPARK)};`);
 
 const write = (url, html) => {
   const dir = path.join(OUT, url);
@@ -347,6 +371,66 @@ for (const c of CITIES) {
     body: cityPage(c),
   });
 }
+
+const ballparkBody = `
+<div class="container breadcrumbs"><a href="/">Home</a> / Ballpark Price</div>
+<section style="padding-top:26px;">
+  <div class="container two-col" style="align-items:stretch;">
+    <div>
+      <h1>60-SECOND BALLPARK PRICE</h1>
+      <hr class="gold-bar" />
+      <p class="lead">Get a rough range for your project right now — no phone call, no waiting. It's a ballpark, not a bid: tile choices, prep surprises, and layout all move the number, which is why the real price comes from a <strong>free in-home estimate</strong>.</p>
+      <form id="ballpark-form" class="ballpark-form">
+        <label>What are we building?
+          <select name="project">${BALLPARK.projects.map((p) => `<option value="${p.key}">${p.label}</option>`).join('')}</select>
+        </label>
+        <label data-for="shower">Shower size
+          <select name="size">${BALLPARK.projects[0].sizes.map((s) => `<option value="${s.key}">${s.label}</option>`).join('')}</select>
+        </label>
+        <label data-for="floor backsplash" hidden>Approximate square feet
+          <input type="number" name="sqft" min="10" max="1000" value="60" />
+        </label>
+        <label>Tile grade
+          <select name="grade">
+            <option value="standard">Standard porcelain / ceramic</option>
+            <option value="premium">Premium — large format, stone, zellige</option>
+          </select>
+        </label>
+        <fieldset>
+          <legend>Add-ons</legend>
+          ${BALLPARK.extras.map((x) => `<label class="check"><input type="checkbox" name="extra" value="${x.key}" /> ${x.label}</label>`).join('')}
+        </fieldset>
+      </form>
+      <div class="ballpark-result" id="ballpark-result">
+        <div class="range" id="ballpark-range">$—</div>
+        <p class="note">${BALLPARK.disclaimerShort}</p>
+      </div>
+    </div>
+    <div>
+      <div class="hero-card" style="position:sticky;top:90px;">
+        <h3>MAKE IT A REAL NUMBER</h3>
+        <p class="hero-card-sub">Like the range? A free in-home estimate turns it into an exact price — measured, sketched, and signed off by you.</p>
+        <form class="lead-form hero-lead" data-context="ballpark" data-ballpark="1">
+          <input name="name" placeholder="Your name *" required maxlength="120" class="full" />
+          <input name="phone" placeholder="Phone" maxlength="30" />
+          <input name="email" type="email" placeholder="Email" maxlength="200" />
+          <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" />
+          <button class="btn full" type="submit">Book My Free Estimate</button>
+          <p class="form-status" hidden></p>
+          <p class="form-note" style="color:var(--stone);">Your ballpark details come with it — no re-explaining.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>`;
+
+add('/ballpark/', {
+  title: 'Ballpark Tile Price Calculator | Showers, Floors, Backsplashes | Buddy Tile',
+  description:
+    'Get a 60-second ballpark price range for a tile shower, bathroom floor, or backsplash in Vancouver WA / Portland OR. Free in-home estimates turn it into a real number.',
+  jsonLd: businessLd(),
+  body: ballparkBody,
+});
 
 add('/about/', {
   title: 'About Buddy Tile — a Buddy Built Company',

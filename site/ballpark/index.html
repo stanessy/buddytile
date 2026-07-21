@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ballpark Tile Price Calculator | Showers, Floors, Backsplashes | Buddy Tile</title>
+  <meta name="description" content="Get a 60-second ballpark price range for a tile shower, bathroom floor, or backsplash in Vancouver WA / Portland OR. Free in-home estimates turn it into a real number." />
+  <link rel="canonical" href="https://buddytile.com/ballpark/" />
+  <link rel="icon" href="/assets/img/buddy-tile-sm.png" />
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <meta property="og:title" content="Ballpark Tile Price Calculator | Showers, Floors, Backsplashes | Buddy Tile" />
+  <meta property="og:description" content="Get a 60-second ballpark price range for a tile shower, bathroom floor, or backsplash in Vancouver WA / Portland OR. Free in-home estimates turn it into a real number." />
+  <meta property="og:image" content="https://buddytile.com/assets/img/buddy-tile.png" />
+  <meta property="og:url" content="https://buddytile.com/ballpark/" />
+  <meta property="og:type" content="website" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","name":"Buddy Tile","url":"https://buddytile.com","telephone":"(360) 899-6336","email":"hello@buddytile.com","image":"https://buddytile.com/assets/img/buddy-tile.png","slogan":"Built for Your Home.","parentOrganization":{"@type":"Organization","name":"Buddy Built LLC","url":"https://buddybuilt.com"},"areaServed":[{"@type":"City","name":"Vancouver, WA"},{"@type":"City","name":"Portland, OR"},{"@type":"City","name":"Beaverton, OR"},{"@type":"City","name":"Gresham, OR"},{"@type":"City","name":"Hillsboro, OR"},{"@type":"City","name":"Salem, OR"}],"priceRange":"$$"}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="/" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff;">
+      <img class="badge" src="/assets/img/buddy-tile-sm.png" alt="Buddy Tile — a Buddy Built company" />
+      <span class="brand-block">
+        <span class="name">BUDDY TILE</span><br />
+        <span class="sub">a BUDDY BUILT company</span>
+      </span>
+    </a>
+    <nav class="site-nav">
+      <a class="hide-m" href="/#services">Services</a>
+      <a class="hide-m" href="/#service-area">Service Area</a>
+      <a class="hide-m" href="/ballpark/">Ballpark Price</a>
+      <a class="hide-m" href="/about/">About</a>
+      <a class="phone-link" href="tel:3608996336">(360) 899-6336</a>
+      <a class="btn" href="#estimate">Free Estimate</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container breadcrumbs"><a href="/">Home</a> / Ballpark Price</div>
+<section style="padding-top:26px;">
+  <div class="container two-col" style="align-items:stretch;">
+    <div>
+      <h1>60-SECOND BALLPARK PRICE</h1>
+      <hr class="gold-bar" />
+      <p class="lead">Get a rough range for your project right now — no phone call, no waiting. It's a ballpark, not a bid: tile choices, prep surprises, and layout all move the number, which is why the real price comes from a <strong>free in-home estimate</strong>.</p>
+      <form id="ballpark-form" class="ballpark-form">
+        <label>What are we building?
+          <select name="project"><option value="shower">Tile shower (walls + pan)</option><option value="floor">Bathroom floor tile</option><option value="backsplash">Kitchen backsplash</option></select>
+        </label>
+        <label data-for="shower">Shower size
+          <select name="size"><option value="small">Small (tub-to-shower, ~60 SF)</option><option value="medium">Medium (walk-in, ~85 SF)</option><option value="large">Large / curbless (~110+ SF)</option></select>
+        </label>
+        <label data-for="floor backsplash" hidden>Approximate square feet
+          <input type="number" name="sqft" min="10" max="1000" value="60" />
+        </label>
+        <label>Tile grade
+          <select name="grade">
+            <option value="standard">Standard porcelain / ceramic</option>
+            <option value="premium">Premium — large format, stone, zellige</option>
+          </select>
+        </label>
+        <fieldset>
+          <legend>Add-ons</legend>
+          <label class="check"><input type="checkbox" name="extra" value="niche" /> Recessed niche</label><label class="check"><input type="checkbox" name="extra" value="bench" /> Built-in bench</label><label class="check"><input type="checkbox" name="extra" value="heated" /> Heated floor</label><label class="check"><input type="checkbox" name="extra" value="glass" /> Glass shower door</label><label class="check"><input type="checkbox" name="extra" value="demo" /> Demo & haul away existing</label>
+        </fieldset>
+      </form>
+      <div class="ballpark-result" id="ballpark-result">
+        <div class="range" id="ballpark-range">$—</div>
+        <p class="note">Ballpark only — not a quote. Every bathroom hides surprises; your real number comes from a free in-home estimate.</p>
+      </div>
+    </div>
+    <div>
+      <div class="hero-card" style="position:sticky;top:90px;">
+        <h3>MAKE IT A REAL NUMBER</h3>
+        <p class="hero-card-sub">Like the range? A free in-home estimate turns it into an exact price — measured, sketched, and signed off by you.</p>
+        <form class="lead-form hero-lead" data-context="ballpark" data-ballpark="1">
+          <input name="name" placeholder="Your name *" required maxlength="120" class="full" />
+          <input name="phone" placeholder="Phone" maxlength="30" />
+          <input name="email" type="email" placeholder="Email" maxlength="200" />
+          <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" />
+          <button class="btn full" type="submit">Book My Free Estimate</button>
+          <p class="form-status" hidden></p>
+          <p class="form-note" style="color:var(--stone);">Your ballpark details come with it — no re-explaining.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="cols">
+      <div class="badge-lockup">
+        <img src="/assets/img/buddy-tile.png" alt="Buddy Tile badge" loading="lazy" />
+        <div class="caption">a BUDDY BUILT company</div>
+      </div>
+      <div>
+        <h3>SERVICES</h3>
+        <ul><li><a href="/services/shower-remodel/">Custom Tile Showers</a></li><li><a href="/services/bathroom-tile/">Bathroom Floor & Wall Tile</a></li><li><a href="/services/kitchen-backsplash/">Kitchen Backsplashes</a></li><li><a href="/services/heated-floors/">Heated Tile Floors</a></li><li><a href="/services/waterproofing/">Shower Waterproofing</a></li><li><a href="/services/tile-repair/">Tile Repair & Regrouting</a></li></ul>
+      </div>
+      <div>
+        <h3>SERVICE AREA</h3>
+        <ul><li><a href="/tile-contractor/vancouver/">Vancouver, WA</a></li><li><a href="/tile-contractor/portland/">Portland, OR</a></li><li><a href="/tile-contractor/beaverton/">Beaverton, OR</a></li><li><a href="/tile-contractor/gresham/">Gresham, OR</a></li><li><a href="/tile-contractor/hillsboro/">Hillsboro, OR</a></li><li><a href="/tile-contractor/salem/">Salem, OR</a></li></ul>
+      </div>
+      <div>
+        <h3>CONTACT</h3>
+        <ul>
+          <li><a href="tel:3608996336">(360) 899-6336</a></li>
+          <li><a href="mailto:hello@buddytile.com">hello@buddytile.com</a></li>
+          <li><a href="/about/">About Buddy Tile</a></li>
+          <li><a href="https://buddybuilt.com" rel="noopener">The Buddy Built family</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <p>Buddy Tile is a registered trade name of Buddy Built LLC · WA reg #PENDING · OR CCB #PENDING</p>
+      <p>© 2026 Buddy Built LLC · Built for Your Home. · <a href="https://buddybuilt.com">buddybuilt.com</a></p>
+    </div>
+  </div>
+</footer>
+<script src="/assets/ballpark-config.js"></script>
+<script src="/assets/main.js" defer></script>
+</body>
+</html>
