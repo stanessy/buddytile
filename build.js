@@ -16,7 +16,7 @@ const header = `
 <header class="site-header">
   <div class="container">
     <a href="/" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff;">
-      <img class="badge" src="/assets/img/buddy-tile-sm.png?v=2" alt="Buddy Tile — a Buddy Built company" />
+      <img class="badge" src="/assets/img/buddy-tile-sm.png?v=3" alt="Buddy Tile — a Buddy Built company" />
       <span class="brand-block">
         <span class="name">BUDDY TILE</span><br />
         <span class="sub">a BUDDY BUILT company</span>
@@ -75,7 +75,7 @@ const footer = `
   <div class="container">
     <div class="cols">
       <div class="badge-lockup">
-        <img src="/assets/img/buddy-tile.png?v=2" alt="Buddy Tile badge" loading="lazy" />
+        <img src="/assets/img/buddy-tile.png?v=3" alt="Buddy Tile badge" loading="lazy" />
         <div class="caption">a BUDDY BUILT company</div>
       </div>
       <div>
@@ -113,11 +113,11 @@ const page = ({ url, title, description, jsonLd, body }) => `<!doctype html>
   <title>${esc(title)}</title>
   <meta name="description" content="${esc(description)}" />
   <link rel="canonical" href="${SITE.domain}${url}" />
-  <link rel="icon" href="/assets/img/buddy-tile-sm.png?v=2" />
+  <link rel="icon" href="/assets/img/buddy-tile-sm.png?v=3" />
   <link rel="stylesheet" href="/assets/styles.css" />
   <meta property="og:title" content="${esc(title)}" />
   <meta property="og:description" content="${esc(description)}" />
-  <meta property="og:image" content="${SITE.domain}/assets/img/buddy-tile.png?v=2" />
+  <meta property="og:image" content="${SITE.domain}/assets/img/buddy-tile.png?v=3" />
   <meta property="og:url" content="${SITE.domain}${url}" />
   <meta property="og:type" content="website" />
   ${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ''}
@@ -136,7 +136,7 @@ const businessLd = (extra = {}) => ({
   url: SITE.domain,
   telephone: SITE.phone,
   email: SITE.email,
-  image: `${SITE.domain}/assets/img/buddy-tile.png?v=2`,
+  image: `${SITE.domain}/assets/img/buddy-tile.png?v=3`,
   slogan: SITE.tagline,
   parentOrganization: { '@type': 'Organization', name: 'Buddy Built LLC', url: 'https://buddybuilt.com' },
   areaServed: CITIES.map((c) => ({ '@type': 'City', name: `${c.name}, ${c.state}` })),
