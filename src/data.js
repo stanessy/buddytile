@@ -6,7 +6,7 @@ const SITE = {
   domain: 'https://buddytile.com',
   tagline: 'Built for Your Home.',
   phone: process.env.BT_PHONE || '(360) 899-6336',
-  email: 'hello@buddytile.com',
+  email: 'info@buddytile.com',
   // Platform API — the lead form posts straight into the Buddy Built CRM
   apiBase: 'https://buddybuilt.com',
   tileDivisionId: 1,

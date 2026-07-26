@@ -40,6 +40,12 @@ function passesHumanCheck(form, statusEl) {
       var btn = form.querySelector('button[type=submit]');
       if (!passesHumanCheck(form, status)) return;
       var f = new FormData(form);
+      if (!f.get('phone') && !f.get('email')) {
+        status.hidden = false;
+        status.style.color = '#FFB4A2';
+        status.textContent = 'Please add a phone number or an email so we can reach you about your estimate.';
+        return;
+      }
       var description = [f.get('projectType'), f.get('description')].filter(Boolean).join(' — ');
       // Ballpark form: attach the calculator selections + range
       if (form.dataset.ballpark && window.__ballparkSummary) {
@@ -69,7 +75,7 @@ function passesHumanCheck(form, statusEl) {
         .then(function (res) {
           if (res.ok) {
             status.style.color = '#F6B015';
-            status.innerHTML = "Got it! We'll reach out the same business day. <img src="/assets/img/buddy-tile-sm.png?v=3" alt="Buddy Tile" style="height:26px;vertical-align:-8px;margin-left:6px">";
+            status.innerHTML = "Got it! We'll reach out the same business day. <img src='/assets/img/buddy-tile-sm.png?v=3' alt='Buddy Tile' style='height:26px;vertical-align:-8px;margin-left:6px'>";
             form.reset();
           } else {
             throw new Error(res.d && res.d.error);
@@ -79,7 +85,7 @@ function passesHumanCheck(form, statusEl) {
           status.style.color = '#FFB4A2';
           status.innerHTML =
             ((err && err.message) || 'Something went wrong.') +
-            ' Call <a href="tel:+13608996336" style="color:inherit;font-weight:700;">(360) 899-6336</a> or email <a href="mailto:hello@buddytile.com" style="color:inherit;font-weight:700;">hello@buddytile.com</a>.';
+            ' Call <a href="tel:+13608996336" style="color:inherit;font-weight:700;">(360) 899-6336</a> or email <a href="mailto:info@buddytile.com" style="color:inherit;font-weight:700;">info@buddytile.com</a>.';
         })
         .finally(function () {
           btn.disabled = false;
@@ -204,6 +210,12 @@ function passesHumanCheck(form, statusEl) {
     var status = gateForm.querySelector('.form-status');
     if (f.get('website')) return; // honeypot
     if (!passesHumanCheck(gateForm, status)) return;
+    if (!f.get('phone') && !f.get('email')) {
+      status.hidden = false;
+      status.style.color = '#FFB4A2';
+      status.textContent = 'Please add a phone number or an email so we can reach you.';
+      return;
+    }
 
     contact = { name: f.get('name'), phone: f.get('phone'), email: f.get('email') };
     try { localStorage.setItem('bt_contact', JSON.stringify(contact)); } catch (e) { /* ignore */ }
@@ -219,7 +231,7 @@ function passesHumanCheck(form, statusEl) {
     status.textContent = 'Booking…';
     sendLead('BALLPARK BOOKING REQUEST', false).then(function () {
       status.style.color = '#1E8449';
-      status.innerHTML = "You're booked for a call! We'll reach out the same business day. <img src="/assets/img/buddy-tile-sm.png?v=3" alt="Buddy Tile" style="height:26px;vertical-align:-8px;margin-left:6px">";
+      status.innerHTML = "You're booked for a call! We'll reach out the same business day. <img src='/assets/img/buddy-tile-sm.png?v=3' alt='Buddy Tile' style='height:26px;vertical-align:-8px;margin-left:6px'>";
       bookBtn.disabled = true;
     });
   });
