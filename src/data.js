@@ -34,7 +34,7 @@ const SERVICES = [
       'Linear or center drains, heated floors, glass enclosures coordinated',
       'Demo to done in days, with daily progress photos to your phone',
     ],
-    photo: 'hero-shower.jpg',
+    photo: 'tile-shower-remodel-vancouver-wa.jpg',
   },
   {
     slug: 'bathroom-tile',
@@ -51,7 +51,7 @@ const SERVICES = [
       'Heated floor systems installed under the tile',
       'Baseboard, trim, and transitions finished clean',
     ],
-    photo: 'work-full-bath.jpg',
+    photo: 'bathroom-tile-remodel-vancouver-wa.jpg',
   },
   {
     slug: 'kitchen-backsplash',
@@ -68,7 +68,7 @@ const SERVICES = [
       'Most backsplashes done in 1–2 days',
       'Grout and sealant matched to your counters',
     ],
-    photo: 'backsplash-kitchen.jpg',
+    photo: 'kitchen-tile-backsplash-installation.jpg',
   },
   {
     slug: 'heated-floors',
@@ -85,7 +85,7 @@ const SERVICES = [
       'Installed with membrane systems, not under them wrong',
       'Adds comfort and resale value for a modest add-on cost',
     ],
-    photo: 'floor-tile.jpg',
+    photo: 'herringbone-tile-floor-portland-or.jpg',
   },
   {
     slug: 'waterproofing',
@@ -119,7 +119,7 @@ const SERVICES = [
       'Loose / hollow tile diagnosis',
       'Straight answers: repair when it can be, rebuild when it must be',
     ],
-    photo: 'work-glass-shower.jpg',
+    photo: 'marble-tile-shower-glass-door.jpg',
   },
 ];
 

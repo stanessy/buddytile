@@ -117,7 +117,7 @@ const page = ({ url, title, description, jsonLd, body }) => `<!doctype html>
   <link rel="stylesheet" href="/assets/styles.css" />
   <meta property="og:title" content="${esc(title)}" />
   <meta property="og:description" content="${esc(description)}" />
-  <meta property="og:image" content="${SITE.domain}/assets/img/buddy-tile.png?v=3" />
+  <meta property="og:image" content="${SITE.domain}/assets/img/tile-shower-remodel-vancouver-wa.jpg" />
   <meta property="og:url" content="${SITE.domain}${url}" />
   <meta property="og:type" content="website" />
   ${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ''}
@@ -136,7 +136,13 @@ const businessLd = (extra = {}) => ({
   url: SITE.domain,
   telephone: SITE.phone,
   email: SITE.email,
-  image: `${SITE.domain}/assets/img/buddy-tile.png?v=3`,
+  image: [
+    `${SITE.domain}/assets/img/tile-shower-remodel-vancouver-wa.jpg`,
+    `${SITE.domain}/assets/img/bathroom-tile-remodel-vancouver-wa.jpg`,
+    `${SITE.domain}/assets/img/marble-tile-shower-glass-door.jpg`,
+    `${SITE.domain}/assets/img/kitchen-tile-backsplash-installation.jpg`,
+  ],
+  logo: `${SITE.domain}/assets/img/buddy-tile.png?v=3`,
   slogan: SITE.tagline,
   parentOrganization: { '@type': 'Organization', name: 'Buddy Built LLC', url: 'https://buddybuilt.com' },
   areaServed: CITIES.map((c) => ({ '@type': 'City', name: `${c.name}, ${c.state}` })),
@@ -148,7 +154,7 @@ const businessLd = (extra = {}) => ({
 
 const homeBody = `
 <div class="hero">
-  <div class="bg" style="background-image:url('/assets/img/hero-shower.jpg?v=2')"></div>
+  <div class="bg" style="background-image:url('/assets/img/tile-shower-remodel-vancouver-wa.jpg')"></div>
   <div class="container hero-grid">
     <div>
       <h1>THE TILE SHOWER YOU<br/>KEEP PUTTING OFF?</h1>
@@ -292,7 +298,7 @@ const cityPage = (c) => `
       <p><a class="btn" href="#estimate">Get My ${c.name} Estimate</a></p>
     </div>
     <div>
-      <img class="rounded-img" src="/assets/img/work-full-bath.jpg?v=2" alt="Tile bathroom remodel in ${esc(c.name)}, ${c.state}" />
+      <img class="rounded-img" src="/assets/img/bathroom-tile-remodel-vancouver-wa.jpg" alt="Tile bathroom remodel in ${esc(c.name)}, ${c.state}" />
     </div>
   </div>
 </section>
