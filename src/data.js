@@ -68,7 +68,7 @@ const SERVICES = [
       'Most backsplashes done in 1–2 days',
       'Grout and sealant matched to your counters',
     ],
-    photo: 'craft-setting.jpg',
+    photo: 'backsplash-kitchen.jpg',
   },
   {
     slug: 'heated-floors',
