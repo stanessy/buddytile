@@ -189,6 +189,9 @@ const BALLPARK = {
   premiumTileMultiplier: 1.18, // large format / stone bumps labor + materials
   rangeLow: 0.9,
   rangeHigh: 1.2,
+  // Every tile job books at least two days (set, come back, grout) — small
+  // jobs never quote below this, in-house or sub.
+  jobMinCents: 250000,
 };
 
 module.exports = { SITE, SERVICES, CITIES, STEPS, TRUST, BALLPARK };

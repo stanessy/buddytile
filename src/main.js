@@ -144,6 +144,11 @@ function passesHumanCheck(form, statusEl) {
 
     var low = Math.round((base * cfg.rangeLow) / 10000) * 10000;
     var high = Math.round((base * cfg.rangeHigh) / 10000) * 10000;
+    // Job minimum: tile work books at least two days (install + return to grout)
+    if (cfg.jobMinCents) {
+      low = Math.max(low, cfg.jobMinCents);
+      high = Math.max(high, Math.round((cfg.jobMinCents * 1.15) / 10000) * 10000);
+    }
     var rangeText = money(low) + ' – ' + money(high);
     document.getElementById('ballpark-range').textContent = rangeText + ' ballpark';
     window.__ballparkSummary = parts.join(', ') + ' → ' + rangeText + ' (labor only, finish materials excluded)';
