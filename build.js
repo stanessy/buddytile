@@ -27,6 +27,7 @@ const header = `
       <a class="hide-m" href="/#service-area">Service Area</a>
       <a class="hide-m" href="/ballpark/">Ballpark Price</a>
       <a class="hide-m" href="/about/">About</a>
+      <a class="hide-m" href="https://buddybuilt.com/portal" rel="noopener">Customer Portal</a>
       <a class="phone-link" href="tel:${SITE.phone.replace(/[^0-9+]/g, '')}">${SITE.phone}</a>
       <a class="btn" href="#estimate">Free Estimate</a>
     </nav>
@@ -92,6 +93,7 @@ const footer = `
           <li><a href="tel:${SITE.phone.replace(/[^0-9+]/g, '')}">${SITE.phone}</a></li>
           <li><a href="mailto:${SITE.email}">${SITE.email}</a></li>
           <li><a href="/about/">About Buddy Tile</a></li>
+          <li><a href="https://buddybuilt.com/portal" rel="noopener">Customer Portal — track your project</a></li>
           <li><a href="https://buddybuilt.com" rel="noopener">The Buddy Built family</a></li>
         </ul>
       </div>
