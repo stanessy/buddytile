@@ -148,7 +148,7 @@ const businessLd = (extra = {}) => ({
 
 const homeBody = `
 <div class="hero">
-  <div class="bg" style="background-image:url('/assets/img/hero-shower.jpg')"></div>
+  <div class="bg" style="background-image:url('/assets/img/hero-shower.jpg?v=2')"></div>
   <div class="container hero-grid">
     <div>
       <h1>THE TILE SHOWER YOU<br/>KEEP PUTTING OFF?</h1>
@@ -292,7 +292,7 @@ const cityPage = (c) => `
       <p><a class="btn" href="#estimate">Get My ${c.name} Estimate</a></p>
     </div>
     <div>
-      <img class="rounded-img" src="/assets/img/work-full-bath.jpg" alt="Tile bathroom remodel in ${esc(c.name)}, ${c.state}" />
+      <img class="rounded-img" src="/assets/img/work-full-bath.jpg?v=2" alt="Tile bathroom remodel in ${esc(c.name)}, ${c.state}" />
     </div>
   </div>
 </section>
