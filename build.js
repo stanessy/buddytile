@@ -18,17 +18,13 @@ const header = (isHome) => `
   <div class="container">
     <a href="/" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff;">
       <span class="badge-slot"><img class="badge" src="/assets/img/buddy-tile-sm.png?v=3" alt="Buddy Tile — a Buddy Built company" /></span>
-      <span class="brand-block">
-        <span class="name">BUDDY TILE</span><br />
-        <span class="sub">a BUDDY BUILT company</span>
-      </span>
     </a>
     <nav class="site-nav">
       <a class="hide-m" href="/#services">Services</a>
       <a class="hide-m" href="/#service-area">Service Area</a>
       <a class="hide-m" href="/ballpark/">Ballpark Price</a>
       <a class="hide-m" href="/about/">About</a>
-      <a class="hide-m" href="https://buddybuilt.com/portal" rel="noopener">Customer Portal</a>
+      <a class="hide-m" href="https://buddybuilt.com/portal" target="_blank" rel="noopener">Customer Portal</a>
       <a class="phone-link" href="tel:${SITE.phone.replace(/[^0-9+]/g, '')}">${SITE.phone}</a>
       <a class="btn" href="#estimate">Free Estimate</a>
     </nav>
@@ -94,7 +90,7 @@ const footer = `
           <li><a href="tel:${SITE.phone.replace(/[^0-9+]/g, '')}">${SITE.phone}</a></li>
           <li><a href="mailto:${SITE.email}">${SITE.email}</a></li>
           <li><a href="/about/">About Buddy Tile</a></li>
-          <li><a href="https://buddybuilt.com/portal" rel="noopener">Customer Portal — track your project</a></li>
+          <li><a href="https://buddybuilt.com/portal" target="_blank" rel="noopener">Customer Portal — track your project</a></li>
           <li><a href="https://buddybuilt.com" rel="noopener">The Buddy Built family</a></li>
         </ul>
       </div>
