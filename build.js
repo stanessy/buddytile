@@ -104,6 +104,10 @@ const footer = `
     </div>
   </div>
 </footer>
+<div class="mobile-cta">
+  <a class="mc-call" href="tel:${SITE.phone.replace(/[^0-9+]/g, '')}">Call ${SITE.phone}</a>
+  <a class="mc-est" href="#estimate">Free Estimate</a>
+</div>
 <script src="/assets/ballpark-config.js"></script>
 <script src="/assets/main.js" defer></script>`;
 
@@ -251,7 +255,33 @@ const homeBody = `
   </div>
 </section>
 
-<section id="service-area">
+<section>
+  <div class="container center">
+    <h2>THE CRAFT BEHIND THE FINISH</h2>
+    <hr class="gold-bar" />
+    <p class="section-sub">Drag the handle. The left side is the work most contractors hope you never ask about — we photograph it and send it to you.</p>
+    <div class="ba">
+      <img src="/assets/img/marble-tile-shower-glass-door.jpg" alt="Finished marble tile shower with glass door" />
+      <div class="ba-top"><img src="/assets/img/craft-tile-hands.jpg" alt="Buddy Tile installer setting tile over waterproofing" /></div>
+      <div class="ba-line"></div>
+      <input class="ba-range" type="range" min="0" max="100" value="50" aria-label="Reveal the finished shower" />
+      <span class="ba-tag left">THE CRAFT</span>
+      <span class="ba-tag right">THE FINISH</span>
+    </div>
+    <div style="margin-top:34px;">
+      <div class="finance-band">
+        <div class="fb-copy" style="text-align:left;">
+          <h2>PROJECT FINANCING AVAILABLE</h2>
+          <p>Pre-qualify in about 60 seconds through Acorn Finance.</p>
+        </div>
+        <a class="btn" href="${SITE.acornUrl}" target="_blank" rel="noopener">Check My Financing Options →</a>
+      </div>
+      <p class="finance-note">Financing offered through Acorn Finance's network of lenders and subject to credit approval. Pre-qualifying uses a soft credit inquiry that does not affect your credit score; proceeding with a lender's offer involves a hard credit pull, which can.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="service-area">
   <div class="container">
     <h2>SERVICE AREA</h2>
     <hr class="gold-bar" />
@@ -264,7 +294,7 @@ const homeBody = `
   </div>
 </section>
 
-<section class="alt">
+<section>
   <div class="container">
     <h2>WHY HOMEOWNERS PICK BUDDY</h2>
     <hr class="gold-bar" />

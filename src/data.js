@@ -12,6 +12,8 @@ const SITE = {
   tileDivisionId: 1,
   accent: '#F6B015',
   navy: '#1C2E44',
+  // Acorn Finance dealer pre-qual link (blocks iframing — always open a new tab)
+  acornUrl: 'https://www.acornfinance.com/pre-qualify/?d=2T7C4&utm_medium=web_pre_qual_link_copy_welcome',
   legalLine:
     'Buddy Tile is a registered trade name of Buddy Built LLC · WA reg #BUDDYBL746MO · OR CCB #PENDING',
   serviceAreaBlurb: 'Serving Vancouver, Portland, and the surrounding metro — Washington and Oregon.',

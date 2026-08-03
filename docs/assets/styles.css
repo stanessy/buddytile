@@ -106,7 +106,13 @@ img { max-width: 100%; display: block; }
 .btn:hover { background: #E3A512; }
 .btn.ghost { background: transparent; border: 1px solid rgba(255,255,255,0.4); color: #fff; }
 .phone-link { color: var(--gold) !important; white-space: nowrap; }
-@media (max-width: 840px) { .site-nav .hide-m { display: none; } }
+@media (max-width: 840px) {
+  /* The sticky bottom bar carries Call + Estimate on phones — keep the header
+     to just the badge lockup. */
+  .site-nav .hide-m, .site-nav .phone-link, .site-nav .btn { display: none; }
+  .site-header img.badge { height: 60px; }
+  .site-header.scrolled img.badge { height: 44px; }
+}
 
 /* Hero */
 .hero {
@@ -354,3 +360,84 @@ section.alt { background: #F3F4F6; }
 .quote-card blockquote { margin: 0 0 14px; flex: 1; }
 .quote-card .who { font-weight: 700; font-size: 14px; }
 .quote-card .where { color: var(--stone); font-size: 12.5px; }
+
+
+/* Sticky mobile call bar — thumb-reach CTAs on phones */
+.mobile-cta { display: none; }
+@media (max-width: 840px) {
+  .mobile-cta {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 60;
+    box-shadow: 0 -6px 20px rgba(10, 22, 38, 0.25);
+  }
+  .mobile-cta a {
+    flex: 1;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 15px 10px calc(15px + env(safe-area-inset-bottom));
+  }
+  .mobile-cta .mc-call { background: var(--deep); color: #fff; }
+  .mobile-cta .mc-est { background: var(--gold); color: var(--navy); }
+  body { padding-bottom: 54px; }
+}
+
+/* Financing band (matches buddybuilt.com) */
+.finance-band {
+  background: var(--deep);
+  color: #fff;
+  border-radius: 16px;
+  padding: 26px 32px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 22px;
+}
+.finance-band .fb-copy { flex: 1; min-width: 240px; }
+.finance-band h2 { color: #fff; margin: 0 0 2px; }
+.finance-band p { margin: 0; color: rgba(255,255,255,0.75); font-weight: 600; }
+.finance-note { font-size: 12px; color: var(--stone); margin: 8px 4px 0; text-align: right; }
+
+/* Craft slider — the work you never see vs the finish you live with */
+.ba { position: relative; overflow: hidden; border-radius: 16px; aspect-ratio: 16 / 9; box-shadow: 0 12px 32px rgba(10,22,38,0.18); }
+.ba img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ba .ba-top { position: absolute; inset: 0; width: 50%; overflow: hidden; }
+.ba .ba-top img { width: auto; max-width: none; }
+.ba .ba-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; background: var(--gold); pointer-events: none; }
+.ba .ba-line::after {
+  content: '⟷';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--navy);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+.ba .ba-range { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; margin: 0; }
+.ba .ba-tag {
+  position: absolute;
+  bottom: 14px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  background: rgba(10,22,38,0.82);
+  color: #fff;
+  padding: 5px 12px 4px;
+  border-radius: 6px;
+  pointer-events: none;
+}
+.ba .ba-tag.left { left: 14px; }
+.ba .ba-tag.right { right: 14px; color: var(--gold); }
