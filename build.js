@@ -8,6 +8,7 @@ const path = require('path');
 const { SITE, SERVICES, CITIES, STEPS, TRUST, PROMISE, TESTIMONIALS, BALLPARK } = require('./src/data');
 
 const OUT = path.join(__dirname, 'docs');
+const V = Date.now().toString(36); // cache-buster for css/js
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 // ---------- shared chrome ----------------------------------------------------
@@ -108,8 +109,8 @@ const footer = `
   <a class="mc-call" href="tel:${SITE.phone.replace(/[^0-9+]/g, '')}">Call ${SITE.phone}</a>
   <a class="mc-est" href="#estimate">Free Estimate</a>
 </div>
-<script src="/assets/ballpark-config.js"></script>
-<script src="/assets/main.js" defer></script>`;
+<script src="/assets/ballpark-config.js?v=${V}"></script>
+<script src="/assets/main.js?v=${V}" defer></script>`;
 
 const page = ({ url, title, description, jsonLd, body }) => `<!doctype html>
 <html lang="en">
@@ -120,7 +121,7 @@ const page = ({ url, title, description, jsonLd, body }) => `<!doctype html>
   <meta name="description" content="${esc(description)}" />
   <link rel="canonical" href="${SITE.domain}${url}" />
   <link rel="icon" href="/assets/img/buddy-tile-sm.png?v=3" />
-  <link rel="stylesheet" href="/assets/styles.css" />
+  <link rel="stylesheet" href="/assets/styles.css?v=${V}" />
   <meta property="og:title" content="${esc(title)}" />
   <meta property="og:description" content="${esc(description)}" />
   <meta property="og:image" content="${SITE.domain}/assets/img/tile-shower-remodel-vancouver-wa.jpg" />
@@ -276,10 +277,13 @@ const homeBody = `
         </figcaption>
       </figure>
     </div>
-    <div style="margin-top:34px;">
+    <div style="margin-top:38px;">
       <div class="finance-band">
-        <div class="fb-copy" style="text-align:left;">
-          <h2>PROJECT FINANCING AVAILABLE</h2>
+        <div class="fb-icon" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/></svg>
+        </div>
+        <div class="fb-copy">
+          <div class="fb-title">PROJECT FINANCING AVAILABLE</div>
           <p>Pre-qualify in about 60 seconds through Acorn Finance.</p>
         </div>
         <a class="btn" href="${SITE.acornUrl}" target="_blank" rel="noopener">Check My Financing Options →</a>
