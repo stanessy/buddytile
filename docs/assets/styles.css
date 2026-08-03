@@ -82,7 +82,9 @@ img { max-width: 100%; display: block; }
   padding-top: 10px;
   padding-bottom: 10px;
 }
-.site-header img.badge { height: 52px; }
+.site-header img.badge { height: 78px; transition: height 0.25s ease; }
+.site-header.scrolled img.badge { height: 48px; }
+.site-header .container { transition: padding 0.25s ease; }
 .brand-block { line-height: 1; }
 .brand-block .name { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 0.03em; }
 .brand-block .sub { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; color: rgba(255,255,255,0.75); }
@@ -210,7 +212,7 @@ section.alt { background: #F3F4F6; }
 @media (max-width: 640px) { .lead-form { grid-template-columns: 1fr; } }
 
 /* Footer */
-.site-footer { background: var(--navy-deep); color: rgba(255,255,255,0.8); font-size: 14px; }
+.site-footer { background: var(--deep); color: rgba(255,255,255,0.8); font-size: 14px; }
 .site-footer .container { padding-top: 44px; padding-bottom: 34px; }
 .site-footer .cols { display: grid; gap: 28px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 26px; }
 .site-footer h3 { color: #fff; font-size: 1.1rem; }

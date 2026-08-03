@@ -246,3 +246,15 @@ function passesHumanCheck(form, statusEl) {
     if (contact && !submitted && !tool.hidden) sendLead('BALLPARK BROWSED (did not book)', true);
   });
 })();
+
+
+// ---- Header: big logo at the top of the page, compact once you scroll ------
+(function () {
+  var header = document.querySelector('.site-header');
+  if (!header) return;
+  var apply = function () {
+    header.classList.toggle('scrolled', window.scrollY > 24);
+  };
+  window.addEventListener('scroll', apply, { passive: true });
+  apply();
+})();
