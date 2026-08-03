@@ -260,18 +260,3 @@ function passesHumanCheck(form, statusEl) {
 })();
 
 
-// ---- Craft slider: drag between the prep work and the finished shower -----
-(function () {
-  var ba = document.querySelector('.ba');
-  if (!ba) return;
-  var top = ba.querySelector('.ba-top');
-  var topImg = top.querySelector('img');
-  var line = ba.querySelector('.ba-line');
-  var range = ba.querySelector('.ba-range');
-  var size = function () { topImg.style.width = ba.offsetWidth + 'px'; topImg.style.height = ba.offsetHeight + 'px'; };
-  var move = function (v) { top.style.width = v + '%'; line.style.left = v + '%'; };
-  range.addEventListener('input', function () { move(range.value); });
-  window.addEventListener('resize', size);
-  size();
-  move(50);
-})();
