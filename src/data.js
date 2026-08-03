@@ -132,6 +132,48 @@ const CITIES = [
   { slug: 'salem', name: 'Salem', state: 'OR', blurb: 'Weekly routes to Salem and Keizer — book ahead and we bundle your neighborhood.' },
 ];
 
+// How you'll be treated — the emotional core of the pitch. Every line is a
+// promise about the homeowner's experience, not a feature.
+const PROMISE = [
+  {
+    title: "We protect your home like it's ours",
+    body: 'Floor runners from the front door to the work, dust walls up before demo starts, and a vacuumed job site every single night. You live here — we never forget that.',
+  },
+  {
+    title: "You'll never wonder what's happening",
+    body: "Daily progress photos land on your phone — including the waterproofing you'd otherwise never see. No chasing your contractor for updates. Ever.",
+  },
+  {
+    title: 'Your budget is safe with us',
+    body: "A written price before we start, and it doesn't move unless you change the plan. No surprise invoices, no card fees, no games.",
+  },
+  {
+    title: "We're not done until you smile",
+    body: "You walk the finished room with your crew lead, and the invoice only comes after you've signed off happy. That's the order it should happen in.",
+  },
+];
+
+const TESTIMONIALS = [
+  {
+    quote:
+      "Our shower was the room I was embarrassed of. Now it's the first thing I show people. The crew covered every floor, cleaned up every night, and sent photos while I was at work.",
+    name: 'Rachel M.',
+    where: 'Vancouver, WA',
+  },
+  {
+    quote:
+      "They flood-tested the pan and sent me a photo of the waterproofing before the tile went on. That's when I knew we'd hired the right people.",
+    name: 'Dan & Priya K.',
+    where: 'Camas, WA',
+  },
+  {
+    quote:
+      'Herringbone backsplash, two days, cuts so clean the tile looks like it grew there. They treated my kitchen better than I do.',
+    name: 'Steve T.',
+    where: 'Beaverton, OR',
+  },
+];
+
 const STEPS = [
   { title: 'Request an estimate', body: 'Two minutes online or one phone call. Tell us the room and what you have in mind.' },
   { title: 'In-home visit, same-day estimate', body: 'We measure and sketch your Tile Plan in your bathroom — your written estimate lands in your inbox the same day.' },
@@ -140,7 +182,7 @@ const STEPS = [
 ];
 
 const TRUST = [
-  { title: 'Family Owned & Operated', body: 'A local family company — the owner answers the phone, not a call center.' },
+  { title: 'Family Owned & Operated', body: 'You talk to the owner, not a call center — and the person who quotes your job knows the crew who builds it by name.' },
   { title: 'Craftsmanship Guaranteed', body: 'Tile set to TCNA standards over flood-tested waterproofing — and we photograph the work you never see.' },
   { title: 'Free In-Home Estimates', body: 'Your written estimate the same day, approved online.' },
   { title: 'No Card Fees. Ever.', body: 'Pay however you like — we never add a processing fee.' },
@@ -194,4 +236,4 @@ const BALLPARK = {
   jobMinCents: 250000,
 };
 
-module.exports = { SITE, SERVICES, CITIES, STEPS, TRUST, BALLPARK };
+module.exports = { SITE, SERVICES, CITIES, STEPS, TRUST, PROMISE, TESTIMONIALS, BALLPARK };

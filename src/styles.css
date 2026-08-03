@@ -32,7 +32,8 @@
 
 :root {
   --navy: #1C2E44;
-  --navy-deep: #101A23;
+  --deep: #0A1626;
+  --navy-deep: #081221;
   --gold: #F6B015;
   --gold-dark: #C98D0A;
   --stone: #6B7280;
@@ -68,7 +69,7 @@ img { max-width: 100%; display: block; }
 
 /* Header */
 .site-header {
-  background: var(--navy);
+  background: var(--deep);
   color: #fff;
   position: sticky;
   top: 0;
@@ -108,43 +109,54 @@ img { max-width: 100%; display: block; }
 /* Hero */
 .hero {
   position: relative;
-  background: var(--navy);
+  background: var(--deep);
   color: #fff;
   overflow: hidden;
 }
 .hero .bg {
   position: absolute;
-  inset: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 34%;
   background-size: cover;
   background-position: center;
-  opacity: 0.35;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 42%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 42%);
 }
+.hero .scrim { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(10,22,38,0.5) 40%, rgba(10,22,38,0.2) 100%); }
+@media (max-width: 900px) { .hero .bg { left: 0; opacity: 0.3; -webkit-mask-image: none; mask-image: none; } }
 .hero .container { position: relative; padding-top: 84px; padding-bottom: 84px; max-width: 1100px; }
 .hero p.lead { font-size: 19px; max-width: 34em; color: rgba(255,255,255,0.92); }
 .hero .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
 .hero .chips span {
-  font-size: 12.5px;
+  font-size: 13.5px;
   font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 99px;
-  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.88);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
+.hero .chips span::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
 
 /* Sections */
 section { padding: 64px 0; }
-section.alt { background: var(--warm); }
+section.alt { background: #F3F4F6; }
 .grid { display: grid; gap: 22px; }
 .grid.cols-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 .grid.cols-4 { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
 .card {
   background: #fff;
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 14px;
+  box-shadow: 0 10px 24px rgba(10, 22, 38, 0.1);
+  transition: transform 0.15s;
   overflow: hidden;
   text-decoration: none;
   display: flex;
   flex-direction: column;
 }
+.card:hover { transform: translateY(-2px); }
 .card img { height: 190px; width: 100%; object-fit: cover; }
 .card .body { padding: 18px 20px 20px; }
 .card .body p { color: var(--stone); font-size: 14.5px; margin: 0; }
@@ -176,7 +188,7 @@ section.alt { background: var(--warm); }
 .step p { color: var(--stone); margin: 0; }
 
 /* Lead form */
-.estimate-band { background: var(--navy); color: #fff; }
+.estimate-band { background: var(--deep); color: #fff; }
 .estimate-band h2 { color: #fff; }
 .lead-form { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; max-width: 640px; }
 .lead-form input, .lead-form select, .lead-form textarea {
@@ -312,3 +324,31 @@ section.alt { background: var(--warm); }
 }
 .estimate-band .human-check label { color: rgba(255,255,255,0.85); }
 .estimate-band .human-check .hc-q { color: var(--gold); }
+
+
+/* Centered section heads (buddybuilt rhythm) */
+.center { text-align: center; }
+.center .gold-bar { margin-left: auto; margin-right: auto; }
+.section-sub { color: var(--stone); max-width: 38em; margin: -6px auto 30px; }
+
+/* The Buddy Tile promise — how you'll be treated */
+.promise-grid { display: grid; gap: 26px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); text-align: left; }
+.promise { position: relative; padding-left: 20px; border-left: 3px solid var(--gold); }
+.promise h3 { margin-bottom: 4px; }
+.promise p { color: var(--stone); margin: 0; font-size: 15px; }
+
+/* Testimonials */
+.quote-grid { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); text-align: left; }
+.quote-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 10px 24px rgba(10, 22, 38, 0.08);
+  padding: 26px 26px 22px;
+  display: flex;
+  flex-direction: column;
+}
+.quote-card .stars { color: var(--gold); letter-spacing: 3px; margin-bottom: 10px; }
+.quote-card blockquote { margin: 0 0 14px; flex: 1; }
+.quote-card .who { font-weight: 700; font-size: 14px; }
+.quote-card .where { color: var(--stone); font-size: 12.5px; }

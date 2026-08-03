@@ -5,7 +5,7 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { SITE, SERVICES, CITIES, STEPS, TRUST, BALLPARK } = require('./src/data');
+const { SITE, SERVICES, CITIES, STEPS, TRUST, PROMISE, TESTIMONIALS, BALLPARK } = require('./src/data');
 
 const OUT = path.join(__dirname, 'docs');
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -157,13 +157,14 @@ const businessLd = (extra = {}) => ({
 const homeBody = `
 <div class="hero">
   <div class="bg" style="background-image:url('/assets/img/tile-shower-remodel-vancouver-wa.jpg')"></div>
+  <div class="scrim"></div>
   <div class="container hero-grid">
     <div>
-      <h1>THE TILE SHOWER YOU<br/>KEEP PUTTING OFF?</h1>
+      <h1>THE BATHROOM YOU'LL<br/>LOVE COMING HOME TO.</h1>
       <hr class="gold-bar" />
-      <p class="lead">We build it in days, not months. Custom tile showers, bathroom floors, and backsplashes across Vancouver WA and Portland OR — same-day estimates, approved from your phone.</p>
+      <p class="lead">You've lived with the cracked grout and the cold floor long enough. In about a week, our tile craftsmen turn the room you apologize for into the one you show off — and treat you, your home, and your budget with the care a neighbor deserves.</p>
       <div class="chips">
-        <span>Family Owned</span><span>Licensed &amp; Bonded</span><span>No card fees</span><span>Craftsmanship guaranteed</span>
+        <span>Family owned</span><span>Licensed &amp; bonded</span><span>Flood-tested waterproofing</span><span>Same-day written estimates</span>
       </div>
     </div>
     <div class="hero-card">
@@ -195,10 +196,11 @@ const homeBody = `
 </div>
 
 <section id="services">
-  <div class="container">
+  <div class="container center">
     <h2>WHAT WE BUILD</h2>
     <hr class="gold-bar" />
-    <div class="grid cols-3">
+    <p class="section-sub">Showers, kitchens, floors, and the waterproofing underneath it all — set by dedicated tile crews, not whoever answered the ad.</p>
+    <div class="grid cols-3" style="text-align:left;">
       ${SERVICES.map(
         (s) => `<a class="card" href="/services/${s.slug}/">
         <img src="/assets/img/${s.photo}" alt="${esc(s.name)}" loading="lazy" />
@@ -210,6 +212,17 @@ const homeBody = `
 </section>
 
 <section class="alt">
+  <div class="container center">
+    <h2>HOW YOU'LL BE TREATED</h2>
+    <hr class="gold-bar" />
+    <p class="section-sub">Anyone can show you tile photos. Here's what it feels like to have Buddy Tile in your home.</p>
+    <div class="promise-grid">
+      ${PROMISE.map((p) => `<div class="promise"><h3>${p.title.toUpperCase()}</h3><p>${esc(p.body)}</p></div>`).join('')}
+    </div>
+  </div>
+</section>
+
+<section>
   <div class="container two-col">
     <div>
       <h2>HOW IT WORKS</h2>
@@ -222,6 +235,18 @@ const homeBody = `
       <img class="rounded-img" src="/assets/img/craft-tile-hands.jpg" alt="Buddy Tile installer setting tile" loading="lazy" />
       <h3 style="margin-top:20px;">YOU'RE A NEIGHBOR, NOT A LEAD</h3>
       <p style="color:var(--stone);">Lead-generation sites sell your phone number to five strangers. Call Buddy Tile and you get Buddy Tile — our crews, our warranty, our number, from the first hello to the final walkthrough.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="container center">
+    <h2>WHAT YOUR NEIGHBORS SAY</h2>
+    <hr class="gold-bar" />
+    <div class="quote-grid">
+      ${TESTIMONIALS.map(
+        (t) => `<div class="quote-card"><div class="stars">★★★★★</div><blockquote>"${esc(t.quote)}"</blockquote><div class="who">– ${esc(t.name)}</div><div class="where">${esc(t.where)}</div></div>`
+      ).join('')}
     </div>
   </div>
 </section>
