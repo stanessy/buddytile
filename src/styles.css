@@ -82,14 +82,21 @@ img { max-width: 100%; display: block; }
   padding-top: 10px;
   padding-bottom: 10px;
 }
-.site-header img.badge { height: 78px; transition: height 0.25s ease; }
-.site-header.scrolled img.badge { height: 48px; }
-.site-header .container { transition: padding 0.25s ease; }
+.site-header img.badge { height: 52px; transition: height 0.25s ease, margin 0.25s ease; }
+/* Home page only: the badge overflows below the fixed-height bar until you
+   scroll — negative margins keep the bar itself at its normal height. */
+.site-header.home:not(.scrolled) img.badge {
+  height: 92px;
+  margin: -20px -40px -20px 0; /* overflow height AND width — bar stays put */
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.35));
+}
+.site-header.home .brand-block { position: relative; z-index: 1; padding-left: 46px; transition: padding 0.25s ease; }
+.site-header.home.scrolled .brand-block { padding-left: 0; }
 .brand-block { line-height: 1; }
 .brand-block .name { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 0.03em; }
 .brand-block .sub { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; color: rgba(255,255,255,0.75); }
 .site-nav { margin-left: auto; display: flex; align-items: center; gap: 20px; font-size: 14px; font-weight: 600; }
-.site-nav a { color: rgba(255,255,255,0.85); text-decoration: none; }
+.site-nav a { color: rgba(255,255,255,0.85); text-decoration: none; white-space: nowrap; }
 .site-nav a:hover { color: var(--gold); }
 .btn {
   display: inline-block;
@@ -110,8 +117,9 @@ img { max-width: 100%; display: block; }
   /* The sticky bottom bar carries Call + Estimate on phones — keep the header
      to just the badge lockup. */
   .site-nav .hide-m, .site-nav .phone-link, .site-nav .btn { display: none; }
-  .site-header img.badge { height: 60px; }
-  .site-header.scrolled img.badge { height: 44px; }
+  .site-header img.badge { height: 48px; }
+  .site-header.home:not(.scrolled) img.badge { height: 76px; margin: -14px -28px -14px 0; }
+  .site-header.home .brand-block { padding-left: 34px; }
 }
 
 /* Hero */
