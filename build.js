@@ -17,7 +17,7 @@ const header = (isHome) => `
 <header class="site-header${isHome ? ' home' : ''}">
   <div class="container">
     <a href="/" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff;">
-      <img class="badge" src="/assets/img/buddy-tile-sm.png?v=3" alt="Buddy Tile — a Buddy Built company" />
+      <span class="badge-slot"><img class="badge" src="/assets/img/buddy-tile-sm.png?v=3" alt="Buddy Tile — a Buddy Built company" /></span>
       <span class="brand-block">
         <span class="name">BUDDY TILE</span><br />
         <span class="sub">a BUDDY BUILT company</span>
