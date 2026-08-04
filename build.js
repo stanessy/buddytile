@@ -92,6 +92,7 @@ const footer = `
           <li><a href="/about/">About Buddy Tile</a></li>
           <li><a href="https://buddybuilt.com/portal" target="_blank" rel="noopener">Customer Portal — track your project</a></li>
           <li><a href="https://buddybuilt.com" rel="noopener">The Buddy Built family</a></li>
+          <li><a href="/privacy/">Privacy Policy</a></li>
         </ul>
       </div>
     </div>
@@ -526,6 +527,48 @@ add('/ballpark/', {
     'Get a 60-second ballpark price range for a tile shower, bathroom floor, or backsplash in Vancouver WA / Portland OR. Free in-home estimates turn it into a real number.',
   jsonLd: businessLd(),
   body: ballparkBody,
+});
+
+
+const privacyBody = `
+<div class="container breadcrumbs"><a href="/">Home</a> / Privacy Policy</div>
+<section style="padding-top:26px;">
+  <div class="container" style="max-width:760px;">
+    <h1>PRIVACY POLICY</h1>
+    <hr class="gold-bar" />
+    <p style="color:var(--stone);font-size:14px;">Effective August 4, 2026 · Buddy Tile, a registered trade name of Buddy Built LLC</p>
+
+    <h3 style="margin-top:28px;">WHAT WE COLLECT</h3>
+    <p>When you request an estimate — on buddytile.com, by phone, or through a Facebook or Instagram lead form — we collect the information you provide: your name, phone number, email, project address, and details about your project. Our website keeps standard server logs; we do not run third-party advertising trackers on buddytile.com.</p>
+
+    <h3>HOW WE USE IT</h3>
+    <p>We use your information to respond to your request, schedule visits, prepare and deliver estimates, send appointment reminders and project updates, and provide the services you hire us for. If you provide your phone number, we may call or text you about your project; reply STOP to any text to opt out. Message and data rates may apply.</p>
+
+    <h3>WHAT WE NEVER DO</h3>
+    <p>We never sell your personal information, and we never share it with other contractors or lead-generation networks. You contacted Buddy Tile; only Buddy Tile (and the Buddy Built family it belongs to) will contact you.</p>
+
+    <h3>WHO WE SHARE IT WITH</h3>
+    <p>Your information lives in our own project-management system and is shared only with the service providers that make our business run — such as email and text-message delivery services and payment processors — and with our crews as needed to perform your work, or where the law requires it.</p>
+
+    <h3>FACEBOOK &amp; INSTAGRAM LEAD FORMS</h3>
+    <p>If you submit a Meta lead form, Meta transmits your responses to us and also processes them under its own <a href="https://www.facebook.com/privacy/policy/" rel="noopener">Data Policy</a>. We use those responses only as described above.</p>
+
+    <h3>RETENTION &amp; YOUR RIGHTS</h3>
+    <p>We keep project records as long as needed to honor warranties and meet legal obligations. You may request a copy of the personal information we hold about you, ask us to correct it, or ask us to delete it (where the law doesn't require us to keep it) by emailing <a href="mailto:${SITE.email}">${SITE.email}</a> or calling <a href="tel:${SITE.phone.replace(/[^0-9+]/g, '')}">${SITE.phone}</a>.</p>
+
+    <h3>CHANGES</h3>
+    <p>If we update this policy, the new version will be posted here with a new effective date.</p>
+
+    <p style="margin-top:24px;color:var(--stone);font-size:14px;">${SITE.legalLine}</p>
+  </div>
+</section>`;
+
+add('/privacy/', {
+  title: 'Privacy Policy | Buddy Tile',
+  description:
+    'How Buddy Tile collects and uses your information: only to deliver your project. Never sold, never shared with other contractors.',
+  jsonLd: null,
+  body: privacyBody,
 });
 
 add('/about/', {
