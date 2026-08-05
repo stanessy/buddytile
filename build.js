@@ -539,19 +539,7 @@ const designBody = `
           <div class="design-chips" id="ds-sizes"></div>
           <p style="font-size:12.5px;color:var(--stone);margin:0;">Not sure? Pick the closest — we measure exactly at your free visit.</p>
         </div>
-        <div class="design-step"><h3><span class="dnum">3</span>MAKE IT YOURS</h3>
-          <p style="font-size:13.5px;color:var(--stone);margin:0 0 12px;">Your ballpark covers the core build. There's a whole menu of upgrades to spruce it up — a few favorites:</p>
-          <div class="feature-grid teaser">
-            <div class="feature-card static"><img src="/assets/img/catalog/niche.svg" alt="" /><div class="fl">Recessed Niches</div></div>
-            <div class="feature-card static"><img src="/assets/img/catalog/bench.svg" alt="" /><div class="fl">Built-in Bench</div></div>
-            <div class="feature-card static"><img src="/assets/img/catalog/curbless.svg" alt="" /><div class="fl">Curbless Entry</div></div>
-            <div class="feature-card static"><img src="/assets/img/catalog/heated.svg" alt="" /><div class="fl">Heated Floors</div></div>
-            <div class="feature-card static"><img src="/assets/img/catalog/rain.svg" alt="" /><div class="fl">Rain Head &amp; Glass</div></div>
-            <div class="feature-card static"><img src="/assets/img/catalog/accent.svg" alt="" /><div class="fl">Patterns &amp; Accents</div></div>
-          </div>
-          <p style="font-size:13.5px;color:var(--stone);margin:12px 0 0;">At your <b style="color:var(--navy);">free in-home estimate</b> we measure exactly, walk every option with you, and hand you a written, feature-by-feature price the same day — no guesswork, no obligation.</p>
         </div>
-      </div>
       <div class="design-side">
         <div class="design-preview">
           <div id="ds-preview-shower" class="preview-photo">
