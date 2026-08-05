@@ -486,3 +486,13 @@ section.alt { background: #F3F4F6; }
 .project-card .fl { font-size: 13px; font-weight: 700; padding: 8px 8px 10px; line-height: 1.2; }
 .project-card .fl span { font-weight: 400; font-size: 11.5px; color: var(--stone); }
 .project-card.on { border-color: var(--gold); background: #FFFBF0; }
+
+
+/* Photo shower preview with live measurement labels */
+.preview-photo { position: relative; }
+.preview-photo img { width: 100%; display: block; }
+.pm { position: absolute; font-size: 12px; font-weight: 600; color: var(--navy); text-align: center; line-height: 1.25; }
+.pm b { font-size: 14px; }
+.pm-h { left: 1%; top: 42%; }
+.pm-w { left: 24%; bottom: -2%; }
+.pm-d { right: 2%; bottom: 8%; }

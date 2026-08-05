@@ -565,45 +565,12 @@ const designBody = `
       </div>
       <div class="design-side">
         <div class="design-preview">
-          <svg id="ds-preview-svg" viewBox="0 0 352 292" aria-label="Your shower preview">
-            <defs>
-              <marker id="arr" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#6B7280"/></marker>
-            </defs>
-            <g transform="translate(30,8)">
-              <polygon points="60,190 160,230 260,190 160,150" fill="#EFE9E0" stroke="#B9B2A6" stroke-width="1.4"/>
-              <polygon points="60,190 60,70 160,30 160,150" fill="#F8F4EE" stroke="#B9B2A6" stroke-width="1.4"/>
-              <polygon id="pv-wall-r" points="160,150 160,30 260,70 260,190" fill="#F3EEE6" stroke="#B9B2A6" stroke-width="1.4"/>
-              <g stroke="#DAD3C7" stroke-width="0.7"><line x1="74" y1="64" x2="74" y2="184"/><line x1="89" y1="59" x2="89" y2="179"/><line x1="103" y1="53" x2="103" y2="173"/><line x1="117" y1="47" x2="117" y2="167"/><line x1="131" y1="41" x2="131" y2="161"/><line x1="146" y1="36" x2="146" y2="156"/><line x1="60" y1="88" x2="160" y2="48"/><line x1="60" y1="105" x2="160" y2="65"/><line x1="60" y1="122" x2="160" y2="82"/><line x1="60" y1="139" x2="160" y2="99"/><line x1="60" y1="156" x2="160" y2="116"/><line x1="60" y1="173" x2="160" y2="133"/><line x1="174" y1="36" x2="174" y2="156"/><line x1="189" y1="41" x2="189" y2="161"/><line x1="203" y1="47" x2="203" y2="167"/><line x1="217" y1="53" x2="217" y2="173"/><line x1="231" y1="59" x2="231" y2="179"/><line x1="246" y1="64" x2="246" y2="184"/><line x1="160" y1="48" x2="260" y2="88"/><line x1="160" y1="65" x2="260" y2="105"/><line x1="160" y1="82" x2="260" y2="122"/><line x1="160" y1="99" x2="260" y2="139"/><line x1="160" y1="116" x2="260" y2="156"/><line x1="160" y1="133" x2="260" y2="173"/></g>
-              <g stroke="#DAD3C7" stroke-width="0.7"><line x1="85" y1="180" x2="185" y2="220"/><line x1="85" y1="200" x2="185" y2="160"/><line x1="110" y1="170" x2="210" y2="210"/><line x1="110" y1="210" x2="210" y2="170"/><line x1="135" y1="160" x2="235" y2="200"/><line x1="135" y1="220" x2="235" y2="180"/></g>
-              <polygon points="60,70 160,30 160,36 60,76" fill="#EDE7DC" stroke="#B9B2A6" stroke-width="0.8"/>
-              <polygon points="160,30 260,70 260,76 160,36" fill="#E8E1D5" stroke="#B9B2A6" stroke-width="0.8"/>
-              <rect x="182" y="183" width="9" height="9" transform="rotate(22 186 187)" fill="#C9C2B4" stroke="#8F887B" stroke-width="0.8"/>
-              <g id="pv-fixtures">
-                <line x1="236" y1="62" x2="222" y2="70" stroke="#1F1F1F" stroke-width="3" stroke-linecap="round"/>
-                <circle cx="220" cy="72" r="7" fill="#1F1F1F"/>
-                <g stroke="#B9B2A6" stroke-width="1"><line x1="216" y1="82" x2="214" y2="92"/><line x1="220" y1="83" x2="220" y2="93"/><line x1="224" y1="82" x2="226" y2="92"/></g>
-                <line x1="196" y1="104" x2="196" y2="126" stroke="#1F1F1F" stroke-width="3" stroke-linecap="round"/>
-                <circle cx="196" cy="130" r="3.4" fill="#1F1F1F"/>
-              </g>
-              <polygon id="pv-niche" points="90,103 120,91 120,121 90,133" fill="#FFFFFF" stroke="#C98D0A" stroke-width="1.5" visibility="hidden"/>
-              <polygon id="pv-niche2" points="90,63 120,51 120,79 90,91" fill="#FFFFFF" stroke="#C98D0A" stroke-width="1.5" visibility="hidden"/>
-              <g id="pv-bench" visibility="hidden"><polygon points="170,162 232,187 232,203 170,178" fill="#EFE9E0" stroke="#C98D0A" stroke-width="1.5"/><polygon points="170,162 232,187 232,193 170,168" fill="#F6B015" stroke="#C98D0A" stroke-width="1"/></g>
-              <polygon id="pv-shelf" points="88,98 122,84 122,88 88,102" fill="#F6B015" stroke="#C98D0A" stroke-width="1" visibility="hidden"/>
-              <g id="pv-curb"><polyline points="60,186 160,226 260,186" fill="none" stroke="#C9C2B4" stroke-width="5"/><polyline points="60,184 160,224 260,184" fill="none" stroke="#8F887B" stroke-width="1"/></g>
-              <polygon id="pv-glass" points="160,230 260,190 260,70 160,110" fill="#7FB4D9" fill-opacity="0.18" stroke="#468FAF" stroke-width="1.2" visibility="hidden"/>
-              <circle id="pv-rain" cx="120" cy="60" r="5" fill="#F6B015" visibility="hidden"/>
-            </g>
-            <line x1="20" y1="86" x2="20" y2="206" stroke="#6B7280" stroke-width="1" marker-start="url(#arr)" marker-end="url(#arr)"/>
-            <text x="2" y="132" font-size="11" font-weight="700" fill="#1C2E44">Wall</text>
-            <text x="2" y="145" font-size="11" font-weight="700" fill="#1C2E44">Height</text>
-            <text id="pv-dh" x="2" y="160" font-size="11.5" font-weight="700" fill="#1C2E44">96 in</text>
-            <line x1="96" y1="216" x2="182" y2="250" stroke="#6B7280" stroke-width="1" marker-start="url(#arr)" marker-end="url(#arr)"/>
-            <text x="118" y="272" font-size="11" font-weight="700" fill="#1C2E44">Width</text>
-            <text id="pv-dw" x="118" y="286" font-size="11.5" font-weight="700" fill="#1C2E44">60 in</text>
-            <line x1="200" y1="248" x2="286" y2="214" stroke="#6B7280" stroke-width="1" marker-start="url(#arr)" marker-end="url(#arr)"/>
-            <text x="292" y="238" font-size="11" font-weight="700" fill="#1C2E44">Depth</text>
-            <text id="pv-dd" x="292" y="252" font-size="11.5" font-weight="700" fill="#1C2E44">36 in</text>
-          </svg>
+          <div id="ds-preview-shower" class="preview-photo">
+            <img src="/assets/img/shower-preview.png" alt="Corner shower with dimension arrows" />
+            <span class="pm pm-h">Wall Height<br /><b id="pv-dh">96 in</b></span>
+            <span class="pm pm-w">Width<br /><b id="pv-dw">60 in</b></span>
+            <span class="pm pm-d">Depth<br /><b id="pv-dd">36 in</b></span>
+          </div>
           <img id="ds-preview-img" src="/assets/img/bathroom-tile-remodel-vancouver-wa.jpg" alt="Project preview" hidden style="width:100%;border-radius:10px;display:block;" />
         </div>
         <div class="design-price">

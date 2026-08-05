@@ -217,7 +217,7 @@ function passesHumanCheck(form, statusEl) {
     document.querySelectorAll('[data-show]').forEach(function (el) {
       el.hidden = el.dataset.show.split(' ').indexOf(state.type) === -1;
     });
-    document.getElementById('ds-preview-svg').style.display = isShower ? 'block' : 'none';
+    document.getElementById('ds-preview-shower').style.display = isShower ? 'block' : 'none';
     var img = document.getElementById('ds-preview-img');
     img.hidden = isShower;
     img.src = state.type === 'floor' ? '/assets/img/bathroom-tile-remodel-vancouver-wa.jpg' : '/assets/img/kitchen-tile-backsplash-installation.jpg';
