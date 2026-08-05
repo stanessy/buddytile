@@ -243,9 +243,9 @@ function passesHumanCheck(form, statusEl) {
       vis('pv-rain', state.feats.rain);
       var curb = document.getElementById('pv-curb');
       if (curb) curb.setAttribute('visibility', state.feats.curbless ? 'hidden' : 'visible');
-      document.getElementById('pv-dw').textContent = state.w + '"';
-      document.getElementById('pv-dd').textContent = state.d + '"';
-      document.getElementById('pv-dh').textContent = state.h + '"';
+      document.getElementById('pv-dw').textContent = state.w + ' in';
+      document.getElementById('pv-dd').textContent = state.d + ' in';
+      document.getElementById('pv-dh').textContent = state.h + ' in';
     }
 
     var lo = Math.round(p.total * 0.9 / 100), hi = Math.round(p.total * 1.15 / 100);
