@@ -260,3 +260,139 @@ function passesHumanCheck(form, statusEl) {
 })();
 
 
+
+
+// ---- Design Your Shower ----------------------------------------------------
+(function () {
+  var grid = document.getElementById('ds-features');
+  if (!grid || !window.BT_DESIGNER) return;
+  var D = window.BT_DESIGNER;
+  var state = { w: 60, d: 36, h: 96, walls: 3, layout: 'straight', floor: 'standard', feats: {} };
+
+  D.features.forEach(function (f) {
+    var el = document.createElement('div');
+    el.className = 'feature-card';
+    el.dataset.key = f.key;
+    el.innerHTML = '<img src="' + f.img + '" alt="" /><div class="fl">' + f.label + '</div><div class="fp">+$' + Math.round(f.cents / 100).toLocaleString() + '</div>';
+    el.addEventListener('click', function () {
+      state.feats[f.key] = !state.feats[f.key];
+      if (state.feats[f.key] && f.excludes) state.feats[f.excludes] = false;
+      render();
+    });
+    grid.appendChild(el);
+  });
+
+  function chips(id, attr, cb) {
+    var box = document.getElementById(id);
+    box.querySelectorAll('button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        box.querySelectorAll('button').forEach(function (x) { x.classList.remove('on'); });
+        b.classList.add('on');
+        cb(b.dataset[attr]);
+        render();
+      });
+    });
+  }
+  chips('ds-h', 'h', function (v) { state.h = Number(v); });
+  chips('ds-layout', 'k', function (v) { state.layout = v; });
+  chips('ds-floor', 'k', function (v) { state.floor = v; });
+  ['ds-w', 'ds-d'].forEach(function (id) {
+    document.getElementById(id).addEventListener('input', render);
+  });
+  document.getElementById('ds-walls').addEventListener('change', render);
+
+  function priceCents() {
+    var wFt = state.w / 12, dFt = state.d / 12, hFt = state.h / 12;
+    var wallSqft = (state.walls === 3 ? wFt + 2 * dFt : wFt + dFt) * hFt;
+    var floorSqft = wFt * dFt;
+    var total = D.rates.fixedCents + wallSqft * D.rates.wallCents + floorSqft * D.rates.floorCents;
+    D.features.forEach(function (f) { if (state.feats[f.key]) total += f.cents; });
+    if (state.layout === 'herringbone' || state.layout === 'vertical') total += D.patternUpgradeCents;
+    if (state.floor === 'mosaic') total += D.mosaicFloorCents;
+    return { total: total, wallSqft: wallSqft, floorSqft: floorSqft };
+  }
+
+  function render() {
+    state.w = Number(document.getElementById('ds-w').value) || 60;
+    state.d = Number(document.getElementById('ds-d').value) || 36;
+    state.walls = Number(document.getElementById('ds-walls').value);
+    grid.querySelectorAll('.feature-card').forEach(function (el) {
+      el.classList.toggle('on', !!state.feats[el.dataset.key]);
+    });
+    var p = priceCents();
+    document.getElementById('ds-areas').innerHTML =
+      'Wall area <b>' + p.wallSqft.toFixed(0) + ' sq ft</b> · Floor <b>' + p.floorSqft.toFixed(0) +
+      ' sq ft</b> · Total tile <b>' + (p.wallSqft + p.floorSqft).toFixed(0) + ' sq ft</b>';
+    // preview
+    var vis = function (id, on) { var e = document.getElementById(id); if (e) e.setAttribute('visibility', on ? 'visible' : 'hidden'); };
+    vis('pv-niche', state.feats.niche || state.feats.niche2);
+    vis('pv-niche2', state.feats.niche2);
+    vis('pv-bench', state.feats.bench);
+    vis('pv-shelf', state.feats.shelf);
+    vis('pv-glass', state.feats.glass);
+    vis('pv-rain', state.feats.rain);
+    var curb = document.getElementById('pv-curb');
+    if (curb) curb.setAttribute('visibility', state.feats.curbless ? 'hidden' : 'visible');
+    document.getElementById('pv-dw').textContent = state.w + '"';
+    document.getElementById('pv-dd').textContent = state.d + '"';
+    document.getElementById('pv-dh').textContent = state.h + '"';
+    // price + summary
+    var lo = Math.round(p.total * 0.9 / 100), hi = Math.round(p.total * 1.15 / 100);
+    document.getElementById('design-range').textContent = '$' + lo.toLocaleString() + ' – $' + hi.toLocaleString();
+    var picked = D.features.filter(function (f) { return state.feats[f.key]; }).map(function (f) { return f.label; });
+    window.__designSummary =
+      state.w + '\"W x ' + state.d + '\"D x ' + state.h + '\"H, ' + state.walls + ' walls, ' +
+      (p.wallSqft + p.floorSqft).toFixed(0) + ' sqft tile — layout: ' + state.layout + ', floor: ' + state.floor +
+      (picked.length ? ' — features: ' + picked.join(', ') : ' — no add-on features') +
+      ' → $' + lo.toLocaleString() + '–$' + hi.toLocaleString() + ' (labor only)';
+  }
+  render();
+
+  // Gate + booking (mirrors the ballpark flow)
+  var gate = document.getElementById('design-gate');
+  var result = document.getElementById('design-result');
+  var contact = null;
+  var gateForm = document.getElementById('design-gate-form');
+  gateForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var status = gateForm.querySelector('.form-status');
+    if (!passesHumanCheck(gateForm, status)) return;
+    var f = new FormData(gateForm);
+    contact = { name: f.get('name'), email: f.get('email'), phone: f.get('phone') || undefined };
+    fetch(API_BASE + '/api/public/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: contact.name, email: contact.email, phone: contact.phone,
+        description: 'SHOWER DESIGN (opened tool) — ' + (window.__designSummary || ''),
+        divisionId: TILE_DIVISION_ID, website: f.get('website') || undefined,
+        source: 'buddytile.com design',
+      }),
+    }).catch(function () {});
+    gate.hidden = true;
+    result.hidden = false;
+    render();
+  });
+  document.getElementById('design-book-btn').addEventListener('click', function () {
+    var status = document.getElementById('design-book-status');
+    status.hidden = false;
+    status.style.color = 'var(--navy)';
+    status.textContent = 'Booking…';
+    fetch(API_BASE + '/api/public/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: contact ? contact.name : 'Design tool visitor',
+        email: contact ? contact.email : undefined,
+        phone: contact ? contact.phone : undefined,
+        description: 'SHOWER DESIGN — BOOK ESTIMATE — ' + (window.__designSummary || ''),
+        divisionId: TILE_DIVISION_ID,
+        source: 'buddytile.com design-book',
+      }),
+    }).then(function (r) {
+      status.textContent = r.ok
+        ? "You're booked for a call — we'll reach out the same business day!"
+        : 'Something went wrong — call us at ' + (document.querySelector('.phone-link') || {}).textContent;
+    }).catch(function () { status.textContent = 'Something went wrong — please call us.'; });
+  });
+})();

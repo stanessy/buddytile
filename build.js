@@ -5,7 +5,7 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { SITE, SERVICES, CITIES, STEPS, TRUST, PROMISE, TESTIMONIALS, BALLPARK } = require('./src/data');
+const { SITE, SERVICES, CITIES, STEPS, TRUST, PROMISE, TESTIMONIALS, BALLPARK, DESIGNER } = require('./src/data');
 
 const OUT = path.join(__dirname, 'docs');
 const V = Date.now().toString(36); // cache-buster for css/js
@@ -22,6 +22,7 @@ const header = (isHome) => `
     <nav class="site-nav">
       <a class="hide-m" href="/#services">Services</a>
       <a class="hide-m" href="/#service-area">Service Area</a>
+      <a class="hide-m" href="/design/">Design Your Shower</a>
       <a class="hide-m" href="/ballpark/">Ballpark Price</a>
       <a class="hide-m" href="/about/">About</a>
       <a class="hide-m" href="https://buddybuilt.com/portal" target="_blank" rel="noopener">Customer Portal</a>
@@ -407,7 +408,7 @@ fs.mkdirSync(path.join(OUT, 'assets'), { recursive: true });
 fs.cpSync(path.join(__dirname, 'assets'), path.join(OUT, 'assets'), { recursive: true });
 fs.copyFileSync(path.join(__dirname, 'src/styles.css'), path.join(OUT, 'assets/styles.css'));
 fs.copyFileSync(path.join(__dirname, 'src/main.js'), path.join(OUT, 'assets/main.js'));
-fs.writeFileSync(path.join(OUT, 'assets/ballpark-config.js'), `window.BT_BALLPARK = ${JSON.stringify(BALLPARK)};`);
+fs.writeFileSync(path.join(OUT, 'assets/ballpark-config.js'), `window.BT_BALLPARK = ${JSON.stringify(BALLPARK)};\nwindow.BT_DESIGNER = ${JSON.stringify(DESIGNER)};`);
 
 const write = (url, html) => {
   const dir = path.join(OUT, url);
@@ -569,6 +570,106 @@ add('/privacy/', {
     'How Buddy Tile collects and uses your information: only to deliver your project. Never sold, never shared with other contractors.',
   jsonLd: null,
   body: privacyBody,
+});
+
+
+const designBody = `
+<div class="container breadcrumbs"><a href="/">Home</a> / Design Your Shower</div>
+<section style="padding-top:26px;">
+  <div class="container">
+    <h1>DESIGN YOUR SHOWER</h1>
+    <hr class="gold-bar" />
+    <p class="lead" style="max-width:38em;">Size it, style it, price it — in about two minutes. Play with the options and watch your shower (and its ballpark price) take shape.</p>
+    <div class="design-grid">
+      <div>
+        <div class="design-step"><h3><span class="dnum">1</span>SIZE</h3>
+          <div class="design-dims">
+            <label>Width (in) <input type="number" id="ds-w" value="60" min="30" max="120" /></label>
+            <label>Depth (in) <input type="number" id="ds-d" value="36" min="30" max="96" /></label>
+            <label>Walls
+              <select id="ds-walls"><option value="3" selected>3 walls</option><option value="2">2 walls</option></select>
+            </label>
+          </div>
+          <div class="design-chips" id="ds-h">
+            <button type="button" data-h="96" class="on">8' walls</button>
+            <button type="button" data-h="108">9'</button>
+            <button type="button" data-h="120">10'</button>
+          </div>
+          <div class="design-areas" id="ds-areas"></div>
+        </div>
+        <div class="design-step"><h3><span class="dnum">2</span>FEATURES</h3>
+          <div class="feature-grid" id="ds-features"></div>
+        </div>
+        <div class="design-step"><h3><span class="dnum">3</span>TILE LOOK</h3>
+          <p style="font-size:13px;color:var(--stone);margin:0 0 10px;">Layout &amp; floor choices — herringbone, vertical, and mosaic floors add setting labor.</p>
+          <div class="design-chips" id="ds-layout">
+            <button type="button" data-k="straight" class="on">Straight</button>
+            <button type="button" data-k="brick">Brick</button>
+            <button type="button" data-k="vertical">Vertical +</button>
+            <button type="button" data-k="herringbone">Herringbone +</button>
+          </div>
+          <div class="design-chips" id="ds-floor">
+            <button type="button" data-k="standard" class="on">Standard floor</button>
+            <button type="button" data-k="mosaic">Mosaic floor +</button>
+          </div>
+        </div>
+      </div>
+      <div class="design-side">
+        <div class="design-preview">
+          <svg viewBox="0 0 320 270" aria-label="Your shower preview">
+            <polygon points="60,190 160,230 260,190 160,150" fill="#F1F2F4" stroke="#1C2E44" stroke-width="1.5"/>
+            <polygon points="60,190 60,70 160,30 160,150" fill="#fff" stroke="#1C2E44" stroke-width="1.5"/>
+            <polygon id="pv-wall-r" points="160,150 160,30 260,70 260,190" fill="#fff" stroke="#1C2E44" stroke-width="1.5"/>
+            <polygon id="pv-niche" points="90,103 120,91 120,121 90,133" fill="none" stroke="#C98D0A" stroke-width="1.5" visibility="hidden"/>
+            <polygon id="pv-niche2" points="90,63 120,51 120,79 90,91" fill="none" stroke="#C98D0A" stroke-width="1.5" visibility="hidden"/>
+            <g id="pv-bench" visibility="hidden"><polygon points="170,162 232,187 232,203 170,178" fill="#FDF3DC" stroke="#C98D0A" stroke-width="1.5"/><polygon points="170,162 232,187 232,193 170,168" fill="#F6B015" stroke="#C98D0A" stroke-width="1"/></g>
+            <polygon id="pv-shelf" points="88,98 122,84 122,88 88,102" fill="#F6B015" stroke="#C98D0A" stroke-width="1" visibility="hidden"/>
+            <g id="pv-curb"><polyline points="60,186 160,226 260,186" fill="none" stroke="#C98D0A" stroke-width="4"/></g>
+            <polygon id="pv-glass" points="160,230 260,190 260,70 160,110" fill="#7FB4D9" fill-opacity="0.22" stroke="#468FAF" stroke-width="1.2" visibility="hidden"/>
+            <circle id="pv-rain" cx="238" cy="86" r="5" fill="#F6B015" visibility="hidden"/>
+            <text id="pv-dw" x="96" y="224" font-size="11" fill="#6B7280" transform="rotate(21 96 224)">60"</text>
+            <text id="pv-dd" x="212" y="222" font-size="11" fill="#6B7280" transform="rotate(-21 212 222)">36"</text>
+            <text id="pv-dh" x="40" y="135" font-size="11" fill="#6B7280">96"</text>
+          </svg>
+        </div>
+        <div class="design-price">
+          <div id="design-gate">
+            <h3 style="margin-bottom:2px;">SEE YOUR BALLPARK PRICE</h3>
+            <p class="hero-card-sub">Where should we send your design? Takes 10 seconds.</p>
+            <form class="lead-form hero-lead" id="design-gate-form">
+              <input name="name" placeholder="Your name *" required maxlength="120" class="full" />
+              <input name="email" type="email" placeholder="Email *" required maxlength="200" />
+              <input name="phone" type="tel" placeholder="Phone (optional)" maxlength="30" />
+              <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" />
+              <div class="human-check full">
+                <label>Quick human check: what is <span class="hc-q">…</span>?
+                  <input name="humanCheck" inputmode="numeric" autocomplete="off" placeholder="?" required />
+                </label>
+              </div>
+              <button class="btn full" type="submit">Show My Price</button>
+              <p class="form-status" hidden></p>
+            </form>
+          </div>
+          <div id="design-result" hidden>
+            <div class="labor-badge">INSTALLATION BALLPARK</div>
+            <div class="range" id="design-range">$—</div>
+            <p class="note">${BALLPARK.laborOnly} ${BALLPARK.disclaimerShort}</p>
+            <button class="btn full" id="design-book-btn" type="button">Book My Free In-Home Estimate</button>
+            <p class="form-status" id="design-book-status" hidden></p>
+            <p class="form-note" style="color:var(--stone);">Your design comes with it — no re-explaining.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>`;
+
+add('/design/', {
+  title: 'Design Your Shower — Interactive Price Tool | Buddy Tile',
+  description:
+    'Size it, style it, price it. Configure your tile shower — niche, bench, curbless, glass, heated floors — and get an instant ballpark for Vancouver WA & Portland OR.',
+  jsonLd: businessLd(),
+  body: designBody,
 });
 
 add('/about/', {

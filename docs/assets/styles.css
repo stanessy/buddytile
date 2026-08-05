@@ -450,3 +450,30 @@ section.alt { background: #F3F4F6; }
 }
 .craft-tag.gold { color: var(--gold); }
 .craft-pair figcaption p { color: var(--stone); font-size: 14.5px; margin: 0; }
+
+
+/* Design Your Shower configurator */
+.design-grid { display: grid; gap: 32px; grid-template-columns: 1.15fr 0.85fr; align-items: start; }
+@media (max-width: 900px) { .design-grid { grid-template-columns: 1fr; } }
+.design-step { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; margin-bottom: 18px; box-shadow: 0 8px 20px rgba(10,22,38,0.06); }
+.design-step h3 { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.dnum { width: 30px; height: 30px; border-radius: 50%; background: var(--deep); color: var(--gold); font-family: 'Bebas Neue', sans-serif; font-size: 17px; display: inline-flex; align-items: center; justify-content: center; }
+.design-dims { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 12px; }
+.design-dims label { font-size: 13px; font-weight: 700; }
+.design-dims input, .design-dims select { display: block; margin-top: 5px; width: 110px; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--warm); font: inherit; }
+.design-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+.design-chips button { font: inherit; font-size: 13.5px; font-weight: 700; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: #fff; cursor: pointer; color: var(--navy); }
+.design-chips button.on { background: var(--gold); border-color: var(--gold); }
+.design-areas { display: flex; gap: 18px; flex-wrap: wrap; font-size: 13px; color: var(--stone); border-top: 1px dashed var(--line); padding-top: 10px; }
+.design-areas b { color: var(--navy); }
+.feature-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+.feature-card { border: 2px solid var(--line); border-radius: 12px; padding: 10px 10px 8px; text-align: center; cursor: pointer; user-select: none; background: #fff; }
+.feature-card img { height: 44px; margin: 0 auto 6px; }
+.feature-card .fl { font-size: 12.5px; font-weight: 700; line-height: 1.15; }
+.feature-card .fp { font-size: 11.5px; color: var(--gold-dark); font-weight: 700; }
+.feature-card.on { border-color: var(--gold); background: #FFFBF0; }
+.design-side { position: sticky; top: 96px; }
+.design-preview { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 12px; margin-bottom: 14px; box-shadow: 0 8px 20px rgba(10,22,38,0.06); }
+.design-price { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; box-shadow: 0 8px 20px rgba(10,22,38,0.06); }
+.design-price .range { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.8rem, 4vw, 2.4rem); color: var(--navy); line-height: 1.05; margin: 6px 0; }
+.design-price .note { color: var(--stone); font-size: 12.5px; }

@@ -238,4 +238,24 @@ const BALLPARK = {
   jobMinCents: 250000,
 };
 
-module.exports = { SITE, SERVICES, CITIES, STEPS, TRUST, PROMISE, TESTIMONIALS, BALLPARK };
+// "Design Your Shower" configurator — sell-side rates mirroring the platform
+// catalog (cost x 1.10). Ranges shown to homeowners are rate x 0.9–1.15.
+const DESIGNER = {
+  rates: { fixedCents: 297000, wallCents: 3300, floorCents: 6600 },
+  features: [
+    { key: 'niche', label: 'Recessed Niche', cents: 55000, img: '/assets/img/catalog/niche.svg', excludes: 'niche2' },
+    { key: 'niche2', label: 'Double Niche', cents: 99000, img: '/assets/img/catalog/niche.svg', excludes: 'niche' },
+    { key: 'bench', label: 'Built-in Bench', cents: 55000, img: '/assets/img/catalog/bench.svg' },
+    { key: 'shelf', label: 'Floating Shelf', cents: 27500, img: '/assets/img/catalog/corner-shelf.svg' },
+    { key: 'curbless', label: 'Curbless Entry', cents: 60500, img: '/assets/img/catalog/curbless.svg' },
+    { key: 'glass', label: 'Glass Door Install', cents: 88000, img: '/assets/img/catalog/curb.svg' },
+    { key: 'heated', label: 'Heated Floor', cents: 132000, img: '/assets/img/catalog/heated.svg' },
+    { key: 'rain', label: 'Rain Shower Head', cents: 27500, img: '/assets/img/catalog/rain.svg' },
+    { key: 'trim', label: 'Schluter\u00ae Trim', cents: 27500, img: '/assets/img/catalog/trim.svg' },
+    { key: 'grout', label: 'Epoxy Grout', cents: 22000, img: '/assets/img/catalog/grout.svg' },
+  ],
+  patternUpgradeCents: 33000, // herringbone / vertical layouts
+  mosaicFloorCents: 22000,
+};
+
+module.exports = { SITE, SERVICES, CITIES, STEPS, TRUST, PROMISE, TESTIMONIALS, BALLPARK, DESIGNER };
