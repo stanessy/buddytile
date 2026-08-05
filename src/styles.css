@@ -496,3 +496,16 @@ section.alt { background: #F3F4F6; }
 .pm-h { left: 1%; top: 42%; }
 .pm-w { left: 24%; bottom: -2%; }
 .pm-d { right: 2%; bottom: 8%; }
+
+
+/* Gate form inputs on white cards — visible boxes + focus ring */
+.design-price .lead-form input, .design-price .lead-form select {
+  background: var(--warm);
+  border: 1px solid #D5D9E0;
+}
+.design-price .lead-form input:focus, .hero-card .lead-form input:focus,
+.hero-card .lead-form select:focus, .human-check input:focus {
+  outline: none;
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 3px rgba(246, 176, 21, 0.18);
+}
