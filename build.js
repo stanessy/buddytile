@@ -515,6 +515,7 @@ const designBody = `
             <div class="project-card on" data-type="shower"><img src="/assets/img/tile-shower-remodel-vancouver-wa.jpg" alt="Tile shower" /><div class="fl">Tile Shower</div></div>
             <div class="project-card" data-type="floor"><img src="/assets/img/bathroom-tile-remodel-vancouver-wa.jpg" alt="Bathroom floor tile" /><div class="fl">Bathroom Floor</div></div>
             <div class="project-card" data-type="backsplash"><img src="/assets/img/kitchen-tile-backsplash-installation.jpg" alt="Kitchen backsplash" /><div class="fl">Kitchen Backsplash</div></div>
+            <div class="project-card" data-type="remodel"><img src="/assets/img/marble-tile-shower-glass-door.jpg" alt="Full bathroom remodel" /><div class="fl">Full Bathroom Remodel</div></div>
           </div>
         </div>
         <div class="design-step" data-show="shower"><h3><span class="dnum">2</span>SIZE</h3>
@@ -538,6 +539,19 @@ const designBody = `
           </div>
           <div class="design-chips" id="ds-sizes"></div>
           <p style="font-size:12.5px;color:var(--stone);margin:0;">Not sure? Pick the closest — we measure exactly at your free visit.</p>
+        </div>
+        <div class="design-step" data-show="remodel" hidden><h3><span class="dnum">2</span>BATHROOM SIZE</h3>
+          <div class="project-grid" id="ds-rsize">
+            <div class="project-card rs" data-rsize="small"><img src="/assets/img/bathroom-tile-remodel-vancouver-wa.jpg" alt="" /><div class="fl">Small / Powder<br /><span>~40 sq ft</span></div></div>
+            <div class="project-card rs on" data-rsize="standard"><img src="/assets/img/tile-shower-remodel-vancouver-wa.jpg" alt="" /><div class="fl">Standard<br /><span>~60 sq ft</span></div></div>
+            <div class="project-card rs" data-rsize="large"><img src="/assets/img/marble-tile-shower-glass-door.jpg" alt="" /><div class="fl">Large / Primary<br /><span>~100+ sq ft</span></div></div>
+          </div>
+        </div>
+        <div class="design-step" data-show="shower floor"><h3><span class="dnum">3</span>THE SCOPE</h3>
+          <div class="project-grid" id="ds-scope">
+            <div class="project-card sc on" data-scope="tile"><img src="/assets/img/craft-tile-hands.jpg" alt="" /><div class="fl">Just tile<br /><span>New tile where it is today</span></div></div>
+            <div class="project-card sc" data-scope="complex"><img src="/assets/img/bathroom-tile-remodel-vancouver-wa.jpg" alt="" /><div class="fl">More than tile<br /><span>Moving fixtures, layout changes, gut work</span></div></div>
+          </div>
         </div>
         </div>
       <div class="design-side">

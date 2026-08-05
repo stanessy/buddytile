@@ -256,6 +256,16 @@ const DESIGNER = {
   ],
   patternUpgradeCents: 33000, // herringbone / vertical layouts
   mosaicFloorCents: 22000,
+  // Scope pricing: "just tile" excludes demo/dump/valve work (the fixed
+  // component), so it's honestly much cheaper; "more than tile" carries the
+  // full fixed scope plus a complexity bump.
+  tileOnlyFixedCents: 60000,
+  complexMultiplier: 1.2,
+  // Broad public range — a ballpark, not a quote
+  rangeLo: 0.75,
+  rangeHi: 1.4,
+  // Full bathroom remodel from-prices (sell side, platform catalog x1.1)
+  remodel: { baseCents: 1650000, sizes: { small: 0.8, standard: 1, large: 1.4 } },
 };
 
 module.exports = { SITE, SERVICES, CITIES, STEPS, TRUST, PROMISE, TESTIMONIALS, BALLPARK, DESIGNER };

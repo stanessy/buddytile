@@ -103,7 +103,7 @@ function passesHumanCheck(form, statusEl) {
   if (!typeBox || !window.BT_DESIGNER || !window.BT_BALLPARK) return;
   var D = window.BT_DESIGNER;
   var BP = window.BT_BALLPARK;
-  var state = { type: 'shower', w: 60, d: 36, h: 96, walls: 3, sqft: 60 };
+  var state = { type: 'shower', w: 60, d: 36, h: 96, walls: 3, sqft: 60, scope: 'tile', rsize: 'standard' };
 
   function chips(id, attr, cb) {
     var box = document.getElementById(id);
@@ -123,6 +123,22 @@ function passesHumanCheck(form, statusEl) {
     if (el) el.addEventListener('input', render);
   });
   document.getElementById('ds-walls').addEventListener('change', render);
+  document.querySelectorAll('#ds-scope .project-card').forEach(function (el) {
+    el.addEventListener('click', function () {
+      state.scope = el.dataset.scope;
+      document.querySelectorAll('#ds-scope .project-card').forEach(function (x) { x.classList.remove('on'); });
+      el.classList.add('on');
+      render();
+    });
+  });
+  document.querySelectorAll('#ds-rsize .project-card').forEach(function (el) {
+    el.addEventListener('click', function () {
+      state.rsize = el.dataset.rsize;
+      document.querySelectorAll('#ds-rsize .project-card').forEach(function (x) { x.classList.remove('on'); });
+      el.classList.add('on');
+      render();
+    });
+  });
 
   document.querySelectorAll('#ds-type .project-card').forEach(function (el) {
     el.addEventListener('click', function () {
@@ -131,6 +147,7 @@ function passesHumanCheck(form, statusEl) {
       el.classList.add('on');
       var sizes = state.type === 'floor' ? [40, 60, 90] : [20, 30, 45];
       var sbox = document.getElementById('ds-sizes');
+      if (state.type === 'remodel') { render(); return; }
       sbox.innerHTML = '';
       sizes.forEach(function (n, i) {
         var b = document.createElement('button');
@@ -151,19 +168,29 @@ function passesHumanCheck(form, statusEl) {
   });
 
   function priceCents() {
+    if (state.type === 'remodel') {
+      return { total: D.remodel.baseCents * D.remodel.sizes[state.rsize] };
+    }
     if (state.type === 'shower') {
       var wFt = state.w / 12, dFt = state.d / 12, hFt = state.h / 12;
       var wallSqft = (state.walls === 3 ? wFt + 2 * dFt : wFt + dFt) * hFt;
       var floorSqft = wFt * dFt;
-      return {
-        total: D.rates.fixedCents + wallSqft * D.rates.wallCents + floorSqft * D.rates.floorCents,
-        wallSqft: wallSqft,
-        floorSqft: floorSqft,
-      };
+      // tile-only: no demo/dump/valve fixed scope; complex: full fixed + bump
+      var fixed = state.scope === 'complex' ? D.rates.fixedCents : D.tileOnlyFixedCents;
+      var t = fixed + wallSqft * D.rates.wallCents + floorSqft * D.rates.floorCents;
+      if (state.scope === 'complex') t *= D.complexMultiplier;
+      return { total: t, wallSqft: wallSqft, floorSqft: floorSqft };
     }
     var proj = BP.projects.filter(function (p) { return p.key === state.type; })[0];
     return { total: Math.max(BP.jobMinCents, Math.max(proj.minCents, state.sqft * proj.perSqftCents)) };
   }
+
+  // floor: complex adds demo/dump/plumbing scope
+  var scoped = function (t) {
+    return state.type === 'floor' && state.scope === 'complex'
+      ? (t + 63000) * D.complexMultiplier
+      : t;
+  };
 
   function render() {
     state.w = Number(document.getElementById('ds-w').value) || 60;
@@ -179,9 +206,12 @@ function passesHumanCheck(form, statusEl) {
     if (svg) svg.style.display = isShower ? 'block' : 'none';
     var img = document.getElementById('ds-preview-img');
     img.hidden = isShower;
-    img.src = state.type === 'floor' ? '/assets/img/bathroom-tile-remodel-vancouver-wa.jpg' : '/assets/img/kitchen-tile-backsplash-installation.jpg';
+    img.src = state.type === 'floor' ? '/assets/img/bathroom-tile-remodel-vancouver-wa.jpg'
+      : state.type === 'remodel' ? '/assets/img/marble-tile-shower-glass-door.jpg'
+      : '/assets/img/kitchen-tile-backsplash-installation.jpg';
 
     var p = priceCents();
+    p.total = scoped(p.total);
     if (isShower) {
       document.getElementById('ds-areas').innerHTML =
         'Wall area <b>' + p.wallSqft.toFixed(0) + ' sq ft</b> · Floor <b>' + p.floorSqft.toFixed(0) +
@@ -191,12 +221,15 @@ function passesHumanCheck(form, statusEl) {
       document.getElementById('pv-dh').textContent = state.h + ' in';
     }
 
-    var lo = Math.round(p.total * 0.9 / 100), hi = Math.round(p.total * 1.15 / 100);
+    var lo = Math.round(p.total * D.rangeLo / 100), hi = Math.round(p.total * D.rangeHi / 100);
     document.getElementById('design-range').textContent = '$' + lo.toLocaleString() + ' – $' + hi.toLocaleString();
+    var scopeNote = (state.type === 'shower' || state.type === 'floor')
+      ? (state.scope === 'complex' ? ', scope: more than tile' : ', scope: tile only') : '';
     window.__designSummary = (isShower
       ? 'Tile shower ' + state.w + '\"W x ' + state.d + '\"D x ' + state.h + '\"H, ' + state.walls + ' walls, ' + (p.wallSqft + p.floorSqft).toFixed(0) + ' sqft'
+      : state.type === 'remodel' ? 'Full bathroom remodel (' + state.rsize + ')'
       : (state.type === 'floor' ? 'Bathroom floor tile ~' : 'Kitchen backsplash ~') + state.sqft + ' sqft') +
-      ' → $' + lo.toLocaleString() + '–$' + hi.toLocaleString() + ' (core build, labor only)';
+      scopeNote + ' → $' + lo.toLocaleString() + '–$' + hi.toLocaleString() + ' (core build, labor only)';
   }
   render();
 
