@@ -552,7 +552,6 @@ const designBody = `
           <p style="font-size:13.5px;color:var(--stone);margin:12px 0 0;">At your <b style="color:var(--navy);">free in-home estimate</b> we measure exactly, walk every option with you, and hand you a written, feature-by-feature price the same day — no guesswork, no obligation.</p>
         </div>
       </div>
-      </div>
       <div class="design-side">
         <div class="design-preview">
           <div id="ds-preview-shower" class="preview-photo">
