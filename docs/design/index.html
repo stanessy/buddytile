@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Design Your Shower — Interactive Price Tool | Buddy Tile</title>
-  <meta name="description" content="Size it, style it, price it. Configure your tile shower — niche, bench, curbless, glass, heated floors — and get an instant ballpark for Vancouver WA &amp; Portland OR." />
+  <title>Design It. Price It. — Instant Tile Ballpark | Buddy Tile</title>
+  <meta name="description" content="Design your tile shower, bathroom floor, or kitchen backsplash and get an instant ballpark price for Vancouver WA &amp; Portland OR. Visual, fast, no spam." />
   <link rel="canonical" href="https://buddytile.com/design/" />
   <link rel="icon" href="/assets/img/buddy-tile-sm.png?v=3" />
-  <link rel="stylesheet" href="/assets/styles.css?v=msghfa4m" />
-  <meta property="og:title" content="Design Your Shower — Interactive Price Tool | Buddy Tile" />
-  <meta property="og:description" content="Size it, style it, price it. Configure your tile shower — niche, bench, curbless, glass, heated floors — and get an instant ballpark for Vancouver WA &amp; Portland OR." />
+  <link rel="stylesheet" href="/assets/styles.css?v=msgi3qpb" />
+  <meta property="og:title" content="Design It. Price It. — Instant Tile Ballpark | Buddy Tile" />
+  <meta property="og:description" content="Design your tile shower, bathroom floor, or kitchen backsplash and get an instant ballpark price for Vancouver WA &amp; Portland OR. Visual, fast, no spam." />
   <meta property="og:image" content="https://buddytile.com/assets/img/tile-shower-remodel-vancouver-wa.jpg" />
   <meta property="og:url" content="https://buddytile.com/design/" />
   <meta property="og:type" content="website" />
@@ -25,8 +25,7 @@
     <nav class="site-nav">
       <a class="hide-m" href="/#services">Services</a>
       <a class="hide-m" href="/#service-area">Service Area</a>
-      <a class="hide-m" href="/design/">Design Your Shower</a>
-      <a class="hide-m" href="/ballpark/">Ballpark Price</a>
+      <a class="hide-m" href="/design/">Design &amp; Price</a>
       <a class="hide-m" href="/about/">About</a>
       <a class="hide-m" href="https://buddybuilt.com/portal" target="_blank" rel="noopener">Customer Portal</a>
       <a class="phone-link" href="tel:3608996336">(360) 899-6336</a>
@@ -35,15 +34,22 @@
   </div>
 </header>
 
-<div class="container breadcrumbs"><a href="/">Home</a> / Design Your Shower</div>
+<div class="container breadcrumbs"><a href="/">Home</a> / Design &amp; Price</div>
 <section style="padding-top:26px;">
   <div class="container">
-    <h1>DESIGN YOUR SHOWER</h1>
+    <h1>DESIGN IT. PRICE IT.</h1>
     <hr class="gold-bar" />
-    <p class="lead" style="max-width:38em;">Size it, style it, price it — in about two minutes. Play with the options and watch your shower (and its ballpark price) take shape.</p>
+    <p class="lead" style="max-width:38em;">Pick your project, style it, and get an instant ballpark — in about two minutes. One number at the end, no pressure, no spam.</p>
     <div class="design-grid">
       <div>
-        <div class="design-step"><h3><span class="dnum">1</span>SIZE</h3>
+        <div class="design-step"><h3><span class="dnum">1</span>YOUR PROJECT</h3>
+          <div class="project-grid" id="ds-type">
+            <div class="project-card on" data-type="shower"><img src="/assets/img/tile-shower-remodel-vancouver-wa.jpg" alt="Tile shower" /><div class="fl">Tile Shower</div></div>
+            <div class="project-card" data-type="floor"><img src="/assets/img/bathroom-tile-remodel-vancouver-wa.jpg" alt="Bathroom floor tile" /><div class="fl">Bathroom Floor</div></div>
+            <div class="project-card" data-type="backsplash"><img src="/assets/img/kitchen-tile-backsplash-installation.jpg" alt="Kitchen backsplash" /><div class="fl">Kitchen Backsplash</div></div>
+          </div>
+        </div>
+        <div class="design-step" data-show="shower"><h3><span class="dnum">2</span>SIZE</h3>
           <div class="design-dims">
             <label>Width (in) <input type="number" id="ds-w" value="60" min="30" max="120" /></label>
             <label>Depth (in) <input type="number" id="ds-d" value="36" min="30" max="96" /></label>
@@ -58,26 +64,40 @@
           </div>
           <div class="design-areas" id="ds-areas"></div>
         </div>
-        <div class="design-step"><h3><span class="dnum">2</span>FEATURES</h3>
+        <div class="design-step" data-show="floor backsplash" hidden><h3><span class="dnum">2</span>SIZE</h3>
+          <div class="design-dims">
+            <label>Approximate square feet <input type="number" id="ds-sqft" value="60" min="10" max="600" /></label>
+          </div>
+          <div class="design-chips" id="ds-sizes"></div>
+          <p style="font-size:12.5px;color:var(--stone);margin:0;">Not sure? Pick the closest — we measure exactly at your free visit.</p>
+        </div>
+        <div class="design-step" data-show="shower"><h3><span class="dnum">3</span>FEATURES</h3>
           <div class="feature-grid" id="ds-features"></div>
         </div>
-        <div class="design-step"><h3><span class="dnum">3</span>TILE LOOK</h3>
-          <p style="font-size:13px;color:var(--stone);margin:0 0 10px;">Layout &amp; floor choices — herringbone, vertical, and mosaic floors add setting labor.</p>
+        <div class="design-step" data-show="floor backsplash" hidden><h3><span class="dnum">3</span>THE INSTALL</h3>
+          <div class="project-grid">
+            <div class="project-card grade on" data-grade="standard"><img src="/assets/img/bathroom-tile-remodel-vancouver-wa.jpg" alt="" /><div class="fl">Standard tile<br /><span>Porcelain &amp; ceramic</span></div></div>
+            <div class="project-card grade" data-grade="premium"><img src="/assets/img/herringbone-tile-floor-portland-or.jpg" alt="" /><div class="fl">Detailed install<br /><span>Large format, stone, mosaic</span></div></div>
+          </div>
+          <div class="feature-grid" id="ds-flat-extras" style="margin-top:10px;"></div>
+        </div>
+        <div class="design-step" data-show="shower backsplash"><h3><span class="dnum">4</span>TILE LOOK</h3>
+          <p style="font-size:13px;color:var(--stone);margin:0 0 10px;">Patterns like herringbone add setting time — it's all in your ballpark.</p>
           <div class="design-chips" id="ds-layout">
             <button type="button" data-k="straight" class="on">Straight</button>
             <button type="button" data-k="brick">Brick</button>
-            <button type="button" data-k="vertical">Vertical +</button>
-            <button type="button" data-k="herringbone">Herringbone +</button>
+            <button type="button" data-k="vertical">Vertical</button>
+            <button type="button" data-k="herringbone">Herringbone</button>
           </div>
-          <div class="design-chips" id="ds-floor">
-            <button type="button" data-k="standard" class="on">Standard floor</button>
-            <button type="button" data-k="mosaic">Mosaic floor +</button>
+          <div class="design-chips" id="ds-floor" data-show="shower">
+            <button type="button" data-k="standard" class="on">Standard shower floor</button>
+            <button type="button" data-k="mosaic">Mosaic shower floor</button>
           </div>
         </div>
       </div>
       <div class="design-side">
         <div class="design-preview">
-          <svg viewBox="0 0 320 270" aria-label="Your shower preview">
+          <svg id="ds-preview-svg" viewBox="0 0 320 270" aria-label="Your shower preview">
             <polygon points="60,190 160,230 260,190 160,150" fill="#F1F2F4" stroke="#1C2E44" stroke-width="1.5"/>
             <polygon points="60,190 60,70 160,30 160,150" fill="#fff" stroke="#1C2E44" stroke-width="1.5"/>
             <polygon id="pv-wall-r" points="160,150 160,30 260,70 260,190" fill="#fff" stroke="#1C2E44" stroke-width="1.5"/>
@@ -92,11 +112,12 @@
             <text id="pv-dd" x="212" y="222" font-size="11" fill="#6B7280" transform="rotate(-21 212 222)">36"</text>
             <text id="pv-dh" x="40" y="135" font-size="11" fill="#6B7280">96"</text>
           </svg>
+          <img id="ds-preview-img" src="/assets/img/bathroom-tile-remodel-vancouver-wa.jpg" alt="Project preview" hidden style="width:100%;border-radius:10px;display:block;" />
         </div>
         <div class="design-price">
           <div id="design-gate">
-            <h3 style="margin-bottom:2px;">SEE YOUR BALLPARK PRICE</h3>
-            <p class="hero-card-sub">Where should we send your design? Takes 10 seconds.</p>
+            <h3 style="margin-bottom:2px;">SEE YOUR BALLPARK</h3>
+            <p class="hero-card-sub">One number for the whole project. Where should we send it?</p>
             <form class="lead-form hero-lead" id="design-gate-form">
               <input name="name" placeholder="Your name *" required maxlength="120" class="full" />
               <input name="email" type="email" placeholder="Email *" required maxlength="200" />
@@ -107,12 +128,12 @@
                   <input name="humanCheck" inputmode="numeric" autocomplete="off" placeholder="?" required />
                 </label>
               </div>
-              <button class="btn full" type="submit">Show My Price</button>
+              <button class="btn full" type="submit">Show My Ballpark</button>
               <p class="form-status" hidden></p>
             </form>
           </div>
           <div id="design-result" hidden>
-            <div class="labor-badge">INSTALLATION BALLPARK</div>
+            <div class="labor-badge">YOUR PROJECT BALLPARK</div>
             <div class="range" id="design-range">$—</div>
             <p class="note">Finish materials (tile, grout, fixtures) not included — they depend on your selections. Not a final quote. Your exact price comes from a free in-home estimate.</p>
             <button class="btn full" id="design-book-btn" type="button">Book My Free In-Home Estimate</button>
@@ -162,7 +183,7 @@
   <a class="mc-call" href="tel:3608996336">Call (360) 899-6336</a>
   <a class="mc-est" href="#estimate">Free Estimate</a>
 </div>
-<script src="/assets/ballpark-config.js?v=msghfa4m"></script>
-<script src="/assets/main.js?v=msghfa4m" defer></script>
+<script src="/assets/ballpark-config.js?v=msgi3qpb"></script>
+<script src="/assets/main.js?v=msgi3qpb" defer></script>
 </body>
 </html>

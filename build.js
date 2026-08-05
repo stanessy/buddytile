@@ -22,8 +22,7 @@ const header = (isHome) => `
     <nav class="site-nav">
       <a class="hide-m" href="/#services">Services</a>
       <a class="hide-m" href="/#service-area">Service Area</a>
-      <a class="hide-m" href="/design/">Design Your Shower</a>
-      <a class="hide-m" href="/ballpark/">Ballpark Price</a>
+      <a class="hide-m" href="/design/">Design &amp; Price</a>
       <a class="hide-m" href="/about/">About</a>
       <a class="hide-m" href="https://buddybuilt.com/portal" target="_blank" rel="noopener">Customer Portal</a>
       <a class="phone-link" href="tel:${SITE.phone.replace(/[^0-9+]/g, '')}">${SITE.phone}</a>
@@ -193,7 +192,7 @@ const homeBody = `
         <button class="btn full" type="submit">Get My Free Estimate</button>
         <p class="form-status" hidden></p>
       </form>
-      <p class="hero-card-alt">Just want a rough number first? <a href="/ballpark/">Try the 60-second ballpark tool →</a></p>
+      <p class="hero-card-alt">Just browsing? <a href="/design/">Design your shower &amp; get an instant ballpark →</a></p>
     </div>
   </div>
 </div>
@@ -455,80 +454,9 @@ for (const c of CITIES) {
   });
 }
 
-const ballparkBody = `
-<div class="container breadcrumbs"><a href="/">Home</a> / Ballpark Price</div>
-<section style="padding-top:26px;">
-  <div class="container two-col" style="align-items:stretch;">
-    <div>
-      <h1>60-SECOND BALLPARK PRICE</h1>
-      <hr class="gold-bar" />
-      <p class="lead">Get a rough installation estimate in 60 seconds.<br /><span style="font-size:16px;color:var(--stone);">Finish materials (tile, grout, fixtures) aren't included — they depend on your selections. Your exact price comes with a free in-home estimate.</span></p>
-      <div id="ballpark-gate" class="hero-card gate-card">
-        <h3>WHERE SHOULD WE SEND YOUR ESTIMATE?</h3>
-        <p class="hero-card-sub">Takes 10 seconds — we'll email it to you.</p>
-        <form class="lead-form hero-lead" id="ballpark-gate-form">
-          <input name="name" placeholder="Your name *" required maxlength="120" class="full" />
-          <input name="email" type="email" placeholder="Email *" required maxlength="200" />
-          <input name="phone" type="tel" placeholder="Phone (optional)" maxlength="30" />
-          <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" />
-          <div class="human-check full">
-        <label>Quick human check: what is <span class="hc-q">…</span>?
-          <input name="humanCheck" inputmode="numeric" autocomplete="off" placeholder="?" required />
-        </label>
-      </div>
-          <button class="btn full" type="submit">Get My Estimate</button>
-          <p class="form-status" hidden></p>
-          <p class="form-note" style="color:var(--stone);">No spam — just your estimate.</p>
-        </form>
-      </div>
-      <div id="ballpark-tool" hidden>
-      <form id="ballpark-form" class="ballpark-form">
-        <label>What are we building?
-          <select name="project">${BALLPARK.projects.map((p) => `<option value="${p.key}">${p.label}</option>`).join('')}</select>
-        </label>
-        <label data-for="shower">Shower size
-          <select name="size">${BALLPARK.projects[0].sizes.map((s) => `<option value="${s.key}">${s.label}</option>`).join('')}</select>
-        </label>
-        <label data-for="floor backsplash" hidden>Approximate square feet
-          <input type="number" name="sqft" min="10" max="1000" value="60" />
-        </label>
-        <label>Installation complexity <span class="label-note">(your tile — we just install it)</span>
-          <select name="grade">
-            <option value="standard">Standard install — porcelain / ceramic</option>
-            <option value="premium">Complex install — large format, stone, mosaic patterns</option>
-          </select>
-        </label>
-        <fieldset>
-          <legend>Add-ons</legend>
-          ${BALLPARK.extras.map((x) => `<label class="check"><input type="checkbox" name="extra" value="${x.key}" /> ${x.label}</label>`).join('')}
-        </fieldset>
-      </form>
-      <div class="ballpark-result" id="ballpark-result">
-        <div class="labor-badge">INSTALLATION ONLY</div>
-        <div class="range" id="ballpark-range">$—</div>
-        <p class="note"><strong>${BALLPARK.laborOnly}</strong> ${BALLPARK.disclaimerShort}</p>
-      </div>
-      </div>
-    </div>
-    <div>
-      <div class="hero-card" id="ballpark-book" style="position:sticky;top:90px;" hidden>
-        <h3>MAKE IT A REAL NUMBER</h3>
-        <p class="hero-card-sub">Like the range, <span id="ballpark-firstname">friend</span>? Get your exact written price — free, same day.</p>
-        <button class="btn full" id="ballpark-book-btn" type="button">Book My Free Estimate</button>
-        <p class="form-status" id="ballpark-book-status" hidden></p>
-        <p class="form-note" style="color:var(--stone);">Your ballpark details come with it — no re-explaining.</p>
-      </div>
-    </div>
-  </div>
-</section>`;
+// /ballpark/ merged into /design/ — keep old links alive with a redirect
+write('/ballpark/', `<!doctype html><html><head><meta charset="utf-8"><title>Redirecting…</title><link rel="canonical" href="${SITE.domain}/design/"><meta http-equiv="refresh" content="0;url=/design/"></head><body><a href="/design/">Design &amp; Price your project</a></body></html>`);
 
-add('/ballpark/', {
-  title: 'Ballpark Tile Price Calculator | Showers, Floors, Backsplashes | Buddy Tile',
-  description:
-    'Get a 60-second ballpark price range for a tile shower, bathroom floor, or backsplash in Vancouver WA / Portland OR. Free in-home estimates turn it into a real number.',
-  jsonLd: businessLd(),
-  body: ballparkBody,
-});
 
 
 const privacyBody = `
@@ -574,15 +502,22 @@ add('/privacy/', {
 
 
 const designBody = `
-<div class="container breadcrumbs"><a href="/">Home</a> / Design Your Shower</div>
+<div class="container breadcrumbs"><a href="/">Home</a> / Design &amp; Price</div>
 <section style="padding-top:26px;">
   <div class="container">
-    <h1>DESIGN YOUR SHOWER</h1>
+    <h1>DESIGN IT. PRICE IT.</h1>
     <hr class="gold-bar" />
-    <p class="lead" style="max-width:38em;">Size it, style it, price it — in about two minutes. Play with the options and watch your shower (and its ballpark price) take shape.</p>
+    <p class="lead" style="max-width:38em;">Pick your project, style it, and get an instant ballpark — in about two minutes. One number at the end, no pressure, no spam.</p>
     <div class="design-grid">
       <div>
-        <div class="design-step"><h3><span class="dnum">1</span>SIZE</h3>
+        <div class="design-step"><h3><span class="dnum">1</span>YOUR PROJECT</h3>
+          <div class="project-grid" id="ds-type">
+            <div class="project-card on" data-type="shower"><img src="/assets/img/tile-shower-remodel-vancouver-wa.jpg" alt="Tile shower" /><div class="fl">Tile Shower</div></div>
+            <div class="project-card" data-type="floor"><img src="/assets/img/bathroom-tile-remodel-vancouver-wa.jpg" alt="Bathroom floor tile" /><div class="fl">Bathroom Floor</div></div>
+            <div class="project-card" data-type="backsplash"><img src="/assets/img/kitchen-tile-backsplash-installation.jpg" alt="Kitchen backsplash" /><div class="fl">Kitchen Backsplash</div></div>
+          </div>
+        </div>
+        <div class="design-step" data-show="shower"><h3><span class="dnum">2</span>SIZE</h3>
           <div class="design-dims">
             <label>Width (in) <input type="number" id="ds-w" value="60" min="30" max="120" /></label>
             <label>Depth (in) <input type="number" id="ds-d" value="36" min="30" max="96" /></label>
@@ -597,26 +532,40 @@ const designBody = `
           </div>
           <div class="design-areas" id="ds-areas"></div>
         </div>
-        <div class="design-step"><h3><span class="dnum">2</span>FEATURES</h3>
+        <div class="design-step" data-show="floor backsplash" hidden><h3><span class="dnum">2</span>SIZE</h3>
+          <div class="design-dims">
+            <label>Approximate square feet <input type="number" id="ds-sqft" value="60" min="10" max="600" /></label>
+          </div>
+          <div class="design-chips" id="ds-sizes"></div>
+          <p style="font-size:12.5px;color:var(--stone);margin:0;">Not sure? Pick the closest — we measure exactly at your free visit.</p>
+        </div>
+        <div class="design-step" data-show="shower"><h3><span class="dnum">3</span>FEATURES</h3>
           <div class="feature-grid" id="ds-features"></div>
         </div>
-        <div class="design-step"><h3><span class="dnum">3</span>TILE LOOK</h3>
-          <p style="font-size:13px;color:var(--stone);margin:0 0 10px;">Layout &amp; floor choices — herringbone, vertical, and mosaic floors add setting labor.</p>
+        <div class="design-step" data-show="floor backsplash" hidden><h3><span class="dnum">3</span>THE INSTALL</h3>
+          <div class="project-grid">
+            <div class="project-card grade on" data-grade="standard"><img src="/assets/img/bathroom-tile-remodel-vancouver-wa.jpg" alt="" /><div class="fl">Standard tile<br /><span>Porcelain &amp; ceramic</span></div></div>
+            <div class="project-card grade" data-grade="premium"><img src="/assets/img/herringbone-tile-floor-portland-or.jpg" alt="" /><div class="fl">Detailed install<br /><span>Large format, stone, mosaic</span></div></div>
+          </div>
+          <div class="feature-grid" id="ds-flat-extras" style="margin-top:10px;"></div>
+        </div>
+        <div class="design-step" data-show="shower backsplash"><h3><span class="dnum">4</span>TILE LOOK</h3>
+          <p style="font-size:13px;color:var(--stone);margin:0 0 10px;">Patterns like herringbone add setting time — it's all in your ballpark.</p>
           <div class="design-chips" id="ds-layout">
             <button type="button" data-k="straight" class="on">Straight</button>
             <button type="button" data-k="brick">Brick</button>
-            <button type="button" data-k="vertical">Vertical +</button>
-            <button type="button" data-k="herringbone">Herringbone +</button>
+            <button type="button" data-k="vertical">Vertical</button>
+            <button type="button" data-k="herringbone">Herringbone</button>
           </div>
-          <div class="design-chips" id="ds-floor">
-            <button type="button" data-k="standard" class="on">Standard floor</button>
-            <button type="button" data-k="mosaic">Mosaic floor +</button>
+          <div class="design-chips" id="ds-floor" data-show="shower">
+            <button type="button" data-k="standard" class="on">Standard shower floor</button>
+            <button type="button" data-k="mosaic">Mosaic shower floor</button>
           </div>
         </div>
       </div>
       <div class="design-side">
         <div class="design-preview">
-          <svg viewBox="0 0 320 270" aria-label="Your shower preview">
+          <svg id="ds-preview-svg" viewBox="0 0 320 270" aria-label="Your shower preview">
             <polygon points="60,190 160,230 260,190 160,150" fill="#F1F2F4" stroke="#1C2E44" stroke-width="1.5"/>
             <polygon points="60,190 60,70 160,30 160,150" fill="#fff" stroke="#1C2E44" stroke-width="1.5"/>
             <polygon id="pv-wall-r" points="160,150 160,30 260,70 260,190" fill="#fff" stroke="#1C2E44" stroke-width="1.5"/>
@@ -631,11 +580,12 @@ const designBody = `
             <text id="pv-dd" x="212" y="222" font-size="11" fill="#6B7280" transform="rotate(-21 212 222)">36"</text>
             <text id="pv-dh" x="40" y="135" font-size="11" fill="#6B7280">96"</text>
           </svg>
+          <img id="ds-preview-img" src="/assets/img/bathroom-tile-remodel-vancouver-wa.jpg" alt="Project preview" hidden style="width:100%;border-radius:10px;display:block;" />
         </div>
         <div class="design-price">
           <div id="design-gate">
-            <h3 style="margin-bottom:2px;">SEE YOUR BALLPARK PRICE</h3>
-            <p class="hero-card-sub">Where should we send your design? Takes 10 seconds.</p>
+            <h3 style="margin-bottom:2px;">SEE YOUR BALLPARK</h3>
+            <p class="hero-card-sub">One number for the whole project. Where should we send it?</p>
             <form class="lead-form hero-lead" id="design-gate-form">
               <input name="name" placeholder="Your name *" required maxlength="120" class="full" />
               <input name="email" type="email" placeholder="Email *" required maxlength="200" />
@@ -646,12 +596,12 @@ const designBody = `
                   <input name="humanCheck" inputmode="numeric" autocomplete="off" placeholder="?" required />
                 </label>
               </div>
-              <button class="btn full" type="submit">Show My Price</button>
+              <button class="btn full" type="submit">Show My Ballpark</button>
               <p class="form-status" hidden></p>
             </form>
           </div>
           <div id="design-result" hidden>
-            <div class="labor-badge">INSTALLATION BALLPARK</div>
+            <div class="labor-badge">YOUR PROJECT BALLPARK</div>
             <div class="range" id="design-range">$—</div>
             <p class="note">${BALLPARK.laborOnly} ${BALLPARK.disclaimerShort}</p>
             <button class="btn full" id="design-book-btn" type="button">Book My Free In-Home Estimate</button>
@@ -665,12 +615,13 @@ const designBody = `
 </section>`;
 
 add('/design/', {
-  title: 'Design Your Shower — Interactive Price Tool | Buddy Tile',
+  title: 'Design It. Price It. — Instant Tile Ballpark | Buddy Tile',
   description:
-    'Size it, style it, price it. Configure your tile shower — niche, bench, curbless, glass, heated floors — and get an instant ballpark for Vancouver WA & Portland OR.',
+    'Design your tile shower, bathroom floor, or kitchen backsplash and get an instant ballpark price for Vancouver WA & Portland OR. Visual, fast, no spam.',
   jsonLd: businessLd(),
   body: designBody,
 });
+
 
 add('/about/', {
   title: 'About Buddy Tile — a Buddy Built Company',
