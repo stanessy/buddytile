@@ -491,7 +491,7 @@ section.alt { background: #F3F4F6; }
 /* Photo shower preview with live measurement labels */
 .preview-photo { position: relative; }
 .preview-photo img { width: 100%; display: block; }
-.pm { position: absolute; font-size: 12px; font-weight: 600; color: var(--navy); text-align: center; line-height: 1.25; }
+.pm { position: absolute; font-size: 12px; font-weight: 600; color: var(--navy); text-align: center; line-height: 1.25; background: rgba(255,255,255,0.92); padding: 2px 7px; border-radius: 6px; }
 .pm b { font-size: 14px; }
 .pm-h { left: 1%; top: 42%; }
 .pm-w { left: 24%; bottom: -2%; }
