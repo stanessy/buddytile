@@ -95,39 +95,15 @@ function passesHumanCheck(form, statusEl) {
 })();
 
 
-// ---- Design & Price (merged designer + ballpark) ---------------------------
+// ---- Design & Price: project + size -> one ballpark number ---------------
+// Deliberately simple: no feature/upgrade configuration in public (that list
+// belongs to the free estimate, not to competitors' quote-matching).
 (function () {
-  var grid = document.getElementById('ds-features');
-  if (!grid || !window.BT_DESIGNER || !window.BT_BALLPARK) return;
+  var typeBox = document.getElementById('ds-type');
+  if (!typeBox || !window.BT_DESIGNER || !window.BT_BALLPARK) return;
   var D = window.BT_DESIGNER;
   var BP = window.BT_BALLPARK;
-  var state = { type: 'shower', w: 60, d: 36, h: 96, walls: 3, sqft: 60, grade: 'standard', layout: 'straight', floor: 'standard', feats: {}, extras: {} };
-
-  // Shower feature cards — art only, no per-item prices (one number at the end)
-  D.features.forEach(function (f) {
-    var el = document.createElement('div');
-    el.className = 'feature-card';
-    el.dataset.key = f.key;
-    el.innerHTML = '<img src="' + f.img + '" alt="" /><div class="fl">' + f.label + '</div>';
-    el.addEventListener('click', function () {
-      state.feats[f.key] = !state.feats[f.key];
-      if (state.feats[f.key] && f.excludes) state.feats[f.excludes] = false;
-      render();
-    });
-    grid.appendChild(el);
-  });
-
-  // Flat-project extras (floor/backsplash): demo + heated, art cards, no prices
-  var flat = document.getElementById('ds-flat-extras');
-  [{ key: 'demo', label: 'Demo & Haul Away', img: '/assets/img/catalog/curb.svg' },
-   { key: 'heated', label: 'Heated Floor', img: '/assets/img/catalog/heated.svg' }].forEach(function (x) {
-    var el = document.createElement('div');
-    el.className = 'feature-card';
-    el.dataset.extra = x.key;
-    el.innerHTML = '<img src="' + x.img + '" alt="" /><div class="fl">' + x.label + '</div>';
-    el.addEventListener('click', function () { state.extras[x.key] = !state.extras[x.key]; render(); });
-    flat.appendChild(el);
-  });
+  var state = { type: 'shower', w: 60, d: 36, h: 96, walls: 3, sqft: 60 };
 
   function chips(id, attr, cb) {
     var box = document.getElementById(id);
@@ -142,21 +118,17 @@ function passesHumanCheck(form, statusEl) {
     });
   }
   chips('ds-h', 'h', function (v) { state.h = Number(v); });
-  chips('ds-layout', 'k', function (v) { state.layout = v; });
-  chips('ds-floor', 'k', function (v) { state.floor = v; });
   ['ds-w', 'ds-d', 'ds-sqft'].forEach(function (id) {
     var el = document.getElementById(id);
     if (el) el.addEventListener('input', render);
   });
   document.getElementById('ds-walls').addEventListener('change', render);
 
-  // Project type + grade cards
   document.querySelectorAll('#ds-type .project-card').forEach(function (el) {
     el.addEventListener('click', function () {
       state.type = el.dataset.type;
       document.querySelectorAll('#ds-type .project-card').forEach(function (x) { x.classList.remove('on'); });
       el.classList.add('on');
-      // sensible sqft defaults + quick-size chips per type
       var sizes = state.type === 'floor' ? [40, 60, 90] : [20, 30, 45];
       var sbox = document.getElementById('ds-sizes');
       sbox.innerHTML = '';
@@ -177,33 +149,20 @@ function passesHumanCheck(form, statusEl) {
       render();
     });
   });
-  document.querySelectorAll('.project-card.grade').forEach(function (el) {
-    el.addEventListener('click', function () {
-      state.grade = el.dataset.grade;
-      document.querySelectorAll('.project-card.grade').forEach(function (x) { x.classList.remove('on'); });
-      el.classList.add('on');
-      render();
-    });
-  });
 
   function priceCents() {
     if (state.type === 'shower') {
       var wFt = state.w / 12, dFt = state.d / 12, hFt = state.h / 12;
       var wallSqft = (state.walls === 3 ? wFt + 2 * dFt : wFt + dFt) * hFt;
       var floorSqft = wFt * dFt;
-      var total = D.rates.fixedCents + wallSqft * D.rates.wallCents + floorSqft * D.rates.floorCents;
-      D.features.forEach(function (f) { if (state.feats[f.key]) total += f.cents; });
-      if (state.layout === 'herringbone' || state.layout === 'vertical') total += D.patternUpgradeCents;
-      if (state.floor === 'mosaic') total += D.mosaicFloorCents;
-      return { total: total, wallSqft: wallSqft, floorSqft: floorSqft };
+      return {
+        total: D.rates.fixedCents + wallSqft * D.rates.wallCents + floorSqft * D.rates.floorCents,
+        wallSqft: wallSqft,
+        floorSqft: floorSqft,
+      };
     }
     var proj = BP.projects.filter(function (p) { return p.key === state.type; })[0];
-    var t = Math.max(proj.minCents, state.sqft * proj.perSqftCents);
-    if (state.grade === 'premium') t *= BP.premiumTileMultiplier;
-    if (state.type === 'backsplash' && (state.layout === 'herringbone' || state.layout === 'vertical')) t += D.patternUpgradeCents;
-    var ex = { demo: 63000, heated: 96600 };
-    Object.keys(state.extras).forEach(function (k) { if (state.extras[k]) t += ex[k] || 0; });
-    return { total: Math.max(t, BP.jobMinCents) };
+    return { total: Math.max(BP.jobMinCents, Math.max(proj.minCents, state.sqft * proj.perSqftCents)) };
   }
 
   function render() {
@@ -213,36 +172,20 @@ function passesHumanCheck(form, statusEl) {
     state.sqft = Number(document.getElementById('ds-sqft').value) || 60;
     var isShower = state.type === 'shower';
 
-    // section + preview visibility by project type
     document.querySelectorAll('[data-show]').forEach(function (el) {
       el.hidden = el.dataset.show.split(' ').indexOf(state.type) === -1;
     });
-    document.getElementById('ds-preview-shower').style.display = isShower ? 'block' : 'none';
+    var svg = document.getElementById('ds-preview-shower');
+    if (svg) svg.style.display = isShower ? 'block' : 'none';
     var img = document.getElementById('ds-preview-img');
     img.hidden = isShower;
     img.src = state.type === 'floor' ? '/assets/img/bathroom-tile-remodel-vancouver-wa.jpg' : '/assets/img/kitchen-tile-backsplash-installation.jpg';
-
-    grid.querySelectorAll('.feature-card').forEach(function (el) {
-      el.classList.toggle('on', !!state.feats[el.dataset.key]);
-    });
-    flat.querySelectorAll('.feature-card').forEach(function (el) {
-      el.classList.toggle('on', !!state.extras[el.dataset.extra]);
-    });
 
     var p = priceCents();
     if (isShower) {
       document.getElementById('ds-areas').innerHTML =
         'Wall area <b>' + p.wallSqft.toFixed(0) + ' sq ft</b> · Floor <b>' + p.floorSqft.toFixed(0) +
         ' sq ft</b> · Total tile <b>' + (p.wallSqft + p.floorSqft).toFixed(0) + ' sq ft</b>';
-      var vis = function (id, on) { var e = document.getElementById(id); if (e) e.setAttribute('visibility', on ? 'visible' : 'hidden'); };
-      vis('pv-niche', state.feats.niche || state.feats.niche2);
-      vis('pv-niche2', state.feats.niche2);
-      vis('pv-bench', state.feats.bench);
-      vis('pv-shelf', state.feats.shelf);
-      vis('pv-glass', state.feats.glass);
-      vis('pv-rain', state.feats.rain);
-      var curb = document.getElementById('pv-curb');
-      if (curb) curb.setAttribute('visibility', state.feats.curbless ? 'hidden' : 'visible');
       document.getElementById('pv-dw').textContent = state.w + ' in';
       document.getElementById('pv-dd').textContent = state.d + ' in';
       document.getElementById('pv-dh').textContent = state.h + ' in';
@@ -250,17 +193,10 @@ function passesHumanCheck(form, statusEl) {
 
     var lo = Math.round(p.total * 0.9 / 100), hi = Math.round(p.total * 1.15 / 100);
     document.getElementById('design-range').textContent = '$' + lo.toLocaleString() + ' – $' + hi.toLocaleString();
-    var picked = D.features.filter(function (f) { return state.feats[f.key]; }).map(function (f) { return f.label; });
-    var extrasPicked = Object.keys(state.extras).filter(function (k) { return state.extras[k]; });
-    window.__designSummary = isShower
-      ? 'Tile shower ' + state.w + '\"W x ' + state.d + '\"D x ' + state.h + '\"H, ' + state.walls + ' walls, ' +
-        (p.wallSqft + p.floorSqft).toFixed(0) + ' sqft — layout: ' + state.layout + ', floor: ' + state.floor +
-        (picked.length ? ' — features: ' + picked.join(', ') : '') +
-        ' → $' + lo.toLocaleString() + '–$' + hi.toLocaleString() + ' (labor only)'
-      : (state.type === 'floor' ? 'Bathroom floor tile ~' : 'Kitchen backsplash ~') + state.sqft + ' sqft, ' +
-        state.grade + ' install' + (state.type === 'backsplash' ? ', layout: ' + state.layout : '') +
-        (extrasPicked.length ? ' + ' + extrasPicked.join(', ') : '') +
-        ' → $' + lo.toLocaleString() + '–$' + hi.toLocaleString() + ' (labor only)';
+    window.__designSummary = (isShower
+      ? 'Tile shower ' + state.w + '\"W x ' + state.d + '\"D x ' + state.h + '\"H, ' + state.walls + ' walls, ' + (p.wallSqft + p.floorSqft).toFixed(0) + ' sqft'
+      : (state.type === 'floor' ? 'Bathroom floor tile ~' : 'Kitchen backsplash ~') + state.sqft + ' sqft') +
+      ' → $' + lo.toLocaleString() + '–$' + hi.toLocaleString() + ' (core build, labor only)';
   }
   render();
 
@@ -280,7 +216,7 @@ function passesHumanCheck(form, statusEl) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         name: contact.name, email: contact.email, phone: contact.phone,
-        description: 'DESIGN TOOL (opened price) — ' + (window.__designSummary || ''),
+        description: 'BALLPARK TOOL — ' + (window.__designSummary || ''),
         divisionId: TILE_DIVISION_ID, website: f.get('website') || undefined,
         source: 'buddytile.com design',
       }),
@@ -298,10 +234,10 @@ function passesHumanCheck(form, statusEl) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name: contact ? contact.name : 'Design tool visitor',
+        name: contact ? contact.name : 'Ballpark visitor',
         email: contact ? contact.email : undefined,
         phone: contact ? contact.phone : undefined,
-        description: 'DESIGN TOOL — BOOK ESTIMATE — ' + (window.__designSummary || ''),
+        description: 'BALLPARK TOOL — BOOK ESTIMATE — ' + (window.__designSummary || ''),
         divisionId: TILE_DIVISION_ID,
         source: 'buddytile.com design-book',
       }),

@@ -509,3 +509,7 @@ section.alt { background: #F3F4F6; }
   border-color: var(--gold) !important;
   box-shadow: 0 0 0 3px rgba(246, 176, 21, 0.18);
 }
+
+
+.feature-card.static { cursor: default; }
+.feature-card.static:hover { border-color: var(--line); }

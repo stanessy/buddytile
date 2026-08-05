@@ -539,29 +539,19 @@ const designBody = `
           <div class="design-chips" id="ds-sizes"></div>
           <p style="font-size:12.5px;color:var(--stone);margin:0;">Not sure? Pick the closest — we measure exactly at your free visit.</p>
         </div>
-        <div class="design-step" data-show="shower"><h3><span class="dnum">3</span>FEATURES</h3>
-          <div class="feature-grid" id="ds-features"></div>
-        </div>
-        <div class="design-step" data-show="floor backsplash" hidden><h3><span class="dnum">3</span>THE INSTALL</h3>
-          <div class="project-grid">
-            <div class="project-card grade on" data-grade="standard"><img src="/assets/img/bathroom-tile-remodel-vancouver-wa.jpg" alt="" /><div class="fl">Standard tile<br /><span>Porcelain &amp; ceramic</span></div></div>
-            <div class="project-card grade" data-grade="premium"><img src="/assets/img/herringbone-tile-floor-portland-or.jpg" alt="" /><div class="fl">Detailed install<br /><span>Large format, stone, mosaic</span></div></div>
+        <div class="design-step"><h3><span class="dnum">3</span>MAKE IT YOURS</h3>
+          <p style="font-size:13.5px;color:var(--stone);margin:0 0 12px;">Your ballpark covers the core build. There's a whole menu of upgrades to spruce it up — a few favorites:</p>
+          <div class="feature-grid teaser">
+            <div class="feature-card static"><img src="/assets/img/catalog/niche.svg" alt="" /><div class="fl">Recessed Niches</div></div>
+            <div class="feature-card static"><img src="/assets/img/catalog/bench.svg" alt="" /><div class="fl">Built-in Bench</div></div>
+            <div class="feature-card static"><img src="/assets/img/catalog/curbless.svg" alt="" /><div class="fl">Curbless Entry</div></div>
+            <div class="feature-card static"><img src="/assets/img/catalog/heated.svg" alt="" /><div class="fl">Heated Floors</div></div>
+            <div class="feature-card static"><img src="/assets/img/catalog/rain.svg" alt="" /><div class="fl">Rain Head &amp; Glass</div></div>
+            <div class="feature-card static"><img src="/assets/img/catalog/accent.svg" alt="" /><div class="fl">Patterns &amp; Accents</div></div>
           </div>
-          <div class="feature-grid" id="ds-flat-extras" style="margin-top:10px;"></div>
+          <p style="font-size:13.5px;color:var(--stone);margin:12px 0 0;">At your <b style="color:var(--navy);">free in-home estimate</b> we measure exactly, walk every option with you, and hand you a written, feature-by-feature price the same day — no guesswork, no obligation.</p>
         </div>
-        <div class="design-step" data-show="shower backsplash"><h3><span class="dnum">4</span>TILE LOOK</h3>
-          <p style="font-size:13px;color:var(--stone);margin:0 0 10px;">Patterns like herringbone add setting time — it's all in your ballpark.</p>
-          <div class="design-chips" id="ds-layout">
-            <button type="button" data-k="straight" class="on">Straight</button>
-            <button type="button" data-k="brick">Brick</button>
-            <button type="button" data-k="vertical">Vertical</button>
-            <button type="button" data-k="herringbone">Herringbone</button>
-          </div>
-          <div class="design-chips" id="ds-floor" data-show="shower">
-            <button type="button" data-k="standard" class="on">Standard shower floor</button>
-            <button type="button" data-k="mosaic">Mosaic shower floor</button>
-          </div>
-        </div>
+      </div>
       </div>
       <div class="design-side">
         <div class="design-preview">
@@ -594,7 +584,7 @@ const designBody = `
           <div id="design-result" hidden>
             <div class="labor-badge">YOUR PROJECT BALLPARK</div>
             <div class="range" id="design-range">$—</div>
-            <p class="note">${BALLPARK.laborOnly} ${BALLPARK.disclaimerShort}</p>
+            <p class="note">Core build only — niches, benches, glass, heated floors and other upgrades are priced at your free estimate. ${BALLPARK.laborOnly} ${BALLPARK.disclaimerShort}</p>
             <button class="btn full" id="design-book-btn" type="button">Book My Free In-Home Estimate</button>
             <p class="form-status" id="design-book-status" hidden></p>
             <p class="form-note" style="color:var(--stone);">Your design comes with it — no re-explaining.</p>
