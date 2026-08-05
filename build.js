@@ -568,8 +568,8 @@ const designBody = `
           <div id="ds-preview-shower" class="preview-photo">
             <img src="/assets/img/shower-preview.png" alt="Corner shower with dimension arrows" />
             <span class="pm pm-h">Wall Height<br /><b id="pv-dh">96 in</b></span>
-            <span class="pm pm-w">Width<br /><b id="pv-dw">60 in</b></span>
-            <span class="pm pm-d">Depth<br /><b id="pv-dd">36 in</b></span>
+            <span class="pm pm-w">Depth<br /><b id="pv-dd">36 in</b></span>
+            <span class="pm pm-d">Width<br /><b id="pv-dw">60 in</b></span>
           </div>
           <img id="ds-preview-img" src="/assets/img/bathroom-tile-remodel-vancouver-wa.jpg" alt="Project preview" hidden style="width:100%;border-radius:10px;display:block;" />
         </div>
