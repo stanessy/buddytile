@@ -502,10 +502,10 @@ add('/privacy/', {
 
 
 const designBody = `
-<div class="container breadcrumbs"><a href="/">Home</a> / Design &amp; Price</div>
+<div class="container breadcrumbs"><a href="/">Home</a> / Ballpark Price</div>
 <section style="padding-top:26px;">
   <div class="container">
-    <h1>DESIGN IT. PRICE IT.</h1>
+    <h1>YOUR INSTANT BALLPARK</h1>
     <hr class="gold-bar" />
     <p class="lead" style="max-width:38em;">Pick your project, style it, and get an instant ballpark — in about two minutes. One number at the end, no pressure, no spam.</p>
     <div class="design-grid">
@@ -597,7 +597,7 @@ const designBody = `
 </section>`;
 
 add('/design/', {
-  title: 'Design It. Price It. — Instant Tile Ballpark | Buddy Tile',
+  title: 'Instant Ballpark Price — Showers, Floors, Backsplashes & Remodels | Buddy Tile',
   description:
     'Design your tile shower, bathroom floor, or kitchen backsplash and get an instant ballpark price for Vancouver WA & Portland OR. Visual, fast, no spam.',
   jsonLd: businessLd(),

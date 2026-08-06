@@ -33,7 +33,7 @@ function passesHumanCheck(form, statusEl) {
   var TILE_DIVISION_ID = 1;
 
   document.querySelectorAll('form.lead-form').forEach(function (form) {
-    if (form.id === 'ballpark-gate-form') return; // the gate has its own handler
+    if (form.id === 'ballpark-gate-form' || form.id === 'design-gate-form') return; // gates have their own handlers
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var status = form.querySelector('.form-status');
@@ -103,6 +103,12 @@ function passesHumanCheck(form, statusEl) {
   if (!typeBox || !window.BT_DESIGNER || !window.BT_BALLPARK) return;
   var D = window.BT_DESIGNER;
   var BP = window.BT_BALLPARK;
+  var API_BASE =
+    window.BT_API_BASE ||
+    (location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+      ? 'http://localhost:5001'
+      : 'https://buddybuilt.com');
+  var TILE_DIVISION_ID = 1;
   var state = { type: 'shower', w: 60, d: 36, h: 96, walls: 3, sqft: 60, scope: 'tile', rsize: 'standard' };
 
   function chips(id, attr, cb) {
