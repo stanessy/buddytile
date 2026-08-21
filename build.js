@@ -690,7 +690,7 @@ const payBody = `
     <h1>MAKE A <span class="hl">PAYMENT</span></h1>
     <p class="lead">Pay your deposit or invoice online. Enter your invoice number and the email we have on file, and we'll send your secure payment page, card or Zelle, no fees either way.</p>
     <form id="pay-lookup" class="lead-form" style="max-width:520px;">
-      <input name="number" placeholder="Invoice number (like BT-INV-1024) *" required maxlength="40" />
+      <input name="number" placeholder="Invoice number *" required maxlength="40" />
       <input name="email" type="email" placeholder="Email on the invoice *" required maxlength="200" />
       <button class="btn full" type="submit">Email Me My Payment Link</button>
       <p class="form-status" hidden></p>
