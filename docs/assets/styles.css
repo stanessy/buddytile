@@ -548,3 +548,34 @@ h2 { margin-bottom: 0.55em; }
 @media (prefers-reduced-motion: reduce) {
   .card, .card img, .quote-card { transition: none; }
 }
+
+/* ---- Angled geometry: color blocks become slanted ribbons ---------------- */
+:root { --slant: 2.4vw; }
+
+/* Gold stat band: parallelogram rising to the right, overlapping the hero
+   photo so the seam is a clean diagonal; faint navy stripes for texture */
+.stat-band {
+  position: relative;
+  z-index: 2;
+  margin-top: calc(-1 * var(--slant));
+  clip-path: polygon(0 var(--slant), 100% 0, 100% calc(100% - var(--slant)), 0 100%);
+  padding: var(--slant) 0;
+  background-image: repeating-linear-gradient(-45deg, rgba(28, 46, 68, 0.05) 0 14px, transparent 14px 28px);
+}
+
+/* Navy promise block: same slope, white shows through the cut corners */
+.navy-block {
+  clip-path: polygon(0 var(--slant), 100% 0, 100% calc(100% - var(--slant)), 0 100%);
+  padding-top: calc(64px + var(--slant));
+  padding-bottom: calc(64px + var(--slant));
+}
+
+/* Estimate band: angled top edge cutting into the section above */
+.estimate-band {
+  clip-path: polygon(0 var(--slant), 100% 0, 100% 100%, 0 100%);
+  padding-top: calc(64px + var(--slant));
+}
+
+/* Tags lean into the angle */
+.craft-tag, .labor-badge { transform: skewX(-6deg); }
+.craft-tag > *, .labor-badge > * { transform: skewX(6deg); }
