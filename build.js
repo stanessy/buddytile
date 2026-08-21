@@ -13,6 +13,15 @@ try {
 } catch {
   /* no projects fetched yet — the section and pages simply don't render */
 }
+// Real Google reviews: refresh with `node scripts/fetch-reviews.js` (needs
+// GOOGLE_MAPS_API_KEY). Until real ones exist, the curated cards render.
+let GOOGLE_REVIEWS = null;
+try {
+  const gr = require('./src/reviews.json');
+  if (gr.reviews?.length) GOOGLE_REVIEWS = gr;
+} catch {
+  /* not fetched yet */
+}
 const monthYear = (d) => new Date(`${d}T12:00:00`).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 const projectCard = (pr) => {
   const cover = pr.photos.find((x) => x.phase === 'after') || pr.photos[0];
@@ -284,11 +293,22 @@ const homeBody = `
   <div class="container center">
     <h2>WHAT YOUR NEIGHBORS SAY</h2>
     <hr class="gold-bar" />
+    ${
+      GOOGLE_REVIEWS
+        ? `<p class="section-sub">${GOOGLE_REVIEWS.rating ? `<strong>${GOOGLE_REVIEWS.rating.toFixed(1)} ★</strong> from ${GOOGLE_REVIEWS.total} Google review${GOOGLE_REVIEWS.total === 1 ? '' : 's'} · ` : ''}<a href="${esc(GOOGLE_REVIEWS.mapsUrl || 'https://www.google.com/maps/place/?q=place_id:' + GOOGLE_REVIEWS.placeId)}" target="_blank" rel="noopener">Read them all on Google →</a></p>
     <div class="quote-grid">
+      ${GOOGLE_REVIEWS.reviews
+        .map(
+          (t) => `<div class="quote-card"><div class="stars">${'★'.repeat(t.rating)}</div><blockquote>"${esc(t.text)}"</blockquote><div class="who">– ${esc(t.author)}</div><div class="where">Google review · ${esc(t.when)}</div></div>`
+        )
+        .join('')}
+    </div>`
+        : `<div class="quote-grid">
       ${TESTIMONIALS.map(
         (t) => `<div class="quote-card"><div class="stars">★★★★★</div><blockquote>"${esc(t.quote)}"</blockquote><div class="who">– ${esc(t.name)}</div><div class="where">${esc(t.where)}</div></div>`
       ).join('')}
-    </div>
+    </div>`
+    }
   </div>
 </section>
 
