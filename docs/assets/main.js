@@ -287,3 +287,41 @@ function passesHumanCheck(form, statusEl) {
     }).catch(function () { status.textContent = 'Something went wrong, please call us.'; });
   });
 })();
+
+// ---- /pay/: invoice lookup, we email the secure payment link ---------------
+(function () {
+  var form = document.getElementById('pay-lookup');
+  if (!form) return;
+  var API_BASE =
+    window.BT_API_BASE ||
+    (location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+      ? 'http://localhost:5001'
+      : 'https://buddybuilt.com');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var status = form.querySelector('.form-status');
+    var btn = form.querySelector('button[type=submit]');
+    var f = new FormData(form);
+    btn.disabled = true;
+    status.hidden = false;
+    status.style.color = 'var(--navy)';
+    status.textContent = 'Checking…';
+    fetch(API_BASE + '/api/public/pay-link', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ number: f.get('number'), email: f.get('email') }),
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        status.style.color = d.ok ? '#1B7F3B' : '#C0392B';
+        status.textContent = d.message || d.error || 'Something went wrong. Give us a call!';
+      })
+      .catch(function () {
+        status.style.color = '#C0392B';
+        status.textContent = 'Could not reach the server. Call (360) 899-6336 and we will take care of it.';
+      })
+      .finally(function () {
+        btn.disabled = false;
+      });
+  });
+})();

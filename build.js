@@ -122,6 +122,7 @@ const footer = `
           <li><a href="tel:${SITE.phone.replace(/[^0-9+]/g, '')}">${SITE.phone}</a></li>
           <li><a href="mailto:${SITE.email}">${SITE.email}</a></li>
           <li><a href="/about/">About Buddy Tile</a></li>
+          <li><a href="/pay/">Make a payment</a></li>
           <li><a href="https://buddybuilt.com/portal" target="_blank" rel="noopener">Customer Portal, track your project</a></li>
           <li><a href="https://buddybuilt.com" rel="noopener">The Buddy Built family</a></li>
           <li><a href="/privacy/">Privacy Policy</a></li>
@@ -680,6 +681,35 @@ for (const pr of PROJECTS) {
     body: projectPage(pr),
   });
 }
+
+
+const payBody = `
+<div class="container breadcrumbs"><a href="/">Home</a> / Make a Payment</div>
+<section style="padding-top:26px;">
+  <div class="container" style="max-width:640px;">
+    <h1>MAKE A <span class="hl">PAYMENT</span></h1>
+    <p class="lead">Pay your deposit or invoice online. Enter your invoice number and the email we have on file, and we'll send your secure payment page, card or Zelle, no fees either way.</p>
+    <form id="pay-lookup" class="lead-form" style="max-width:520px;">
+      <input name="number" placeholder="Invoice number (like BT-INV-1024) *" required maxlength="40" />
+      <input name="email" type="email" placeholder="Email on the invoice *" required maxlength="200" />
+      <button class="btn full" type="submit">Email Me My Payment Link</button>
+      <p class="form-status" hidden></p>
+      <p class="form-note" style="color:var(--stone);">Your invoice number is at the top of the invoice we emailed you. The payment page is private to you, that's why we send it to your email instead of showing it here.</p>
+    </form>
+    <div style="margin-top:34px;border-top:1px solid var(--line);padding-top:22px;">
+      <h3>PREFER TO TALK TO A PERSON?</h3>
+      <p style="color:var(--stone);">Call <a href="tel:${SITE.phone.replace(/[^0-9+]/g, '')}" style="font-weight:700;">${SITE.phone}</a> and we'll take your payment over the phone or answer anything about your invoice. Card, Zelle, or check, whatever is easiest for you.</p>
+    </div>
+  </div>
+</section>`;
+
+add('/pay/', {
+  title: 'Make a Payment | Buddy Tile',
+  description:
+    'Pay your Buddy Tile deposit or invoice online, card or Zelle, no fees. Enter your invoice number and we email your secure payment link.',
+  jsonLd: null,
+  body: payBody,
+});
 
 // /ballpark/ merged into /design/, keep old links alive with a redirect
 write('/ballpark/', `<!doctype html><html><head><meta charset="utf-8"><title>Redirecting…</title><link rel="canonical" href="${SITE.domain}/design/"><meta http-equiv="refresh" content="0;url=/design/"></head><body><a href="/design/">Design &amp; Price your project</a></body></html>`);
