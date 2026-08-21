@@ -133,6 +133,32 @@ ${footer}
 </body>
 </html>`;
 
+const faqSection = (faqs) =>
+  !faqs?.length
+    ? ''
+    : `
+<section>
+  <div class="container" style="max-width:840px;">
+    <h2>QUESTIONS WE HEAR EVERY WEEK</h2>
+    <hr class="gold-bar" />
+    ${faqs
+      .map(
+        (f) => `<details style="border-bottom:1px solid #E5E7EB;padding:14px 0;"><summary style="font-weight:700;cursor:pointer;font-size:17px;">${esc(f.q)}</summary><p style="color:var(--stone);margin:10px 0 0;">${esc(f.a)}</p></details>`
+      )
+      .join('')}
+  </div>
+</section>`;
+
+const faqLd = (faqs) => ({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: (faqs || []).map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+});
+
 const businessLd = (extra = {}) => ({
   '@context': 'https://schema.org',
   '@type': 'HomeAndConstructionBusiness',
@@ -344,7 +370,57 @@ const servicePage = (s) => `
     </div>
   </div>
 </section>
+${faqSection(s.faqs)}
+<section class="alt">
+  <div class="container">
+    <h2>${s.name.toUpperCase()} NEAR YOU</h2>
+    <hr class="gold-bar" />
+    <div class="grid cols-3">
+      ${CITIES.map(
+        (c) => `<a class="card" href="/services/${s.slug}/${c.slug}/"><div class="body"><h3>${c.name.toUpperCase()}, ${c.state}</h3><div class="go">${esc(s.name)} in ${c.name} →</div></div></a>`
+      ).join('')}
+    </div>
+  </div>
+</section>
 ${leadForm(`service:${s.slug}`)}`;
+
+// The matrix page: one service in one city — localized copy, prices, and
+// neighborhoods so every page earns its ranking instead of being a doorway.
+const serviceCityPage = (s, c) => `
+<div class="container breadcrumbs"><a href="/">Home</a> / <a href="/services/${s.slug}/">${esc(s.name)}</a> / ${c.name}, ${c.state}</div>
+<section style="padding-top:26px;">
+  <div class="container two-col">
+    <div>
+      <h1>${s.h1.toUpperCase()} IN ${c.name.toUpperCase()}, ${c.state}</h1>
+      <hr class="gold-bar" />
+      <p class="lead">${esc(s.intro)}</p>
+      <p>${esc(c.blurb)} We regularly work in ${c.neighborhoods.slice(0, -1).join(', ')} and ${c.neighborhoods[c.neighborhoods.length - 1]} — free in-home estimates, written the same day.</p>
+      <ul class="tick-list">${s.bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>
+      <p><a class="btn" href="#estimate">Get My ${c.name} Estimate</a></p>
+    </div>
+    <div>
+      <img class="rounded-img" src="/assets/img/${s.photo}" alt="${esc(s.h1)} in ${esc(c.name)}, ${c.state}" />
+      <p style="color:var(--stone);font-size:14px;margin-top:12px;">Licensed, bonded &amp; insured · Serving ${c.name} and the surrounding metro.</p>
+    </div>
+  </div>
+</section>
+${faqSection(s.faqs)}
+<section class="alt">
+  <div class="container">
+    <h2>MORE TILE WORK IN ${c.name.toUpperCase()}</h2>
+    <hr class="gold-bar" />
+    <div class="grid cols-3">
+      ${SERVICES.filter((x) => x.slug !== s.slug)
+        .slice(0, 6)
+        .map((x) => `<a class="card" href="/services/${x.slug}/${c.slug}/"><div class="body"><h3>${x.name.toUpperCase()}</h3><div class="go">${esc(x.name)} in ${c.name} →</div></div></a>`)
+        .join('')}
+    </div>
+    <p style="margin-top:18px;"><a href="/tile-contractor/${c.slug}/">Everything we do in ${c.name}, ${c.state} →</a>
+      ${CITIES.filter((x) => x.slug !== c.slug).slice(0, 3).map((x) => ` · <a href="/services/${s.slug}/${x.slug}/">${esc(s.name)} in ${x.name}</a>`).join('')}
+    </p>
+  </div>
+</section>
+${leadForm(`service:${s.slug}:${c.slug}`)}`;
 
 const cityPage = (c) => `
 <div class="container breadcrumbs"><a href="/">Home</a> / <a href="/#service-area">Service Area</a> / ${c.name}, ${c.state}</div>
@@ -370,12 +446,12 @@ const cityPage = (c) => `
 </section>
 <section class="alt">
   <div class="container">
-    <h2>POPULAR IN ${c.name.toUpperCase()}</h2>
+    <h2>EVERYTHING WE DO IN ${c.name.toUpperCase()}</h2>
     <hr class="gold-bar" />
     <div class="grid cols-3">
-      ${SERVICES.slice(0, 3)
-        .map((x) => `<a class="card" href="/services/${x.slug}/"><img src="/assets/img/${x.photo}" alt="${esc(x.name)}" loading="lazy" /><div class="body"><h3>${x.name.toUpperCase()}</h3><div class="go">Learn more →</div></div></a>`)
-        .join('')}
+      ${SERVICES.map(
+        (x) => `<a class="card" href="/services/${x.slug}/${c.slug}/"><img src="/assets/img/${x.photo}" alt="${esc(x.name)} in ${esc(c.name)}, ${c.state}" loading="lazy" /><div class="body"><h3>${x.name.toUpperCase()}</h3><div class="go">${esc(x.name)} in ${c.name} →</div></div></a>`
+      ).join('')}
     </div>
   </div>
 </section>
@@ -433,16 +509,38 @@ for (const s of SERVICES) {
   add(`/services/${s.slug}/`, {
     title: s.metaTitle,
     description: s.metaDescription,
-    jsonLd: {
-      '@context': 'https://schema.org',
-      '@type': 'Service',
-      name: s.h1,
-      description: s.metaDescription,
-      provider: businessLd(),
-      areaServed: CITIES.map((c) => `${c.name}, ${c.state}`),
-    },
+    jsonLd: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        name: s.h1,
+        description: s.metaDescription,
+        provider: businessLd(),
+        areaServed: CITIES.map((c) => `${c.name}, ${c.state}`),
+      },
+      faqLd(s.faqs),
+    ],
     body: servicePage(s),
   });
+  // One page per service per city — the long-tail matrix
+  for (const c of CITIES) {
+    add(`/services/${s.slug}/${c.slug}/`, {
+      title: `${s.name} in ${c.name}, ${c.state} | Buddy Tile`,
+      description: `${s.name} for ${c.name}, ${c.state} homeowners — free in-home estimates, licensed & bonded, no card fees. ${s.metaDescription}`.slice(0, 300),
+      jsonLd: [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'Service',
+          name: `${s.h1} in ${c.name}, ${c.state}`,
+          description: s.metaDescription,
+          provider: businessLd(),
+          areaServed: { '@type': 'City', name: `${c.name}, ${c.state}` },
+        },
+        faqLd(s.faqs),
+      ],
+      body: serviceCityPage(s, c),
+    });
+  }
 }
 
 for (const c of CITIES) {

@@ -36,6 +36,12 @@ const SERVICES = [
       'Linear or center drains, heated floors, glass enclosures coordinated',
       'Demo to done in days, with daily progress photos to your phone',
     ],
+    faqs: [
+      { q: 'How much does a custom tile shower cost in Vancouver WA?', a: 'Most full tile showers run $6,200–$10,500 for labor and waterproofing, depending on size and features like niches, benches, or curbless entries. Tub-to-shower conversions start around $5,600. Finish tile is priced with your selections, and your written in-home estimate is free.' },
+      { q: 'How long does a shower remodel take?', a: 'Most showers run 5–8 working days from demo to grout: tear-out, waterproofing with a flood test, tile, then grout and seal. We protect the path to the room and vacuum the site every night.' },
+      { q: 'Do you use Schluter waterproofing?', a: 'Yes — every shower gets a full membrane system (Schluter Kerdi, GoBoard, or HydroBan), a flood-tested pan, and photos of the waterproofing before tile covers it.' },
+      { q: 'Can you convert my tub to a walk-in shower?', a: 'That is one of our most common projects. We remove the tub, rebuild the wet area with proper waterproofing, and tile a walk-in or curbless shower — usually within a week.' },
+    ],
     photo: 'tile-shower-remodel-vancouver-wa.jpg',
   },
   {
@@ -52,6 +58,11 @@ const SERVICES = [
       'Substrate prep: self-level, Ditra, crack isolation',
       'Heated floor systems installed under the tile',
       'Baseboard, trim, and transitions finished clean',
+    ],
+    faqs: [
+      { q: 'How much does bathroom floor tile cost installed?', a: 'Figure roughly $16 per square foot for labor and prep on most bathroom floors, with a $900 minimum — a typical hall bath floor lands between $900 and $1,600 before tile selection. Heated floor systems add about $950.' },
+      { q: 'Can you install large-format tile?', a: 'Yes — large format is most of what we set. It needs flatter substrates, so we self-level and use uncoupling membranes where the floor calls for it.' },
+      { q: 'Do you level the floor first?', a: 'Every floor gets checked with a straightedge before tile. If it needs self-leveler or crack isolation, that is in your estimate up front — not a surprise later.' },
     ],
     photo: 'bathroom-tile-remodel-vancouver-wa.jpg',
   },
@@ -70,6 +81,11 @@ const SERVICES = [
       'Most backsplashes done in 1–2 days',
       'Grout and sealant matched to your counters',
     ],
+    faqs: [
+      { q: 'How much does a kitchen backsplash cost?', a: 'Most backsplashes run $28 per square foot for labor with a $750 minimum — a typical 30 sq ft kitchen lands between $750 and $1,100 before tile selection. Zellige, mosaics, and pattern layouts price slightly higher.' },
+      { q: 'How long does a backsplash take?', a: 'Most kitchens are done in 1–2 days: set day one, grout day two. You keep your kitchen usable the whole time.' },
+      { q: 'Do I need to buy the tile?', a: 'Either way works. Bring your own tile, or we supply it with your selections — the estimate shows both clearly.' },
+    ],
     photo: 'kitchen-tile-backsplash-installation.jpg',
   },
   {
@@ -86,6 +102,11 @@ const SERVICES = [
       'Programmable / smart thermostats',
       'Installed with membrane systems, not under them wrong',
       'Adds comfort and resale value for a modest add-on cost',
+    ],
+    faqs: [
+      { q: 'How much does a heated tile floor cost to add?', a: 'Adding electric radiant heat to a bathroom floor we are already tiling typically runs about $950–$1,400 including the thermostat, depending on room size.' },
+      { q: 'How much does a heated floor cost to run?', a: 'A typical bathroom mat draws about as much as a hair dryer while warming up, and a programmable thermostat only runs it when you use the room — most homeowners see a few dollars a month.' },
+      { q: 'Can you add heat under my existing tile?', a: 'The mat has to go under the tile, so heat gets added when a floor is being redone — which is why we always ask about it before a floor project starts.' },
     ],
     photo: 'herringbone-tile-floor-portland-or.jpg',
   },
@@ -104,6 +125,11 @@ const SERVICES = [
       'Fix-it work: we diagnose and rebuild failed showers',
       'Documentation and photos of the membrane before it disappears behind tile',
     ],
+    faqs: [
+      { q: 'How do I know if my shower is leaking behind the tile?', a: 'Soft baseboards, a musty smell, cracked or dark grout lines, and hollow-sounding tile are the common signs. We diagnose honestly — sometimes it is a $400 regrout, sometimes the pan has failed.' },
+      { q: 'Is grout waterproof?', a: 'No — grout and tile both pass moisture. The membrane behind them does the waterproofing, which is why we photograph and flood-test it before tile ever goes up.' },
+      { q: 'Can you fix just the shower pan?', a: 'Sometimes. If the wall membrane is sound we can rebuild the pan alone. If the system behind the walls has failed, we will show you the evidence and price the honest fix.' },
+    ],
     photo: 'craft-tile-hands.jpg',
   },
   {
@@ -121,17 +147,159 @@ const SERVICES = [
       'Loose / hollow tile diagnosis',
       'Straight answers: repair when it can be, rebuild when it must be',
     ],
+    faqs: [
+      { q: 'How much does regrouting a shower cost?', a: 'Most shower regrouts run $550–$900: we grind out the old grout, regrout, and re-caulk the changes of plane. It is the most cost-effective way to make a tired shower look rebuilt.' },
+      { q: 'Can you match my existing grout color?', a: 'Usually, yes. We carry samples of the major grout lines and match against a cleaned section of your existing grout so the repair disappears.' },
+      { q: 'Can you replace one cracked tile?', a: 'If you have a spare tile or we can source a match, single-tile replacement with color-matched grout is a routine visit.' },
+    ],
     photo: 'marble-tile-shower-glass-door.jpg',
+  },
+  {
+    slug: 'tub-to-shower',
+    name: 'Tub-to-Shower Conversions',
+    h1: 'Tub-to-Shower Conversion',
+    metaTitle: 'Tub to Shower Conversion | Vancouver WA & Portland OR | Buddy Tile',
+    metaDescription:
+      'Swap the tub nobody uses for a tiled walk-in shower — demo, waterproofing, tile, and glass handled by one crew, usually inside a week. Free estimates.',
+    intro:
+      "Most families use the tub a handful of times a year and the shower every day. A conversion trades that wasted tub for a walk-in tile shower with real waterproofing — done by one crew, usually inside a week.",
+    bullets: [
+      'Tub out, walk-in tile shower in — one crew, one warranty',
+      'Full membrane waterproofing with a flood-tested pan',
+      'Low-curb and curbless options for easy entry',
+      'Glass doors, niches, benches, and grab bars planned in',
+      'Most conversions finish in 5–7 working days',
+    ],
+    faqs: [
+      { q: 'How much does a tub-to-shower conversion cost?', a: 'Most conversions run $5,600–$7,400 for demo, waterproofing, pan, and wall tile, before finish tile selection. Glass doors add roughly $1,800 installed.' },
+      { q: 'Does removing a tub hurt resale value?', a: 'Agents generally want at least one tub in the house. If you have a second bathroom with a tub, converting the primary to a walk-in shower usually helps, not hurts.' },
+      { q: 'How long is my bathroom out of commission?', a: 'Plan on 5–7 working days from demo to first shower. We seal off the room, protect your floors, and clean up every night.' },
+    ],
+    photo: 'tile-shower-remodel-vancouver-wa.jpg',
+  },
+  {
+    slug: 'walk-in-shower',
+    name: 'Walk-In & Curbless Showers',
+    h1: 'Walk-In & Curbless Shower Installation',
+    metaTitle: 'Walk-In & Curbless Showers | Vancouver WA & Portland OR | Buddy Tile',
+    metaDescription:
+      'Curbless, walk-in tile showers built on linear drains and proper slopes — beautiful now, accessible forever. Free in-home design and estimate.',
+    intro:
+      'A curbless shower is the upgrade that looks high-end today and keeps working for you decades from now. Getting one right is all below the tile: recessed pans, correct slopes, linear drains, and waterproofing that extends past the glass.',
+    bullets: [
+      'True curbless entries with recessed, flood-tested pans',
+      'Linear drains and one-direction slopes done right',
+      'Bench seating, niches, and grab-bar blocking planned in',
+      'Aging-in-place friendly without looking clinical',
+    ],
+    faqs: [
+      { q: 'How much does a curbless shower cost?', a: 'Curbless builds typically run $7,400–$10,500 for labor and waterproofing depending on size — the recessed pan and drain work price above a standard curb shower. Your written estimate is free.' },
+      { q: 'Do curbless showers leak?', a: 'Not when the pan is recessed and sloped correctly with the membrane carried out past the glass line. That is exactly the part we photograph and flood-test before tile.' },
+      { q: 'Is a curbless shower good for aging in place?', a: 'It is the single best bathroom investment for staying in your home: zero threshold, optional bench and grab bars, and nothing that looks like a hospital.' },
+    ],
+    photo: 'marble-tile-shower-glass-door.jpg',
+  },
+  {
+    slug: 'shower-regrout',
+    name: 'Shower Regrouting',
+    h1: 'Shower Regrouting & Recaulking',
+    metaTitle: 'Shower Regrouting | Vancouver WA & Portland OR | Buddy Tile',
+    metaDescription:
+      'Keep your tile — we grind out failing grout and regrout the whole shower. A freshly remodeled look for a fraction of a remodel price. Free estimates.',
+    intro:
+      "If your tile is sound but the grout is dark, cracked, or crumbling, you don't need a remodel — you need a regrout. We grind the old grout out, regrout the field, and re-caulk every change of plane. The shower reads brand-new at a fraction of remodel cost.",
+    bullets: [
+      'Old grout ground out — not smeared over',
+      'Fresh grout, color of your choice, sealed',
+      'Silicone re-caulked at corners, curb, and glass',
+      'Done in a day or two, shower back in service fast',
+      'Honest assessment first: if the problem is behind the tile, we tell you',
+    ],
+    faqs: [
+      { q: 'How much does shower regrouting cost?', a: 'Most full shower regrouts run $550–$900 including re-caulking. Compare that to a $6,000+ remodel — when the tile and waterproofing are sound, regrouting is the smart money.' },
+      { q: 'How do I know if I need regrouting or a new shower?', a: 'Cracked or powdery grout with solid, well-bonded tile usually means regrout. Hollow-sounding tile, soft walls, or recurring mold point deeper — we check honestly before quoting either way.' },
+      { q: 'How long does regrouting take?', a: 'Most showers take one to two days, and you can usually shower again 24 hours after we seal.' },
+    ],
+    photo: 'craft-tile-hands.jpg',
+  },
+  {
+    slug: 'grout-cleaning',
+    name: 'Grout Cleaning & Sealing',
+    h1: 'Grout Deep Cleaning & Sealing',
+    metaTitle: 'Grout Cleaning & Sealing | Vancouver WA & Portland OR | Buddy Tile',
+    metaDescription:
+      'Machine deep-cleaning, stain treatment, and penetrating sealer for tile floors and showers — the most cost-effective way to make tile look new again.',
+    intro:
+      "Years of mopping push dirt into grout and leave it gray no matter what you scrub with. Our machine deep-clean pulls the grime back out, treats stains, and locks the result in with a penetrating sealer — the single most cost-effective spruce-up in the book.",
+    bullets: [
+      'Machine extraction cleaning — not a mop and hope',
+      'Stain treatment for oil, rust, and organic marks',
+      'Penetrating sealer so it stays clean longer',
+      'Floors, showers, backsplashes, and entryways',
+      'No demo, no dust — done in a day',
+    ],
+    faqs: [
+      { q: 'How much does grout cleaning and sealing cost?', a: 'Most jobs run $300–$600 depending on the area — roughly $1.50 per square foot with a modest minimum. It is the cheapest way to make a tiled room look new.' },
+      { q: 'Will cleaning fix discolored grout?', a: 'Usually dramatically. Where stains are permanent, we can apply a color-seal that restores a uniform tone — or quote a regrout if the grout is failing rather than just dirty.' },
+      { q: 'How often should grout be sealed?', a: 'High-traffic floors every 1–2 years; showers roughly every year. Sealed grout wipes clean instead of absorbing.' },
+    ],
+    photo: 'bathroom-tile-remodel-vancouver-wa.jpg',
+  },
+  {
+    slug: 'floor-tile',
+    name: 'Tile Floor Installation',
+    h1: 'Tile Floor Installation',
+    metaTitle: 'Tile Floor Installation | Vancouver WA & Portland OR | Buddy Tile',
+    metaDescription:
+      'Kitchen, entry, laundry, and bathroom tile floors installed flat and hollow-free — self-leveling, uncoupling membranes, and clean transitions. Free estimates.',
+    intro:
+      "Floors take the most abuse of any tile in the house — carts, dogs, dropped pans, wet boots. We prep the substrate like it matters, because it does: self-leveler where the floor dips, uncoupling membrane where it moves, and layout planned so the cuts land where you'll never see them.",
+    bullets: [
+      'Kitchens, entries, laundry rooms, mudrooms, and baths',
+      'Self-leveling and crack-isolation prep included in the quote',
+      'Large format, herringbone, and pattern layouts',
+      'Heated floor systems added while the floor is open',
+      'Clean transitions to wood, carpet, and LVP',
+    ],
+    faqs: [
+      { q: 'How much does tile floor installation cost?', a: 'Labor and prep run about $16 per square foot on most floors with a $900 minimum — a 60 sq ft entry lands near $1,000, a 120 sq ft kitchen near $2,000, before tile selection.' },
+      { q: 'Can you tile over my existing floor?', a: 'Sometimes over sound concrete or existing tile; never over floating floors. We check the substrate at the estimate and put the honest prep in writing.' },
+      { q: 'What tile is best for entryways and mudrooms?', a: 'Porcelain with a textured finish — it shrugs off water, grit, and dog claws. We will bring samples rated for exactly that abuse.' },
+    ],
+    photo: 'herringbone-tile-floor-portland-or.jpg',
+  },
+  {
+    slug: 'fireplace-tile',
+    name: 'Fireplace Tile Surrounds',
+    h1: 'Fireplace Tile & Stone Surrounds',
+    metaTitle: 'Fireplace Tile Surround | Vancouver WA & Portland OR | Buddy Tile',
+    metaDescription:
+      'Fireplace surrounds in tile and stone — from dated brick to a modern floor-to-ceiling feature wall, built with heat-rated materials. Free estimates.',
+    intro:
+      "The fireplace is the wall everyone looks at. We take dated brick and 90s tile to floor-to-ceiling stone, large-format porcelain, or handmade tile — set with heat-rated materials and details that hold up to real fires.",
+    bullets: [
+      'Floor-to-ceiling feature walls and classic surrounds',
+      'Large-format porcelain, stacked stone, zellige, and marble',
+      'Heat-rated setting materials around fireboxes',
+      'Hearths, mantels, and TV niches coordinated',
+      'Most surrounds finish in 2–4 days',
+    ],
+    faqs: [
+      { q: 'How much does a tile fireplace surround cost?', a: 'Classic surrounds start around $1,200; floor-to-ceiling feature walls typically run $2,500–$4,500 in labor depending on height and material, before tile selection.' },
+      { q: 'Can you tile over a brick fireplace?', a: 'Usually yes — sound brick takes a scratch coat or backer and then tile or stone directly, which is far cleaner than demolition.' },
+      { q: 'Is it safe to tile around a wood stove or firebox?', a: 'With heat-rated setting materials and correct clearances, yes — we follow the manufacturer clearances for your specific insert or stove.' },
+    ],
+    photo: 'craft-setting.jpg',
   },
 ];
 
 const CITIES = [
-  { slug: 'vancouver', name: 'Vancouver', state: 'WA', blurb: 'Our home base. Same-week estimates across Clark County — Salmon Creek, Felida, Cascade Park, Camas, and Ridgefield.' },
-  { slug: 'portland', name: 'Portland', state: 'OR', blurb: 'Full service across Portland — from Craftsman bathrooms in Sellwood to condo showers in the Pearl.' },
-  { slug: 'beaverton', name: 'Beaverton', state: 'OR', blurb: 'Bathroom remodels and backsplashes across Beaverton, Cedar Hills, and Aloha.' },
-  { slug: 'gresham', name: 'Gresham', state: 'OR', blurb: 'Serving Gresham, Troutdale, and Fairview with the same crews and the same standard.' },
-  { slug: 'hillsboro', name: 'Hillsboro', state: 'OR', blurb: 'Tile work for Hillsboro and Orenco — fast scheduling for occupied homes.' },
-  { slug: 'salem', name: 'Salem', state: 'OR', blurb: 'Weekly routes to Salem and Keizer — book ahead and we bundle your neighborhood.' },
+  { slug: 'vancouver', name: 'Vancouver', state: 'WA', neighborhoods: ['Salmon Creek', 'Felida', 'Cascade Park', 'Fishers Landing', 'Hazel Dell', 'Camas', 'Ridgefield', 'Battle Ground'], blurb: 'Our home base. Same-week estimates across Clark County — Salmon Creek, Felida, Cascade Park, Camas, and Ridgefield.' },
+  { slug: 'portland', name: 'Portland', state: 'OR', neighborhoods: ['Sellwood', 'the Pearl', 'Alberta', 'St. Johns', 'Mt. Tabor', 'Multnomah Village'], blurb: 'Full service across Portland — from Craftsman bathrooms in Sellwood to condo showers in the Pearl.' },
+  { slug: 'beaverton', name: 'Beaverton', state: 'OR', neighborhoods: ['Cedar Hills', 'Aloha', 'Raleigh Hills', 'Sexton Mountain'], blurb: 'Bathroom remodels and backsplashes across Beaverton, Cedar Hills, and Aloha.' },
+  { slug: 'gresham', name: 'Gresham', state: 'OR', neighborhoods: ['Troutdale', 'Fairview', 'Wood Village', 'Powell Valley'], blurb: 'Serving Gresham, Troutdale, and Fairview with the same crews and the same standard.' },
+  { slug: 'hillsboro', name: 'Hillsboro', state: 'OR', neighborhoods: ['Orenco', 'Tanasbourne', 'Jackson School', 'Reedville'], blurb: 'Tile work for Hillsboro and Orenco — fast scheduling for occupied homes.' },
+  { slug: 'salem', name: 'Salem', state: 'OR', neighborhoods: ['Keizer', 'South Salem', 'West Salem', 'Four Corners'], blurb: 'Weekly routes to Salem and Keizer — book ahead and we bundle your neighborhood.' },
 ];
 
 // How you'll be treated — the emotional core of the pitch. Every line is a
