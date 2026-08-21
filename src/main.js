@@ -18,7 +18,7 @@ function passesHumanCheck(form, statusEl) {
   if (statusEl) {
     statusEl.hidden = false;
     statusEl.style.color = '#C0392B';
-    statusEl.textContent = 'That math answer doesn\'t look right — one more try!';
+    statusEl.textContent = 'That math answer doesn\'t look right, one more try!';
   }
   return false;
 }
@@ -46,10 +46,10 @@ function passesHumanCheck(form, statusEl) {
         status.textContent = 'Please add a phone number or an email so we can reach you about your estimate.';
         return;
       }
-      var description = [f.get('projectType'), f.get('description')].filter(Boolean).join(' — ');
+      var description = [f.get('projectType'), f.get('description')].filter(Boolean).join(', ');
       // Ballpark form: attach the calculator selections + range
       if (form.dataset.ballpark && window.__ballparkSummary) {
-        description = 'BALLPARK REQUEST — ' + window.__ballparkSummary;
+        description = 'BALLPARK REQUEST, ' + window.__ballparkSummary;
       }
 
       btn.disabled = true;
@@ -228,14 +228,14 @@ function passesHumanCheck(form, statusEl) {
     }
 
     var lo = Math.round(p.total * D.rangeLo / 100), hi = Math.round(p.total * D.rangeHi / 100);
-    document.getElementById('design-range').textContent = '$' + lo.toLocaleString() + ' – $' + hi.toLocaleString();
+    document.getElementById('design-range').textContent = '$' + lo.toLocaleString() + ' - $' + hi.toLocaleString();
     var scopeNote = (state.type === 'shower' || state.type === 'floor')
       ? (state.scope === 'complex' ? ', scope: more than tile' : ', scope: tile only') : '';
     window.__designSummary = (isShower
       ? 'Tile shower ' + state.w + '\"W x ' + state.d + '\"D x ' + state.h + '\"H, ' + state.walls + ' walls, ' + (p.wallSqft + p.floorSqft).toFixed(0) + ' sqft'
       : state.type === 'remodel' ? 'Full bathroom remodel (' + state.rsize + ')'
       : (state.type === 'floor' ? 'Bathroom floor tile ~' : 'Kitchen backsplash ~') + state.sqft + ' sqft') +
-      scopeNote + ' → $' + lo.toLocaleString() + '–$' + hi.toLocaleString() + ' (core build, labor only)';
+      scopeNote + ' → $' + lo.toLocaleString() + '-$' + hi.toLocaleString() + ' (core build, labor only)';
   }
   render();
 
@@ -255,7 +255,7 @@ function passesHumanCheck(form, statusEl) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         name: contact.name, email: contact.email, phone: contact.phone,
-        description: 'BALLPARK TOOL — ' + (window.__designSummary || ''),
+        description: 'BALLPARK TOOL, ' + (window.__designSummary || ''),
         divisionId: TILE_DIVISION_ID, website: f.get('website') || undefined,
         source: 'buddytile.com design',
       }),
@@ -276,14 +276,14 @@ function passesHumanCheck(form, statusEl) {
         name: contact ? contact.name : 'Ballpark visitor',
         email: contact ? contact.email : undefined,
         phone: contact ? contact.phone : undefined,
-        description: 'BALLPARK TOOL — BOOK ESTIMATE — ' + (window.__designSummary || ''),
+        description: 'BALLPARK TOOL, BOOK ESTIMATE, ' + (window.__designSummary || ''),
         divisionId: TILE_DIVISION_ID,
         source: 'buddytile.com design-book',
       }),
     }).then(function (r) {
       status.textContent = r.ok
-        ? "You're booked for a call — we'll reach out the same business day!"
-        : 'Something went wrong — please call us.';
-    }).catch(function () { status.textContent = 'Something went wrong — please call us.'; });
+        ? "You're booked for a call, we'll reach out the same business day!"
+        : 'Something went wrong, please call us.';
+    }).catch(function () { status.textContent = 'Something went wrong, please call us.'; });
   });
 })();

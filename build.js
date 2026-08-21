@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Buddy Tile static site generator — zero dependencies.
+ * Buddy Tile static site generator, zero dependencies.
  * `node build.js` writes the whole site (HTML, sitemap, robots, assets) to site/.
  */
 const fs = require('fs');
@@ -8,7 +8,7 @@ const path = require('path');
 const { SITE, SERVICES, CITIES, STEPS, TRUST, PROMISE, TESTIMONIALS, BALLPARK, DESIGNER } = require('./src/data');
 // Real jobs from two sources: the platform's portfolio feed (refresh with
 // `node scripts/fetch-projects.js`) plus the hand-curated galleries in
-// projects-manual.json. Platform jobs list first — they're local and dated.
+// projects-manual.json. Platform jobs list first, they're local and dated.
 let PROJECTS = [];
 try {
   PROJECTS = require('./src/projects.json');
@@ -30,7 +30,7 @@ try {
   /* not fetched yet */
 }
 const monthYear = (d) => new Date(`${d}T12:00:00`).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-// Manual galleries may carry no city or date — say only what we know.
+// Manual galleries may carry no city or date, say only what we know.
 const projectByline = (pr) =>
   [pr.city ? `Tile work in ${pr.city}, ${pr.state}` : 'Tile, stone, and glass', pr.completed ? `Completed ${monthYear(pr.completed)}` : null, `Built by ${pr.brand || SITE.name}`]
     .filter(Boolean)
@@ -38,7 +38,7 @@ const projectByline = (pr) =>
 const projectCard = (pr) => {
   const cover = pr.photos.find((x) => x.phase === 'after') || pr.photos[0];
   const sub = [pr.city ? `${pr.city}, ${pr.state}` : `${pr.photos.length} photos`, pr.completed ? monthYear(pr.completed) : null].filter(Boolean).join(' · ');
-  return `<a class="card" href="/projects/${pr.slug}/"><img src="/assets/img/projects/${cover.file}" alt="${esc(pr.title)}${pr.city ? ` — ${esc(pr.city)}, ${esc(pr.state)}` : ''}" loading="lazy" /><div class="body"><h3>${esc((pr.title || '').toUpperCase())}</h3><p>${esc(sub)}</p><div class="go">See this project →</div></div></a>`;
+  return `<a class="card" href="/projects/${pr.slug}/"><img src="/assets/img/projects/${cover.file}" alt="${esc(pr.title)}${pr.city ? `, ${esc(pr.city)}, ${esc(pr.state)}` : ''}" loading="lazy" /><div class="body"><h3>${esc((pr.title || '').toUpperCase())}</h3><p>${esc(sub)}</p><div class="go">See this project →</div></div></a>`;
 };
 
 const OUT = path.join(__dirname, 'docs');
@@ -51,7 +51,7 @@ const header = (isHome) => `
 <header class="site-header${isHome ? ' home' : ''}">
   <div class="container">
     <a href="/" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff;">
-      <span class="badge-slot"><img class="badge" src="/assets/img/buddy-tile-sm.png?v=3" alt="Buddy Tile — a Buddy Built company" /></span>
+      <span class="badge-slot"><img class="badge" src="/assets/img/buddy-tile-sm.png?v=3" alt="Buddy Tile, a Buddy Built company" /></span>
     </a>
     <nav class="site-nav">
       <a class="hide-m" href="/#services">Services</a>
@@ -95,7 +95,7 @@ const leadForm = (context) => `
       </div>
       <button class="btn" type="submit">Get My Free Estimate</button>
       <p class="form-status" hidden></p>
-      <p class="form-note">We reply the same business day. Your info never gets sold — you're a neighbor, not a lead.</p>
+      <p class="form-note">We reply the same business day. Your info never gets sold. You're a neighbor, not a lead.</p>
     </form>
   </div>
 </section>`;
@@ -122,7 +122,7 @@ const footer = `
           <li><a href="tel:${SITE.phone.replace(/[^0-9+]/g, '')}">${SITE.phone}</a></li>
           <li><a href="mailto:${SITE.email}">${SITE.email}</a></li>
           <li><a href="/about/">About Buddy Tile</a></li>
-          <li><a href="https://buddybuilt.com/portal" target="_blank" rel="noopener">Customer Portal — track your project</a></li>
+          <li><a href="https://buddybuilt.com/portal" target="_blank" rel="noopener">Customer Portal, track your project</a></li>
           <li><a href="https://buddybuilt.com" rel="noopener">The Buddy Built family</a></li>
           <li><a href="/privacy/">Privacy Policy</a></li>
         </ul>
@@ -222,14 +222,14 @@ const homeBody = `
     <div>
       <h1>THE BATHROOM YOU'LL<br/><span class="gold">LOVE</span> COMING HOME TO.</h1>
       <hr class="gold-bar" />
-      <p class="lead">You've lived with the cracked grout and the cold floor long enough. In about a week, our tile craftsmen turn the room you apologize for into the one you show off — and treat you, your home, and your budget with the care a neighbor deserves.</p>
+      <p class="lead">You've lived with the cracked grout and the cold floor long enough. In about a week, our tile craftsmen turn the room you apologize for into the one you show off. And they treat you, your home, and your budget with the care a neighbor deserves.</p>
       <div class="chips">
         <span>Family owned</span><span>Licensed &amp; bonded</span><span>Flood-tested waterproofing</span><span>Same-day written estimates</span>
       </div>
     </div>
     <div class="hero-card">
       <h3>GET A FREE IN-HOME ESTIMATE</h3>
-      <p class="hero-card-sub">We measure in person — your written estimate arrives the same day.</p>
+      <p class="hero-card-sub">We measure in person, and your written estimate arrives the same day.</p>
       <form class="lead-form hero-lead" data-context="hero">
         <input name="name" placeholder="Your name *" required maxlength="120" class="full" />
         <input name="phone" type="tel" placeholder="Phone *" required maxlength="30" />
@@ -257,7 +257,7 @@ const homeBody = `
 
 <div class="stat-band">
   <div class="container stat-grid">
-    <div class="stat"><div class="n">SAME DAY</div><p>Written estimates — in your inbox before dinner</p></div>
+    <div class="stat"><div class="n">SAME DAY</div><p>Written estimates, in your inbox before dinner</p></div>
     <div class="stat"><div class="n">5&ndash;8 DAYS</div><p>Demo to grout on most showers</p></div>
     <div class="stat"><div class="n">100%</div><p>Every shower flood-tested &amp; photographed before tile</p></div>
     <div class="stat"><div class="n">1</div><p>Number, one warranty, one standard</p></div>
@@ -268,7 +268,7 @@ const homeBody = `
   <div class="container center">
     <h2>WHAT WE <span class="hl">BUILD</span></h2>
     <hr class="gold-bar" />
-    <p class="section-sub">Showers, kitchens, floors, and the waterproofing underneath it all — set by dedicated tile crews, not whoever answered the ad.</p>
+    <p class="section-sub">Showers, kitchens, floors, and the waterproofing underneath it all, set by dedicated tile crews, not whoever answered the ad.</p>
     <div class="grid cols-3" style="text-align:left;">
       ${SERVICES.map(
         (s) => `<a class="card" href="/services/${s.slug}/">
@@ -303,7 +303,7 @@ const homeBody = `
     <div>
       <img class="rounded-img" src="/assets/img/craft-tile-hands.jpg" alt="Buddy Tile installer setting tile" loading="lazy" />
       <h3 style="margin-top:20px;">YOU'RE A NEIGHBOR, NOT A LEAD</h3>
-      <p style="color:var(--stone);">Lead-generation sites sell your phone number to five strangers. Call Buddy Tile and you get Buddy Tile — our crews, our warranty, our number, from the first hello to the final walkthrough.</p>
+      <p style="color:var(--stone);">Lead-generation sites sell your phone number to five strangers. Call Buddy Tile and you get Buddy Tile, our crews, our warranty, our number, from the first hello to the final walkthrough.</p>
     </div>
   </div>
 </section>
@@ -318,13 +318,13 @@ const homeBody = `
     <div class="quote-grid">
       ${GOOGLE_REVIEWS.reviews
         .map(
-          (t) => `<div class="quote-card"><div class="stars">${'★'.repeat(t.rating)}</div><blockquote>"${esc(t.text)}"</blockquote><div class="who">– ${esc(t.author)}</div><div class="where">Google review · ${esc(t.when)}</div></div>`
+          (t) => `<div class="quote-card"><div class="stars">${'★'.repeat(t.rating)}</div><blockquote>"${esc(t.text)}"</blockquote><div class="who">- ${esc(t.author)}</div><div class="where">Google review · ${esc(t.when)}</div></div>`
         )
         .join('')}
     </div>`
         : `<div class="quote-grid">
       ${TESTIMONIALS.map(
-        (t) => `<div class="quote-card"><div class="stars">★★★★★</div><blockquote>"${esc(t.quote)}"</blockquote><div class="who">– ${esc(t.name)}</div><div class="where">${esc(t.where)}</div></div>`
+        (t) => `<div class="quote-card"><div class="stars">★★★★★</div><blockquote>"${esc(t.quote)}"</blockquote><div class="who">- ${esc(t.name)}</div><div class="where">${esc(t.where)}</div></div>`
       ).join('')}
     </div>`
     }
@@ -335,20 +335,20 @@ const homeBody = `
   <div class="container center">
     <h2>THE <span class="hl">CRAFT</span> BEHIND THE FINISH</h2>
     <hr class="gold-bar" />
-    <p class="section-sub">Anyone can show you a pretty "after." We're just as proud of what goes underneath — and we photograph both for you.</p>
+    <p class="section-sub">Anyone can show you a pretty "after." We're just as proud of what goes underneath, and we photograph both for you.</p>
     <div class="craft-pair">
       <figure>
         <img src="/assets/img/craft-tile-hands.jpg" alt="Buddy Tile installer setting tile over prepared substrate" loading="lazy" />
         <figcaption>
           <span class="craft-tag">THE WORK YOU NEVER SEE</span>
-          <p>Waterproofing, flat substrates, tight layout — every hidden step photographed and sent to your phone before tile covers it.</p>
+          <p>Waterproofing, flat substrates, tight layout, every hidden step photographed and sent to your phone before tile covers it.</p>
         </figcaption>
       </figure>
       <figure>
         <img src="/assets/img/marble-tile-shower-glass-door.jpg" alt="Finished marble tile shower with glass door" loading="lazy" />
         <figcaption>
           <span class="craft-tag gold">THE FINISH YOU LIVE WITH</span>
-          <p>Set to TCNA standards over a flood-tested pan — built to look this good for decades, and warrantied by name.</p>
+          <p>Set to TCNA standards over a flood-tested pan, built to look this good for decades, and warrantied by name.</p>
         </figcaption>
       </figure>
     </div>
@@ -436,7 +436,7 @@ ${faqSection(s.faqs)}
 </section>
 ${leadForm(`service:${s.slug}`)}`;
 
-// The matrix page: one service in one city — localized copy, prices, and
+// The matrix page: one service in one city, localized copy, prices, and
 // neighborhoods so every page earns its ranking instead of being a doorway.
 const serviceCityPage = (s, c) => `
 <div class="container breadcrumbs"><a href="/">Home</a> / <a href="/services/${s.slug}/">${esc(s.name)}</a> / ${c.name}, ${c.state}</div>
@@ -446,7 +446,7 @@ const serviceCityPage = (s, c) => `
       <h1>${s.h1.toUpperCase()} IN ${c.name.toUpperCase()}, ${c.state}</h1>
       <hr class="gold-bar" />
       <p class="lead">${esc(s.intro)}</p>
-      <p>${esc(c.blurb)} We regularly work in ${c.neighborhoods.slice(0, -1).join(', ')} and ${c.neighborhoods[c.neighborhoods.length - 1]} — free in-home estimates, written the same day.</p>
+      <p>${esc(c.blurb)} We regularly work in ${c.neighborhoods.slice(0, -1).join(', ')} and ${c.neighborhoods[c.neighborhoods.length - 1]}, free in-home estimates, written the same day.</p>
       <ul class="tick-list">${s.bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>
       <p><a class="btn" href="#estimate">Get My ${c.name} Estimate</a></p>
     </div>
@@ -483,7 +483,7 @@ const cityPage = (c) => `
       <hr class="gold-bar" />
       <p class="lead">Custom tile showers, bathroom floors, backsplashes, and heated floors for ${c.name} homeowners. ${esc(c.blurb)}</p>
       <ul class="tick-list">
-        <li>Free in-home visits in ${c.name} — written estimate the same day</li>
+        <li>Free in-home visits in ${c.name}, written estimate the same day</li>
         <li>Licensed, bonded &amp; insured in Washington and Oregon</li>
         <li>Schluter-system waterproofing on every shower, flood-tested</li>
         <li>Approve your estimate online; watch daily progress photos</li>
@@ -515,11 +515,11 @@ const projectsIndexBody = `
   <div class="container">
     <h1>REAL JOBS. REAL HOMES. REAL PHOTOS.</h1>
     <hr class="gold-bar" />
-    <p class="lead" style="max-width:760px;">Every project below is a real ${SITE.name} job — photographed by the crew that built it, including the waterproofing you'd never otherwise see. No stock photos, ever.</p>
+    <p class="lead" style="max-width:760px;">Every project below is a real ${SITE.name} job, photographed by the crew that built it, including the waterproofing you'd never otherwise see. No stock photos, ever.</p>
     <div class="grid cols-3" style="margin-top:22px;">
       ${PROJECTS.map(projectCard).join('')}
     </div>
-    ${PROJECTS.length === 0 ? '<p style="color:var(--stone);">Fresh projects are on the way — check back soon.</p>' : ''}
+    ${PROJECTS.length === 0 ? '<p style="color:var(--stone);">Fresh projects are on the way, check back soon.</p>' : ''}
   </div>
 </section>
 ${leadForm('projects')}`;
@@ -568,9 +568,9 @@ const aboutBody = `
     <div>
       <h1>ONE COMPANY. EXPERTS IN EVERY TRADE.</h1>
       <hr class="gold-bar" />
-      <p class="lead">Buddy Tile is the tile division of Buddy Built — a family of home-service brands built on one idea: hire the company, not a stranger from a lead site.</p>
-      <p>Every Buddy crew works to one standard, carries one warranty, and answers to one phone number. Your estimator sketches your Tile Plan in your bathroom, sends your written estimate the same day, and the crew that shows up builds exactly what you approved — with photos of the waterproofing before it disappears behind tile.</p>
-      <p>Need glass, plumbing, or flooring alongside the tile? That's the point of the family — one call brings the right Buddy trade, and everything lands on a single estimate.</p>
+      <p class="lead">Buddy Tile is the tile division of Buddy Built, a family of home-service brands built on one idea: hire the company, not a stranger from a lead site.</p>
+      <p>Every Buddy crew works to one standard, carries one warranty, and answers to one phone number. Your estimator sketches your Tile Plan in your bathroom, sends your written estimate the same day, and the crew that shows up builds exactly what you approved, with photos of the waterproofing before it disappears behind tile.</p>
+      <p>Need glass, plumbing, or flooring alongside the tile? That's the point of the family, one call brings the right Buddy trade, and everything lands on a single estimate.</p>
       <p><a class="btn" href="#estimate">Get My Free Estimate</a></p>
     </div>
     <div>
@@ -602,7 +602,7 @@ const add = (url, opts) => {
 };
 
 add('/', {
-  title: 'Buddy Tile — Custom Tile Showers & Bathroom Remodels | Vancouver WA & Portland OR',
+  title: 'Buddy Tile, Custom Tile Showers & Bathroom Remodels | Vancouver WA & Portland OR',
   description:
     'Custom tile showers, bathroom floors, backsplashes, and heated floors in Vancouver WA and Portland OR. Free in-home estimates, online approval, no card fees. A Buddy Built company.',
   jsonLd: businessLd(),
@@ -626,11 +626,11 @@ for (const s of SERVICES) {
     ],
     body: servicePage(s),
   });
-  // One page per service per city — the long-tail matrix
+  // One page per service per city, the long-tail matrix
   for (const c of CITIES) {
     add(`/services/${s.slug}/${c.slug}/`, {
       title: `${s.name} in ${c.name}, ${c.state} | Buddy Tile`,
-      description: `${s.name} for ${c.name}, ${c.state} homeowners — free in-home estimates, licensed & bonded, no card fees. ${s.metaDescription}`.slice(0, 300),
+      description: `${s.name} for ${c.name}, ${c.state} homeowners, free in-home estimates, licensed & bonded, no card fees. ${s.metaDescription}`.slice(0, 300),
       jsonLd: [
         {
           '@context': 'https://schema.org',
@@ -657,16 +657,16 @@ for (const c of CITIES) {
 }
 
 add('/projects/', {
-  title: `Our Work — Real Tile Projects in Vancouver WA & Portland OR | ${SITE.name}`,
+  title: `Our Work, Real Tile Projects in Vancouver WA & Portland OR | ${SITE.name}`,
   description:
-    'Real tile showers, floors, and backsplashes photographed by the crews that built them — including the waterproofing you never see. Vancouver WA & Portland OR.',
+    'Real tile showers, floors, and backsplashes photographed by the crews that built them, including the waterproofing you never see. Vancouver WA & Portland OR.',
   jsonLd: businessLd(),
   body: projectsIndexBody,
 });
 for (const pr of PROJECTS) {
   add(`/projects/${pr.slug}/`, {
-    title: `${pr.title}${pr.city ? ` — ${pr.city}, ${pr.state}` : ''} | ${SITE.name} Project`,
-    description: `${pr.title}: a real ${SITE.name} project${pr.city ? ` in ${pr.city}, ${pr.state}` : ''}${pr.completed ? `, completed ${monthYear(pr.completed)}` : ''} — with the crew's own photos.`,
+    title: `${pr.title}${pr.city ? `, ${pr.city}, ${pr.state}` : ''} | ${SITE.name} Project`,
+    description: `${pr.title}: a real ${SITE.name} project${pr.city ? ` in ${pr.city}, ${pr.state}` : ''}${pr.completed ? `, completed ${monthYear(pr.completed)}` : ''}, with the crew's own photos.`,
     jsonLd: [
       businessLd(),
       {
@@ -681,7 +681,7 @@ for (const pr of PROJECTS) {
   });
 }
 
-// /ballpark/ merged into /design/ — keep old links alive with a redirect
+// /ballpark/ merged into /design/, keep old links alive with a redirect
 write('/ballpark/', `<!doctype html><html><head><meta charset="utf-8"><title>Redirecting…</title><link rel="canonical" href="${SITE.domain}/design/"><meta http-equiv="refresh" content="0;url=/design/"></head><body><a href="/design/">Design &amp; Price your project</a></body></html>`);
 
 
@@ -695,7 +695,7 @@ const privacyBody = `
     <p style="color:var(--stone);font-size:14px;">Effective August 4, 2026 · Buddy Tile, a registered trade name of Buddy Built LLC</p>
 
     <h3 style="margin-top:28px;">WHAT WE COLLECT</h3>
-    <p>When you request an estimate — on buddytile.com, by phone, or through a Facebook or Instagram lead form — we collect the information you provide: your name, phone number, email, project address, and details about your project. Our website keeps standard server logs; we do not run third-party advertising trackers on buddytile.com.</p>
+    <p>When you request an estimate (on buddytile.com, by phone, or through a Facebook or Instagram lead form), we collect the information you provide: your name, phone number, email, project address, and details about your project. Our website keeps standard server logs; we do not run third-party advertising trackers on buddytile.com.</p>
 
     <h3>HOW WE USE IT</h3>
     <p>We use your information to respond to your request, schedule visits, prepare and deliver estimates, send appointment reminders and project updates, and provide the services you hire us for. If you provide your phone number, we may call or text you about your project; reply STOP to any text to opt out. Message and data rates may apply.</p>
@@ -704,7 +704,7 @@ const privacyBody = `
     <p>We never sell your personal information, and we never share it with other contractors or lead-generation networks. You contacted Buddy Tile; only Buddy Tile (and the Buddy Built family it belongs to) will contact you.</p>
 
     <h3>WHO WE SHARE IT WITH</h3>
-    <p>Your information lives in our own project-management system and is shared only with the service providers that make our business run — such as email and text-message delivery services and payment processors — and with our crews as needed to perform your work, or where the law requires it.</p>
+    <p>Your information lives in our own project-management system and is shared only with the service providers that make our business run, such as email and text-message delivery services and payment processors, and with our crews as needed to perform your work, or where the law requires it.</p>
 
     <h3>FACEBOOK &amp; INSTAGRAM LEAD FORMS</h3>
     <p>If you submit a Meta lead form, Meta transmits your responses to us and also processes them under its own <a href="https://www.facebook.com/privacy/policy/" rel="noopener">Data Policy</a>. We use those responses only as described above.</p>
@@ -734,7 +734,7 @@ const designBody = `
   <div class="container">
     <h1>YOUR INSTANT BALLPARK</h1>
     <hr class="gold-bar" />
-    <p class="lead" style="max-width:38em;">Pick your project, style it, and get an instant ballpark — in about two minutes. One number at the end, no pressure, no spam.</p>
+    <p class="lead" style="max-width:38em;">Pick your project, style it, and get an instant ballpark, in about two minutes. One number at the end, no pressure, no spam.</p>
     <div class="design-grid">
       <div>
         <div class="design-step"><h3><span class="dnum">1</span>YOUR PROJECT</h3>
@@ -765,7 +765,7 @@ const designBody = `
             <label>Approximate square feet <input type="number" id="ds-sqft" value="60" min="10" max="600" /></label>
           </div>
           <div class="design-chips" id="ds-sizes"></div>
-          <p style="font-size:12.5px;color:var(--stone);margin:0;">Not sure? Pick the closest — we measure exactly at your free visit.</p>
+          <p style="font-size:12.5px;color:var(--stone);margin:0;">Not sure? Pick the closest. We measure exactly at your free visit.</p>
         </div>
         <div class="design-step" data-show="remodel" hidden><h3><span class="dnum">2</span>BATHROOM SIZE</h3>
           <div class="project-grid" id="ds-rsize">
@@ -811,11 +811,11 @@ const designBody = `
           </div>
           <div id="design-result" hidden>
             <div class="labor-badge">YOUR PROJECT BALLPARK</div>
-            <div class="range" id="design-range">$—</div>
-            <p class="note">Core build only — niches, benches, glass, heated floors and other upgrades are priced at your free estimate. ${BALLPARK.laborOnly} ${BALLPARK.disclaimerShort}</p>
+            <div class="range" id="design-range">$…</div>
+            <p class="note">Core build only, niches, benches, glass, heated floors and other upgrades are priced at your free estimate. ${BALLPARK.laborOnly} ${BALLPARK.disclaimerShort}</p>
             <button class="btn full" id="design-book-btn" type="button">Book My Free In-Home Estimate</button>
             <p class="form-status" id="design-book-status" hidden></p>
-            <p class="form-note" style="color:var(--stone);">Your design comes with it — no re-explaining.</p>
+            <p class="form-note" style="color:var(--stone);">Your design comes with it, no re-explaining.</p>
           </div>
         </div>
       </div>
@@ -824,7 +824,7 @@ const designBody = `
 </section>`;
 
 add('/design/', {
-  title: 'Instant Ballpark Price — Showers, Floors, Backsplashes & Remodels | Buddy Tile',
+  title: 'Instant Ballpark Price, Showers, Floors, Backsplashes & Remodels | Buddy Tile',
   description:
     'Design your tile shower, bathroom floor, or kitchen backsplash and get an instant ballpark price for Vancouver WA & Portland OR. Visual, fast, no spam.',
   jsonLd: businessLd(),
@@ -833,7 +833,7 @@ add('/design/', {
 
 
 add('/about/', {
-  title: 'About Buddy Tile — a Buddy Built Company',
+  title: 'About Buddy Tile, a Buddy Built Company',
   description:
     'Buddy Tile is the tile division of Buddy Built: one standard, one warranty, one number. Meet the family of home-service brands built for your home.',
   jsonLd: businessLd(),
