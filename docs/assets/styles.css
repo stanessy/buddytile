@@ -513,3 +513,8 @@ section.alt { background: #F3F4F6; }
 
 .feature-card.static { cursor: default; }
 .feature-card.static:hover { border-color: var(--line); }
+
+/* Gold underline bars retired — headings stand on their own */
+.gold-bar { display: none; }
+h2 { margin-bottom: 0.55em; }
+.section-sub { margin-top: 0; }
