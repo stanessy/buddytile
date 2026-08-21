@@ -55,11 +55,8 @@ const header = (isHome) => `
     </a>
     <nav class="site-nav">
       <a class="hide-m" href="/#services">Services</a>
-      <a class="hide-m" href="/#service-area">Service Area</a>
       <a class="hide-m" href="/projects/">Our Work</a>
       <a class="hide-m" href="/design/">Ballpark Price</a>
-      <a class="hide-m" href="/about/">About</a>
-      <a class="hide-m" href="https://buddybuilt.com/portal" target="_blank" rel="noopener">Customer Portal</a>
       <a class="phone-link" href="tel:${SITE.phone.replace(/[^0-9+]/g, '')}">${SITE.phone}</a>
       <a class="btn" href="#estimate">Free Estimate</a>
     </nav>
@@ -69,7 +66,7 @@ const header = (isHome) => `
 const leadForm = (context) => `
 <section class="estimate-band" id="estimate">
   <div class="container">
-    <h2>GET YOUR FREE ESTIMATE</h2>
+    <h2>GET YOUR <span class="hl">FREE</span> ESTIMATE</h2>
     <hr class="gold-bar" />
     <p style="max-width:36em;color:rgba(255,255,255,0.85);">Two minutes now, an in-home visit this week, and your written estimate the same day. No pressure, no card fees, ever.</p>
     <form class="lead-form" data-context="${esc(context)}">
@@ -223,7 +220,7 @@ const homeBody = `
   <div class="scrim"></div>
   <div class="container hero-grid">
     <div>
-      <h1>THE BATHROOM YOU'LL<br/>LOVE COMING HOME TO.</h1>
+      <h1>THE BATHROOM YOU'LL<br/><span class="gold">LOVE</span> COMING HOME TO.</h1>
       <hr class="gold-bar" />
       <p class="lead">You've lived with the cracked grout and the cold floor long enough. In about a week, our tile craftsmen turn the room you apologize for into the one you show off — and treat you, your home, and your budget with the care a neighbor deserves.</p>
       <div class="chips">
@@ -258,9 +255,18 @@ const homeBody = `
   </div>
 </div>
 
+<div class="stat-band">
+  <div class="container stat-grid">
+    <div class="stat"><div class="n">SAME DAY</div><p>Written estimates — in your inbox before dinner</p></div>
+    <div class="stat"><div class="n">5&ndash;8 DAYS</div><p>Demo to grout on most showers</p></div>
+    <div class="stat"><div class="n">$0</div><p>Card fees, ever — pay however you like</p></div>
+    <div class="stat"><div class="n">1</div><p>Number, one warranty, one standard</p></div>
+  </div>
+</div>
+
 <section id="services">
   <div class="container center">
-    <h2>WHAT WE BUILD</h2>
+    <h2>WHAT WE <span class="hl">BUILD</span></h2>
     <hr class="gold-bar" />
     <p class="section-sub">Showers, kitchens, floors, and the waterproofing underneath it all — set by dedicated tile crews, not whoever answered the ad.</p>
     <div class="grid cols-3" style="text-align:left;">
@@ -274,9 +280,9 @@ const homeBody = `
   </div>
 </section>
 
-<section class="alt">
+<section class="navy-block">
   <div class="container center">
-    <h2>HOW YOU'LL BE TREATED</h2>
+    <h2>HOW YOU'LL BE <span class="hl">TREATED</span></h2>
     <hr class="gold-bar" />
     <p class="section-sub">Anyone can show you tile photos. Here's what it feels like to have Buddy Tile in your home.</p>
     <div class="promise-grid">
@@ -304,7 +310,7 @@ const homeBody = `
 
 <section class="alt">
   <div class="container center">
-    <h2>WHAT YOUR NEIGHBORS SAY</h2>
+    <h2>WHAT YOUR <span class="hl">NEIGHBORS</span> SAY</h2>
     <hr class="gold-bar" />
     ${
       GOOGLE_REVIEWS
@@ -327,7 +333,7 @@ const homeBody = `
 
 <section>
   <div class="container center">
-    <h2>THE CRAFT BEHIND THE FINISH</h2>
+    <h2>THE <span class="hl">CRAFT</span> BEHIND THE FINISH</h2>
     <hr class="gold-bar" />
     <p class="section-sub">Anyone can show you a pretty "after." We're just as proud of what goes underneath — and we photograph both for you.</p>
     <div class="craft-pair">
