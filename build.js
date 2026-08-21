@@ -6,6 +6,18 @@
 const fs = require('fs');
 const path = require('path');
 const { SITE, SERVICES, CITIES, STEPS, TRUST, PROMISE, TESTIMONIALS, BALLPARK, DESIGNER } = require('./src/data');
+// Real jobs, auto-published: refresh with `node scripts/fetch-projects.js`
+let PROJECTS = [];
+try {
+  PROJECTS = require('./src/projects.json');
+} catch {
+  /* no projects fetched yet — the section and pages simply don't render */
+}
+const monthYear = (d) => new Date(`${d}T12:00:00`).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+const projectCard = (pr) => {
+  const cover = pr.photos.find((x) => x.phase === 'after') || pr.photos[0];
+  return `<a class="card" href="/projects/${pr.slug}/"><img src="/assets/img/projects/${cover.file}" alt="${esc(pr.title)} — ${esc(pr.city || '')} ${esc(pr.state || '')}" loading="lazy" /><div class="body"><h3>${esc((pr.title || '').toUpperCase())}</h3><p>${esc(pr.city ? `${pr.city}, ${pr.state}` : SITE.serviceAreaBlurb)} · ${monthYear(pr.completed)}</p><div class="go">See this project →</div></div></a>`;
+};
 
 const OUT = path.join(__dirname, 'docs');
 const V = Date.now().toString(36); // cache-buster for css/js
@@ -22,6 +34,7 @@ const header = (isHome) => `
     <nav class="site-nav">
       <a class="hide-m" href="/#services">Services</a>
       <a class="hide-m" href="/#service-area">Service Area</a>
+      <a class="hide-m" href="/projects/">Our Work</a>
       <a class="hide-m" href="/design/">Ballpark Price</a>
       <a class="hide-m" href="/about/">About</a>
       <a class="hide-m" href="https://buddybuilt.com/portal" target="_blank" rel="noopener">Customer Portal</a>
@@ -457,6 +470,58 @@ const cityPage = (c) => `
 </section>
 ${leadForm(`city:${c.slug}`)}`;
 
+const projectsIndexBody = `
+<div class="container breadcrumbs"><a href="/">Home</a> / Our Work</div>
+<section style="padding-top:26px;">
+  <div class="container">
+    <h1>REAL JOBS. REAL HOMES. REAL PHOTOS.</h1>
+    <hr class="gold-bar" />
+    <p class="lead" style="max-width:760px;">Every project below is a real ${SITE.name} job — photographed by the crew that built it, including the waterproofing you'd never otherwise see. No stock photos, ever.</p>
+    <div class="grid cols-3" style="margin-top:22px;">
+      ${PROJECTS.map(projectCard).join('')}
+    </div>
+    ${PROJECTS.length === 0 ? '<p style="color:var(--stone);">Fresh projects are on the way — check back soon.</p>' : ''}
+  </div>
+</section>
+${leadForm('projects')}`;
+
+const projectPage = (pr) => {
+  const cityMatch = CITIES.find((c) => c.name.toLowerCase() === (pr.city || '').toLowerCase());
+  return `
+<div class="container breadcrumbs"><a href="/">Home</a> / <a href="/projects/">Our Work</a> / ${esc(pr.city || 'Project')}</div>
+<section style="padding-top:26px;">
+  <div class="container">
+    <h1>${esc(pr.title.toUpperCase())}</h1>
+    <hr class="gold-bar" />
+    <p class="lead">Tile work in ${esc(pr.city ? `${pr.city}, ${pr.state}` : 'the Vancouver–Portland metro')} · Completed ${monthYear(pr.completed)} · Built by ${esc(pr.brand || SITE.name)}</p>
+    <div class="grid cols-2" style="margin-top:20px;">
+      ${pr.photos
+        .map(
+          (ph) => `<figure style="margin:0;">
+        <img class="rounded-img" src="/assets/img/projects/${ph.file}" alt="${esc(ph.caption || pr.title)}" loading="lazy" />
+        <figcaption style="color:var(--stone);font-size:14px;margin-top:8px;">${ph.phase ? `<strong style="color:var(--navy);text-transform:uppercase;font-size:12px;letter-spacing:.06em;">${esc(ph.phase)}</strong> · ` : ''}${esc(ph.caption || '')}</figcaption>
+      </figure>`
+        )
+        .join('')}
+    </div>
+    <p style="margin-top:24px;"><a class="btn" href="#estimate">Get a project like this priced free</a></p>
+  </div>
+</section>
+<section class="alt">
+  <div class="container">
+    <h2>WANT THIS IN YOUR HOME?</h2>
+    <hr class="gold-bar" />
+    <div class="grid cols-3">
+      ${SERVICES.slice(0, 3)
+        .map((x) => `<a class="card" href="/services/${x.slug}/${cityMatch ? cityMatch.slug + '/' : ''}"><div class="body"><h3>${x.name.toUpperCase()}</h3><div class="go">${esc(x.name)}${cityMatch ? ` in ${cityMatch.name}` : ''} →</div></div></a>`)
+        .join('')}
+    </div>
+    ${cityMatch ? `<p style="margin-top:18px;"><a href="/tile-contractor/${cityMatch.slug}/">Everything we do in ${cityMatch.name}, ${cityMatch.state} →</a></p>` : ''}
+  </div>
+</section>
+${leadForm(`project:${pr.slug}`)}`;
+};
+
 const aboutBody = `
 <div class="container breadcrumbs"><a href="/">Home</a> / About</div>
 <section style="padding-top:26px;">
@@ -549,6 +614,31 @@ for (const c of CITIES) {
     description: `Buddy Tile installs custom showers, bathroom tile, and backsplashes in ${c.name}, ${c.state}. Free in-home estimates, licensed & bonded, no card fees.`,
     jsonLd: businessLd({ areaServed: { '@type': 'City', name: `${c.name}, ${c.state}` } }),
     body: cityPage(c),
+  });
+}
+
+add('/projects/', {
+  title: `Our Work — Real Tile Projects in Vancouver WA & Portland OR | ${SITE.name}`,
+  description:
+    'Real tile showers, floors, and backsplashes photographed by the crews that built them — including the waterproofing you never see. Vancouver WA & Portland OR.',
+  jsonLd: businessLd(),
+  body: projectsIndexBody,
+});
+for (const pr of PROJECTS) {
+  add(`/projects/${pr.slug}/`, {
+    title: `${pr.title} — ${pr.city ? `${pr.city}, ${pr.state}` : 'Vancouver–Portland'} | ${SITE.name} Project`,
+    description: `${pr.title}: a real ${SITE.name} tile project in ${pr.city ? `${pr.city}, ${pr.state}` : 'the Vancouver–Portland metro'}, completed ${monthYear(pr.completed)} — with the crew's own photos.`,
+    jsonLd: [
+      businessLd(),
+      {
+        '@context': 'https://schema.org',
+        '@type': 'ImageGallery',
+        name: pr.title,
+        description: `Tile project in ${pr.city || 'the Vancouver–Portland metro'}`,
+        image: pr.photos.map((ph) => `${SITE.domain}/assets/img/projects/${ph.file}`),
+      },
+    ],
+    body: projectPage(pr),
   });
 }
 

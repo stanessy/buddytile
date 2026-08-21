@@ -2,9 +2,10 @@
   "name": "buddytile-site",
   "version": "1.0.0",
   "private": true,
-  "description": "buddytile.com — customer-facing site for Buddy Tile, a Buddy Built company. Static, zero-dependency, SEO-first.",
+  "description": "buddytile.com \u2014 customer-facing site for Buddy Tile, a Buddy Built company. Static, zero-dependency, SEO-first.",
   "scripts": {
     "build": "node build.js",
-    "preview": "npm run build && python3 -m http.server 4300 -d docs"
+    "preview": "npm run build && python3 -m http.server 4300 -d docs",
+    "refresh": "node scripts/fetch-projects.js && node build.js"
   }
 }
