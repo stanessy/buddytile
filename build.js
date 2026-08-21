@@ -216,7 +216,7 @@ const businessLd = (extra = {}) => ({
 
 const homeBody = `
 <div class="hero">
-  <div class="bg" style="background-image:url('/assets/img/tile-shower-remodel-vancouver-wa.jpg')"></div>
+  <div class="bg" style="background-image:url('/assets/img/hero-master-bath-remodel.jpg')"></div>
   <div class="scrim"></div>
   <div class="container hero-grid">
     <div>
