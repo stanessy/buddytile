@@ -239,7 +239,7 @@ const SERVICES = [
       'No demo, no dust — done in a day',
     ],
     faqs: [
-      { q: 'How much does grout cleaning and sealing cost?', a: 'Most jobs run $300–$600 depending on the area — roughly $1.50 per square foot with a modest minimum. It is the cheapest way to make a tiled room look new.' },
+      { q: 'How much does grout cleaning and sealing cost?', a: 'Most jobs land around $950, with a typical range of $750–$1,200 depending on the square footage and how many rooms we treat. Machine deep-cleaning, stain treatment, and penetrating sealer are all included — still the cheapest way to make a tiled room look new.' },
       { q: 'Will cleaning fix discolored grout?', a: 'Usually dramatically. Where stains are permanent, we can apply a color-seal that restores a uniform tone — or quote a regrout if the grout is failing rather than just dirty.' },
       { q: 'How often should grout be sealed?', a: 'High-traffic floors every 1–2 years; showers roughly every year. Sealed grout wipes clean instead of absorbing.' },
     ],
