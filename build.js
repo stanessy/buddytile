@@ -259,7 +259,6 @@ const homeBody = `
   <div class="container stat-grid">
     <div class="stat"><div class="n">SAME DAY</div><p>Written estimates — in your inbox before dinner</p></div>
     <div class="stat"><div class="n">5&ndash;8 DAYS</div><p>Demo to grout on most showers</p></div>
-    <div class="stat"><div class="n">$0</div><p>Card fees, ever — pay however you like</p></div>
     <div class="stat"><div class="n">1</div><p>Number, one warranty, one standard</p></div>
   </div>
 </div>
