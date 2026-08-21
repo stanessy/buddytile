@@ -6,12 +6,19 @@
 const fs = require('fs');
 const path = require('path');
 const { SITE, SERVICES, CITIES, STEPS, TRUST, PROMISE, TESTIMONIALS, BALLPARK, DESIGNER } = require('./src/data');
-// Real jobs, auto-published: refresh with `node scripts/fetch-projects.js`
+// Real jobs from two sources: the platform's portfolio feed (refresh with
+// `node scripts/fetch-projects.js`) plus the hand-curated galleries in
+// projects-manual.json. Platform jobs list first — they're local and dated.
 let PROJECTS = [];
 try {
   PROJECTS = require('./src/projects.json');
 } catch {
-  /* no projects fetched yet — the section and pages simply don't render */
+  /* no projects fetched yet */
+}
+try {
+  PROJECTS = [...PROJECTS, ...require('./src/projects-manual.json')];
+} catch {
+  /* no manual galleries */
 }
 // Real Google reviews: refresh with `node scripts/fetch-reviews.js` (needs
 // GOOGLE_MAPS_API_KEY). Until real ones exist, the curated cards render.
@@ -23,9 +30,15 @@ try {
   /* not fetched yet */
 }
 const monthYear = (d) => new Date(`${d}T12:00:00`).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+// Manual galleries may carry no city or date — say only what we know.
+const projectByline = (pr) =>
+  [pr.city ? `Tile work in ${pr.city}, ${pr.state}` : 'Tile, stone, and glass', pr.completed ? `Completed ${monthYear(pr.completed)}` : null, `Built by ${pr.brand || SITE.name}`]
+    .filter(Boolean)
+    .join(' · ');
 const projectCard = (pr) => {
   const cover = pr.photos.find((x) => x.phase === 'after') || pr.photos[0];
-  return `<a class="card" href="/projects/${pr.slug}/"><img src="/assets/img/projects/${cover.file}" alt="${esc(pr.title)} — ${esc(pr.city || '')} ${esc(pr.state || '')}" loading="lazy" /><div class="body"><h3>${esc((pr.title || '').toUpperCase())}</h3><p>${esc(pr.city ? `${pr.city}, ${pr.state}` : SITE.serviceAreaBlurb)} · ${monthYear(pr.completed)}</p><div class="go">See this project →</div></div></a>`;
+  const sub = [pr.city ? `${pr.city}, ${pr.state}` : `${pr.photos.length} photos`, pr.completed ? monthYear(pr.completed) : null].filter(Boolean).join(' · ');
+  return `<a class="card" href="/projects/${pr.slug}/"><img src="/assets/img/projects/${cover.file}" alt="${esc(pr.title)}${pr.city ? ` — ${esc(pr.city)}, ${esc(pr.state)}` : ''}" loading="lazy" /><div class="body"><h3>${esc((pr.title || '').toUpperCase())}</h3><p>${esc(sub)}</p><div class="go">See this project →</div></div></a>`;
 };
 
 const OUT = path.join(__dirname, 'docs');
@@ -513,7 +526,7 @@ const projectPage = (pr) => {
   <div class="container">
     <h1>${esc(pr.title.toUpperCase())}</h1>
     <hr class="gold-bar" />
-    <p class="lead">Tile work in ${esc(pr.city ? `${pr.city}, ${pr.state}` : 'the Vancouver–Portland metro')} · Completed ${monthYear(pr.completed)} · Built by ${esc(pr.brand || SITE.name)}</p>
+    <p class="lead">${esc(projectByline(pr))}</p>
     <div class="grid cols-2" style="margin-top:20px;">
       ${pr.photos
         .map(
@@ -646,15 +659,15 @@ add('/projects/', {
 });
 for (const pr of PROJECTS) {
   add(`/projects/${pr.slug}/`, {
-    title: `${pr.title} — ${pr.city ? `${pr.city}, ${pr.state}` : 'Vancouver–Portland'} | ${SITE.name} Project`,
-    description: `${pr.title}: a real ${SITE.name} tile project in ${pr.city ? `${pr.city}, ${pr.state}` : 'the Vancouver–Portland metro'}, completed ${monthYear(pr.completed)} — with the crew's own photos.`,
+    title: `${pr.title}${pr.city ? ` — ${pr.city}, ${pr.state}` : ''} | ${SITE.name} Project`,
+    description: `${pr.title}: a real ${SITE.name} project${pr.city ? ` in ${pr.city}, ${pr.state}` : ''}${pr.completed ? `, completed ${monthYear(pr.completed)}` : ''} — with the crew's own photos.`,
     jsonLd: [
       businessLd(),
       {
         '@context': 'https://schema.org',
         '@type': 'ImageGallery',
         name: pr.title,
-        description: `Tile project in ${pr.city || 'the Vancouver–Portland metro'}`,
+        description: pr.city ? `Tile project in ${pr.city}, ${pr.state}` : `A real ${SITE.name} tile project`,
         image: pr.photos.map((ph) => `${SITE.domain}/assets/img/projects/${ph.file}`),
       },
     ],
