@@ -83,16 +83,7 @@ img { max-width: 100%; display: block; }
   padding-top: 10px;
   padding-bottom: 10px;
 }
-/* Badge sits in a fixed-size slot: the bar and the brand text never move.
-   On the home page the image is oversized and overflows DOWNWARD out of the
-   slot, easing back to slot size on scroll. */
-.badge-slot { position: relative; width: 52px; height: 52px; flex-shrink: 0; }
-.badge-slot img.badge { position: absolute; top: 0; left: 0; height: 52px; transition: height 0.25s ease; }
-.site-header.home .badge-slot { width: 104px; }
-.site-header.home:not(.scrolled) .badge-slot img.badge {
-  height: 104px;
-  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.35));
-}
+.badge-slot { position: relative; flex-shrink: 0; }
 .site-nav { margin-left: auto; display: flex; align-items: center; gap: 20px; font-size: 14px; font-weight: 600; }
 .site-nav a { color: rgba(255,255,255,0.85); text-decoration: none; white-space: nowrap; }
 .site-nav a:hover { color: var(--gold); }
@@ -115,9 +106,6 @@ img { max-width: 100%; display: block; }
   /* The sticky bottom bar carries Call + Estimate on phones — keep the header
      to just the badge lockup. */
   .site-nav .hide-m, .site-nav .phone-link, .site-nav .btn { display: none; }
-  .badge-slot, .badge-slot img.badge { width: 48px; height: 48px; }
-  .site-header.home .badge-slot { width: 80px; }
-  .site-header.home:not(.scrolled) .badge-slot img.badge { height: 80px; width: auto; }
 }
 
 /* Hero */
@@ -659,17 +647,24 @@ h2 { margin-bottom: 0.55em; }
 .estimate-card .form-status { color: var(--navy); }
 .estimate-card .lead-form button { justify-self: stretch; width: 100%; }
 
-/* Header tune-up: badge stays inside the bar (the old oversized home badge
-   fought the straight buddybuilt bands), CTA sized to the bar */
+/* Header: large logo overflowing the bar, tucking into it on scroll */
 .site-header .container { padding-top: 12px; padding-bottom: 12px; }
-.badge-slot, .site-header.home .badge-slot { width: 56px; height: 56px; }
-.badge-slot img.badge, .site-header.home:not(.scrolled) .badge-slot img.badge {
-  height: 56px;
-  filter: none;
-}
 .site-nav { gap: 26px; }
 .site-nav .btn { padding: 11px 24px; font-size: 14.5px; }
+.badge-slot { width: 108px; height: 56px; transition: width 0.3s ease; }
+.badge-slot img.badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 108px;
+  transition: height 0.3s ease, filter 0.3s ease;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.35));
+}
+.site-header.scrolled .badge-slot { width: 56px; }
+.site-header.scrolled .badge-slot img.badge { height: 56px; filter: none; }
 @media (max-width: 840px) {
-  .badge-slot, .site-header.home .badge-slot, .badge-slot img.badge,
-  .site-header.home:not(.scrolled) .badge-slot img.badge { width: 48px; height: 48px; }
+  .badge-slot { width: 84px; height: 48px; }
+  .badge-slot img.badge { height: 84px; }
+  .site-header.scrolled .badge-slot { width: 48px; }
+  .site-header.scrolled .badge-slot img.badge { height: 48px; }
 }

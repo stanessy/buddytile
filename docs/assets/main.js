@@ -325,3 +325,25 @@ function passesHumanCheck(form, statusEl) {
       });
   });
 })();
+
+// ---- Header logo: oversized at the top of the page, tucks in on scroll ----
+(function () {
+  var header = document.querySelector('.site-header');
+  if (!header) return;
+  var ticking = false;
+  var update = function () {
+    header.classList.toggle('scrolled', window.scrollY > 10);
+    ticking = false;
+  };
+  window.addEventListener(
+    'scroll',
+    function () {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    },
+    { passive: true }
+  );
+  update();
+})();
