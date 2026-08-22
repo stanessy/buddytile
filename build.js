@@ -20,6 +20,40 @@ try {
 } catch {
   /* no manual galleries */
 }
+// Blog posts, written in the platform: refresh with `node scripts/fetch-posts.js`
+let POSTS = [];
+try {
+  POSTS = require('./src/posts.json');
+} catch {
+  /* no posts yet, blog pages simply don't render */
+}
+// Tiny markdown renderer, enough for posts: ## headings, **bold**, *em*,
+// [links](url), - lists, paragraphs. No dependencies, like everything here.
+const mdInline = (t) =>
+  esc(t)
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+    .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_, a, b) => `<a href="${b.startsWith('http') || b.startsWith('/') ? b : '#'}">${a}</a>`);
+const mdToHtml = (md) => {
+  const out = [];
+  let list = null;
+  for (const raw of String(md || '').split(/\r?\n/)) {
+    const line = raw.trim();
+    if (list && !line.startsWith('- ')) {
+      out.push(`<ul>${list.join('')}</ul>`);
+      list = null;
+    }
+    if (!line) continue;
+    if (line.startsWith('### ')) out.push(`<h3>${mdInline(line.slice(4)).toUpperCase()}</h3>`);
+    else if (line.startsWith('## ')) out.push(`<h2>${mdInline(line.slice(3)).toUpperCase()}</h2>`);
+    else if (line.startsWith('- ')) (list = list || []).push(`<li>${mdInline(line.slice(2))}</li>`);
+    else out.push(`<p>${mdInline(line)}</p>`);
+  }
+  if (list) out.push(`<ul>${list.join('')}</ul>`);
+  return out.join('\n');
+};
+const postDate = (d) => new Date(d).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
 // Real Google reviews: refresh with `node scripts/fetch-reviews.js` (needs
 // GOOGLE_MAPS_API_KEY). Until real ones exist, the curated cards render.
 let GOOGLE_REVIEWS = null;
@@ -123,6 +157,7 @@ const footer = `
           <li><a href="mailto:${SITE.email}">${SITE.email}</a></li>
           <li><a href="/about/">About Buddy Tile</a></li>
           <li><a href="/pay/">Make a payment</a></li>
+          <li><a href="/blog/">Tile Talk, advice from the crew</a></li>
           <li><a href="https://buddybuilt.com/portal" target="_blank" rel="noopener">Customer Portal, track your project</a></li>
           <li><a href="https://buddybuilt.com" rel="noopener">The Buddy Built family</a></li>
           <li><a href="/privacy/">Privacy Policy</a></li>
@@ -710,6 +745,63 @@ add('/pay/', {
   jsonLd: null,
   body: payBody,
 });
+
+if (POSTS.length) {
+  const blogIndexBody = `
+<div class="container breadcrumbs"><a href="/">Home</a> / Tile Talk</div>
+<section style="padding-top:26px;">
+  <div class="container">
+    <h1>TILE <span class="hl">TALK</span></h1>
+    <p class="lead" style="max-width:720px;">Straight answers about tile, showers, and remodeling in the Northwest, written by the people who do the work. No fluff, real prices, real photos.</p>
+    <div class="grid cols-3" style="margin-top:22px;">
+      ${POSTS.map(
+        (p) => `<a class="card" href="/blog/${p.slug}/"><div class="body"><h3>${esc(p.title.toUpperCase())}</h3><p>${esc(p.excerpt || '')}</p><div class="go">Read it →</div></div></a>`
+      ).join('')}
+    </div>
+  </div>
+</section>
+${leadForm('blog')}`;
+
+  add('/blog/', {
+    title: `Tile Talk, Advice From the Crew | ${SITE.name}`,
+    description:
+      'Straight answers about tile showers, bathroom remodels, and grout from a working tile crew in Vancouver WA and Portland OR.',
+    jsonLd: businessLd(),
+    body: blogIndexBody,
+  });
+
+  for (const p of POSTS) {
+    add(`/blog/${p.slug}/`, {
+      title: `${p.title} | ${SITE.name}`,
+      description: (p.excerpt || p.title).slice(0, 300),
+      jsonLd: [
+        businessLd(),
+        {
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          headline: p.title,
+          description: p.excerpt || undefined,
+          datePublished: p.publishedAt,
+          dateModified: p.updatedAt || p.publishedAt,
+          author: { '@type': 'Organization', name: SITE.name },
+          publisher: { '@type': 'Organization', name: SITE.name },
+          mainEntityOfPage: `${SITE.domain}/blog/${p.slug}/`,
+        },
+      ],
+      body: `
+<div class="container breadcrumbs"><a href="/">Home</a> / <a href="/blog/">Tile Talk</a> / ${esc(p.title)}</div>
+<section style="padding-top:26px;">
+  <div class="container" style="max-width:760px;">
+    <h1>${esc(p.title.toUpperCase())}</h1>
+    <p style="color:var(--stone);font-size:14px;">${postDate(p.publishedAt)} · ${SITE.name}</p>
+    <div class="post-body">${mdToHtml(p.bodyMd)}</div>
+    <p style="margin-top:30px;"><a class="btn" href="#estimate">Get My Free Estimate</a></p>
+  </div>
+</section>
+${leadForm('blog-post')}`,
+    });
+  }
+}
 
 // /ballpark/ merged into /design/, keep old links alive with a redirect
 write('/ballpark/', `<!doctype html><html><head><meta charset="utf-8"><title>Redirecting…</title><link rel="canonical" href="${SITE.domain}/design/"><meta http-equiv="refresh" content="0;url=/design/"></head><body><a href="/design/">Design &amp; Price your project</a></body></html>`);

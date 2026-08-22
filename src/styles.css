@@ -593,3 +593,10 @@ h2 { margin-bottom: 0.55em; }
   box-shadow: 0 0 0 3px rgba(246, 176, 21, 0.18);
 }
 #pay-lookup .form-note { color: var(--stone); }
+
+/* Blog post body */
+.post-body h2 { margin-top: 34px; }
+.post-body h3 { margin-top: 26px; }
+.post-body ul { padding-left: 22px; }
+.post-body li { margin-bottom: 8px; }
+.post-body a { color: var(--gold-dark); font-weight: 700; }

@@ -6,6 +6,6 @@
   "scripts": {
     "build": "node build.js",
     "preview": "npm run build && python3 -m http.server 4300 -d docs",
-    "refresh": "node scripts/fetch-projects.js && node scripts/fetch-reviews.js && node build.js"
+    "refresh": "node scripts/fetch-projects.js && node scripts/fetch-reviews.js && node scripts/fetch-posts.js && node build.js"
   }
 }
