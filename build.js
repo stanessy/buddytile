@@ -257,9 +257,9 @@ const homeBody = `
   <div class="scrim"></div>
   <div class="container hero-grid">
     <div>
-      <h1>THE BATHROOM YOU'LL<br/><span class="gold">LOVE</span> COMING HOME TO.</h1>
+      <h1>CUSTOM TILE SHOWERS &amp;<br/><span class="gold">GROUT CLEANING</span> IN WASHINGTON &amp;&nbsp;OREGON</h1>
       <hr class="gold-bar" />
-      <p class="lead">You've lived with the cracked grout and the cold floor long enough. In about a week, our tile craftsmen turn the room you apologize for into the one you show off. And they treat you, your home, and your budget with the care a neighbor deserves.</p>
+      <p class="lead">Buddy Tile builds custom tile showers, bathroom remodels, tub-to-shower conversions, heated tile floors, and backsplashes. We also bring tired tile back to life with grout deep cleaning, sealing, and shower regrouts. Our licensed, bonded tile craftsmen serve Vancouver, Camas, and Battle Ground in Washington and the Portland metro in Oregon. Every shower gets flood-tested waterproofing, and your written estimate arrives the same day we measure.</p>
       <div class="chips">
         <span>Family owned</span><span>Licensed &amp; bonded</span><span>Flood-tested waterproofing</span><span>Same-day written estimates</span>
       </div>
@@ -429,19 +429,71 @@ const homeBody = `
 
 ${leadForm('home')}`;
 
+
+const HERO_CHIPS = `<div class="chips">
+        <span>Family owned</span><span>Licensed &amp; bonded</span><span>Flood-tested waterproofing</span><span>Same-day written estimates</span>
+      </div>`;
+
+const heroCard = (context) => `
+    <div class="hero-card">
+      <h3>GET A FREE IN-HOME ESTIMATE</h3>
+      <p class="hero-card-sub">We measure in person, and your written estimate arrives the same day.</p>
+      <form class="lead-form hero-lead" data-context="${context}">
+        <input name="name" placeholder="Your name *" required maxlength="120" class="full" />
+        <input name="phone" type="tel" placeholder="Phone *" required maxlength="30" />
+        <select name="projectType">
+          <option value="">Project…</option>
+          <option>Tile shower remodel</option>
+          <option>Bathroom floor / wall tile</option>
+          <option>Kitchen backsplash</option>
+          <option>Heated floors</option>
+          <option>Repair / regrout</option>
+        </select>
+        <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" />
+        <div class="human-check full">
+        <label>Quick human check: what is <span class="hc-q">…</span>?
+          <input name="humanCheck" inputmode="numeric" autocomplete="off" placeholder="?" required />
+        </label>
+      </div>
+        <button class="btn full" type="submit">Get My Free Estimate</button>
+        <p class="form-status" hidden></p>
+      </form>
+      <p class="hero-card-alt">Just browsing? <a href="/design/">Design your shower &amp; get an instant ballpark →</a></p>
+    </div>`;
+
+const pageHero = ({ h1, lead, photo, context }) => `
+<div class="hero">
+  <div class="bg" style="background-image:url('/assets/img/${photo}')"></div>
+  <div class="scrim"></div>
+  <div class="container hero-grid">
+    <div>
+      <h1>${h1}</h1>
+      <hr class="gold-bar" />
+      <p class="lead">${lead}</p>
+      ${HERO_CHIPS}
+    </div>
+${heroCard(context)}
+  </div>
+</div>`;
+
 const servicePage = (s) => `
-<div class="container breadcrumbs"><a href="/">Home</a> / <a href="/#services">Services</a> / ${s.name}</div>
+${pageHero({
+  h1: `${s.h1.toUpperCase()} IN <span class="gold">VANCOUVER, WA</span> &amp; PORTLAND, OR`,
+  lead: esc(s.intro),
+  photo: s.photo,
+  context: `service:${s.slug}`,
+})}
+<div class="container breadcrumbs crumbs-after-hero"><a href="/">Home</a> / <a href="/#services">Services</a> / ${s.name}</div>
 <section style="padding-top:26px;">
   <div class="container two-col">
     <div>
-      <h1>${s.h1.toUpperCase()}</h1>
+      <h2>WHAT'S INCLUDED</h2>
       <hr class="gold-bar" />
-      <p class="lead">${esc(s.intro)}</p>
       <ul class="tick-list">${s.bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>
       <p><a class="btn" href="#estimate">Get My Free Estimate</a></p>
     </div>
     <div>
-      <img class="rounded-img" src="/assets/img/${s.photo}" alt="${esc(s.h1)}" />
+      <img class="rounded-img" src="/assets/img/${s.photo}" alt="${esc(s.h1)} in Vancouver, WA and Portland, OR" />
       <p style="color:var(--stone);font-size:14px;margin-top:12px;">${SITE.serviceAreaBlurb}</p>
     </div>
   </div>
@@ -475,13 +527,18 @@ ${leadForm(`service:${s.slug}`)}`;
 // The matrix page: one service in one city, localized copy, prices, and
 // neighborhoods so every page earns its ranking instead of being a doorway.
 const serviceCityPage = (s, c) => `
-<div class="container breadcrumbs"><a href="/">Home</a> / <a href="/services/${s.slug}/">${esc(s.name)}</a> / ${c.name}, ${c.state}</div>
+${pageHero({
+  h1: `${s.h1.toUpperCase()} IN <span class="gold">${c.name.toUpperCase()}, ${c.state}</span>`,
+  lead: esc(s.intro),
+  photo: s.photo,
+  context: `service:${s.slug}:${c.slug}`,
+})}
+<div class="container breadcrumbs crumbs-after-hero"><a href="/">Home</a> / <a href="/services/${s.slug}/">${esc(s.name)}</a> / ${c.name}, ${c.state}</div>
 <section style="padding-top:26px;">
   <div class="container two-col">
     <div>
-      <h1>${s.h1.toUpperCase()} IN ${c.name.toUpperCase()}, ${c.state}</h1>
+      <h2>${s.name.toUpperCase()} IN ${c.name.toUpperCase()}, ${c.state}</h2>
       <hr class="gold-bar" />
-      <p class="lead">${esc(s.intro)}</p>
       <p>${esc(c.blurb)} We regularly work in ${c.neighborhoods.slice(0, -1).join(', ')} and ${c.neighborhoods[c.neighborhoods.length - 1]}, free in-home estimates, written the same day.</p>
       <ul class="tick-list">${s.bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>
       <p><a class="btn" href="#estimate">Get My ${c.name} Estimate</a></p>
@@ -511,13 +568,18 @@ ${faqSection(s.faqs)}
 ${leadForm(`service:${s.slug}:${c.slug}`)}`;
 
 const cityPage = (c) => `
-<div class="container breadcrumbs"><a href="/">Home</a> / <a href="/#service-area">Service Area</a> / ${c.name}, ${c.state}</div>
+${pageHero({
+  h1: `TILE CONTRACTOR IN <span class="gold">${c.name.toUpperCase()}, ${c.state}</span>`,
+  lead: `Custom tile showers, bathroom floors, backsplashes, heated floors, and grout cleaning for ${c.name} homeowners. ${esc(c.blurb)}`,
+  photo: 'bathroom-tile-remodel-vancouver-wa.jpg',
+  context: `city:${c.slug}`,
+})}
+<div class="container breadcrumbs crumbs-after-hero"><a href="/">Home</a> / <a href="/#service-area">Service Area</a> / ${c.name}, ${c.state}</div>
 <section style="padding-top:26px;">
   <div class="container two-col">
     <div>
-      <h1>TILE CONTRACTOR IN ${c.name.toUpperCase()}, ${c.state}</h1>
+      <h2>WHY ${c.name.toUpperCase()} HOMEOWNERS CALL US</h2>
       <hr class="gold-bar" />
-      <p class="lead">Custom tile showers, bathroom floors, backsplashes, and heated floors for ${c.name} homeowners. ${esc(c.blurb)}</p>
       <ul class="tick-list">
         <li>Free in-home visits in ${c.name}, written estimate the same day</li>
         <li>Licensed, bonded &amp; insured in Washington and Oregon</li>
