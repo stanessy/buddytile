@@ -100,9 +100,9 @@ const header = (isHome) => `
 const leadForm = (context) => `
 <section class="estimate-band" id="estimate">
   <div class="container">
-    <h2>GET YOUR <span class="hl">FREE</span> ESTIMATE</h2>
-    <hr class="gold-bar" />
-    <p style="max-width:36em;color:rgba(255,255,255,0.85);">Two minutes now, an in-home visit this week, and your written estimate the same day. No pressure, no card fees, ever.</p>
+    <h2>READY TO <span class="hl">START</span> YOUR PROJECT?</h2>
+    <p class="cta-sub">Two minutes now, an in-home visit this week, and your written estimate the same day. No pressure, no card fees, ever.</p>
+    <div class="estimate-card">
     <form class="lead-form" data-context="${esc(context)}">
       <input name="name" placeholder="Your name *" required maxlength="120" />
       <input name="phone" placeholder="Phone" maxlength="30" />
@@ -131,6 +131,7 @@ const leadForm = (context) => `
       <p class="form-status" hidden></p>
       <p class="form-note">We reply the same business day. Your info never gets sold. You're a neighbor, not a lead.</p>
     </form>
+    </div>
   </div>
 </section>`;
 
@@ -328,17 +329,16 @@ const homeBody = `
 </section>
 
 <section>
-  <div class="container two-col">
-    <div>
-      <h2>HOW IT WORKS</h2>
-      <hr class="gold-bar" />
-      <div class="steps">
-        ${STEPS.map((s) => `<div class="step"><h3>${s.title.toUpperCase()}</h3><p>${s.body}</p></div>`).join('')}
-      </div>
+  <div class="container center">
+    <h2>HOW IT <span class="hl">WORKS</span></h2>
+    <p class="section-sub">One call is all it takes. Here's the whole ride, start to finish.</p>
+    <div class="hiw-grid">
+      ${STEPS.map(
+        (st, i) => `<div class="hiw"><div class="circ"><span class="bebas">${['\u260E', '\u25A4', '\u2692', '\u2605'][i] || ''}</span><span class="num">${i + 1}</span></div><h3>${st.title.toUpperCase()}</h3><p>${esc(st.body)}</p></div>`
+      ).join('')}
     </div>
-    <div>
-      <img class="rounded-img" src="/assets/img/craft-tile-hands.jpg" alt="Buddy Tile installer setting tile" loading="lazy" />
-      <h3 style="margin-top:20px;">YOU'RE A NEIGHBOR, NOT A LEAD</h3>
+    <div style="max-width:640px;margin:44px auto 0;">
+      <h3>YOU'RE A NEIGHBOR, NOT A LEAD</h3>
       <p style="color:var(--stone);">Lead-generation sites sell your phone number to five strangers. Call Buddy Tile and you get Buddy Tile, our crews, our warranty, our number, from the first hello to the final walkthrough.</p>
     </div>
   </div>

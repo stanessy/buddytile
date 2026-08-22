@@ -552,28 +552,14 @@ h2 { margin-bottom: 0.55em; }
 /* ---- Angled geometry: color blocks become slanted ribbons ---------------- */
 :root { --slant: 2.4vw; }
 
-/* Gold stat band: parallelogram rising to the right, overlapping the hero
-   photo so the seam is a clean diagonal; faint navy stripes for texture */
-.stat-band {
-  position: relative;
-  z-index: 2;
-  margin-top: calc(-1 * var(--slant));
-  clip-path: polygon(0 var(--slant), 100% 0, 100% calc(100% - var(--slant)), 0 100%);
-  padding: var(--slant) 0;
-}
+/* Stat band: deep navy like the buddybuilt bands, gold numerals */
+.stat-band { background: var(--deep); color: #fff; }
+.stat-band .stat .n { color: var(--gold); }
+.stat-band .stat p { color: rgba(255, 255, 255, 0.75); }
 
-/* Navy promise block: same slope, white shows through the cut corners */
-.navy-block {
-  clip-path: polygon(0 var(--slant), 100% 0, 100% calc(100% - var(--slant)), 0 100%);
-  padding-top: calc(64px + var(--slant));
-  padding-bottom: calc(64px + var(--slant));
-}
 
-/* Estimate band: angled top edge cutting into the section above */
-.estimate-band {
-  clip-path: polygon(0 var(--slant), 100% 0, 100% 100%, 0 100%);
-  padding-top: calc(64px + var(--slant));
-}
+
+
 
 /* Tags lean into the angle */
 .craft-tag, .labor-badge { transform: skewX(-6deg); }
@@ -600,3 +586,75 @@ h2 { margin-bottom: 0.55em; }
 .post-body ul { padding-left: 22px; }
 .post-body li { margin-bottom: 8px; }
 .post-body a { color: var(--gold-dark); font-weight: 700; }
+
+/* ---- buddybuilt.com look: pill buttons, step circles, centered navy CTA --- */
+.btn { border-radius: 999px; }
+
+/* How It Works, buddybuilt-style: navy circles with gold number badges */
+.hiw-grid { display: grid; gap: 26px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); margin-top: 26px; }
+.hiw { text-align: center; }
+.hiw .circ {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: var(--deep);
+  color: var(--gold);
+  margin: 0 auto 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font-size: 30px;
+}
+.hiw .num {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--navy);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hiw h3 { font-size: 1.15rem; margin-bottom: 4px; }
+.hiw p { color: var(--stone); font-size: 14px; margin: 0; }
+
+/* Estimate band: centered heading over a floating white form card */
+.estimate-band { text-align: center; }
+.estimate-band .cta-sub { color: rgba(255, 255, 255, 0.75); max-width: 34em; margin: -4px auto 26px; }
+.estimate-card {
+  background: #fff;
+  color: var(--navy);
+  border-radius: 12px;
+  padding: 26px 26px 20px;
+  box-shadow: 0 12px 40px rgba(8, 22, 40, 0.35);
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: left;
+}
+.estimate-card .lead-form { max-width: none; }
+.estimate-card .lead-form input,
+.estimate-card .lead-form select,
+.estimate-card .lead-form textarea {
+  background: var(--warm);
+  border: 1px solid #D5D9E0;
+  color: var(--navy);
+}
+.estimate-card .lead-form input:focus,
+.estimate-card .lead-form select:focus,
+.estimate-card .lead-form textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(246, 176, 21, 0.18);
+}
+.estimate-card .human-check label { color: var(--navy); }
+.estimate-card .human-check .hc-q { color: var(--gold-dark); }
+.estimate-card .form-note { color: var(--stone); }
+.estimate-card .form-status { color: var(--navy); }
+.estimate-card .lead-form button { justify-self: stretch; width: 100%; }
