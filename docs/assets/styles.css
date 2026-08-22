@@ -235,6 +235,15 @@ section.alt { background: #F3F4F6; }
 @media (max-width: 840px) { .breadcrumbs { padding-left: 118px; } }
 /* Crumbs that sit below a hero have no badge overhead, no offset needed */
 .breadcrumbs.crumbs-after-hero { padding-left: 22px; }
+
+/* States line inside the hero h1: present for SEO, visually quieter */
+.hero h1 .h1-states {
+  display: block;
+  font-size: 0.45em;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.82);
+  margin-top: 10px;
+}
 .breadcrumbs a { color: var(--stone); }
 .two-col { display: grid; gap: 40px; grid-template-columns: 1.2fr 1fr; align-items: start; }
 @media (max-width: 840px) { .two-col { grid-template-columns: 1fr; } }
@@ -614,6 +623,7 @@ h2 { margin-bottom: 0.55em; }
   align-items: center;
   justify-content: center;
 }
+.hiw .circ svg { display: block; }
 .hiw h3 { font-size: 1.15rem; margin-bottom: 4px; }
 .hiw p { color: var(--stone); font-size: 14px; margin: 0; }
 

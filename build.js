@@ -251,13 +251,22 @@ const businessLd = (extra = {}) => ({
 
 // ---------- pages ------------------------------------------------------------
 
+// How-it-works step icons: clean filled SVGs instead of the old unicode glyphs
+const hiwSvg = (d) => `<svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor" aria-hidden="true"><path d="${d}"/></svg>`;
+const HIW_ICONS = [
+  hiwSvg('M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z'),
+  hiwSvg('M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z'),
+  hiwSvg('M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'),
+  hiwSvg('M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z'),
+];
+
 const homeBody = `
 <div class="hero">
   <div class="bg" style="background-image:url('/assets/img/hero-master-bath-remodel.jpg')"></div>
   <div class="scrim"></div>
   <div class="container hero-grid">
     <div>
-      <h1>CUSTOM TILE SHOWERS &amp;<br/><span class="gold">GROUT CLEANING</span> IN WASHINGTON &amp;&nbsp;OREGON</h1>
+      <h1>CUSTOM TILE SHOWERS &amp;<br/><span class="gold">GROUT CLEANING</span><span class="h1-states">IN WASHINGTON &amp; OREGON</span></h1>
       <hr class="gold-bar" />
       <p class="lead">Buddy Tile builds custom tile showers, bathroom remodels, tub-to-shower conversions, heated tile floors, and backsplashes. We also bring tired tile back to life with grout deep cleaning, sealing, and shower regrouts. Our licensed, bonded tile craftsmen serve Vancouver, Camas, and Battle Ground in Washington and the Portland metro in Oregon. Every shower gets flood-tested waterproofing, and your written estimate arrives the same day we measure.</p>
       <div class="chips">
@@ -334,7 +343,7 @@ const homeBody = `
     <p class="section-sub">One call is all it takes. Here's the whole ride, start to finish.</p>
     <div class="hiw-grid">
       ${STEPS.map(
-        (st, i) => `<div class="hiw"><div class="circ"><span class="bebas">${['\u260E', '\u25A4', '\u2692', '\u2605'][i] || ''}</span><span class="num">${i + 1}</span></div><h3>${st.title.toUpperCase()}</h3><p>${esc(st.body)}</p></div>`
+        (st, i) => `<div class="hiw"><div class="circ">${HIW_ICONS[i] || ''}<span class="num">${i + 1}</span></div><h3>${st.title.toUpperCase()}</h3><p>${esc(st.body)}</p></div>`
       ).join('')}
     </div>
     <div style="max-width:640px;margin:44px auto 0;">
@@ -475,6 +484,7 @@ const pageHero = ({ h1, lead, photo, context }) => `
 ${heroCard(context)}
   </div>
 </div>`;
+
 
 const servicePage = (s) => `
 ${pageHero({
