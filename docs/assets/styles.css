@@ -658,3 +658,18 @@ h2 { margin-bottom: 0.55em; }
 .estimate-card .form-note { color: var(--stone); }
 .estimate-card .form-status { color: var(--navy); }
 .estimate-card .lead-form button { justify-self: stretch; width: 100%; }
+
+/* Header tune-up: badge stays inside the bar (the old oversized home badge
+   fought the straight buddybuilt bands), CTA sized to the bar */
+.site-header .container { padding-top: 12px; padding-bottom: 12px; }
+.badge-slot, .site-header.home .badge-slot { width: 56px; height: 56px; }
+.badge-slot img.badge, .site-header.home:not(.scrolled) .badge-slot img.badge {
+  height: 56px;
+  filter: none;
+}
+.site-nav { gap: 26px; }
+.site-nav .btn { padding: 11px 24px; font-size: 14.5px; }
+@media (max-width: 840px) {
+  .badge-slot, .site-header.home .badge-slot, .badge-slot img.badge,
+  .site-header.home:not(.scrolled) .badge-slot img.badge { width: 48px; height: 48px; }
+}
