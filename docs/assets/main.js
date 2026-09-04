@@ -243,26 +243,106 @@ function passesHumanCheck(form, statusEl) {
   var gate = document.getElementById('design-gate');
   var result = document.getElementById('design-result');
   var contact = null;
+  // Email verification: the visitor proves the address with a 6-digit
+  // code before the number shows and before they become a lead.
+  var verify = document.getElementById('design-verify');
+  var verifyForm = document.getElementById('design-verify-form');
+  var verifyEmailEl = document.getElementById('design-verify-email');
   var gateForm = document.getElementById('design-gate-form');
+  var honeypot = undefined;
+
+  function showStatus(form, msg, ok) {
+    var status = form.querySelector('.form-status');
+    status.hidden = !msg;
+    status.style.color = ok ? 'var(--navy)' : '#C0392B';
+    status.textContent = msg || '';
+  }
+  function setBusy(form, busy) {
+    var btn = form.querySelector('button[type=submit]');
+    if (btn) { btn.disabled = busy; }
+  }
+  function postJson(path, payload) {
+    return fetch(API_BASE + path, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (data) {
+        if (!r.ok) throw new Error(data.error || 'Something went wrong, please try again.');
+        return data;
+      });
+    });
+  }
+  function sendCode() {
+    setBusy(gateForm, true);
+    setBusy(verifyForm, true);
+    return postJson('/api/public/verify/start', {
+      email: contact.email, divisionId: TILE_DIVISION_ID, website: honeypot,
+    }).then(function () {
+      verifyEmailEl.textContent = contact.email;
+      gate.hidden = true;
+      verify.hidden = false;
+      showStatus(gateForm, '', true);
+      showStatus(verifyForm, '', true);
+      var codeBox = verifyForm.querySelector('input[name=code]');
+      codeBox.value = '';
+      codeBox.focus();
+    }).catch(function (err) {
+      showStatus(gate.hidden ? verifyForm : gateForm, err.message, false);
+    }).then(function () {
+      setBusy(gateForm, false);
+      setBusy(verifyForm, false);
+    });
+  }
+
   gateForm.addEventListener('submit', function (e) {
     e.preventDefault();
     var status = gateForm.querySelector('.form-status');
     if (!passesHumanCheck(gateForm, status)) return;
     var f = new FormData(gateForm);
-    contact = { name: f.get('name'), email: f.get('email'), phone: f.get('phone') || undefined };
-    fetch(API_BASE + '/api/public/leads', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+    honeypot = f.get('website') || undefined;
+    contact = { name: f.get('name'), email: String(f.get('email') || '').trim(), phone: f.get('phone') || undefined };
+    showStatus(gateForm, 'Sending your code…', true);
+    sendCode();
+  });
+
+  verifyForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var code = (verifyForm.querySelector('input[name=code]').value || '').replace(/\D/g, '');
+    if (code.length !== 6) { showStatus(verifyForm, 'Enter the 6-digit code from your email.', false); return; }
+    setBusy(verifyForm, true);
+    showStatus(verifyForm, 'Checking…', true);
+    postJson('/api/public/verify/check', { email: contact.email, code: code }).then(function (data) {
+      contact.verificationToken = data.token;
+      return postJson('/api/public/leads', {
         name: contact.name, email: contact.email, phone: contact.phone,
         description: 'BALLPARK TOOL, ' + (window.__designSummary || ''),
-        divisionId: TILE_DIVISION_ID, website: f.get('website') || undefined,
+        divisionId: TILE_DIVISION_ID, website: honeypot,
         source: 'buddytile.com design',
-      }),
-    }).catch(function () {});
-    gate.hidden = true;
-    result.hidden = false;
-    render();
+        verificationToken: contact.verificationToken,
+      });
+    }).then(function () {
+      verify.hidden = true;
+      result.hidden = false;
+      render();
+    }).catch(function (err) {
+      showStatus(verifyForm, err.message, false);
+    }).then(function () { setBusy(verifyForm, false); });
+  });
+
+  document.getElementById('design-verify-resend').addEventListener('click', function (e) {
+    e.preventDefault();
+    showStatus(verifyForm, 'Sending a new code…', true);
+    sendCode().then(function () {
+      if (!verify.hidden) showStatus(verifyForm, 'New code sent, check your inbox.', true);
+    });
+  });
+  document.getElementById('design-verify-edit').addEventListener('click', function (e) {
+    e.preventDefault();
+    verify.hidden = true;
+    gate.hidden = false;
+    showStatus(gateForm, '', true);
+    gateForm.querySelector('input[name=email]').focus();
   });
   document.getElementById('design-book-btn').addEventListener('click', function () {
     var status = document.getElementById('design-book-status');
@@ -279,6 +359,7 @@ function passesHumanCheck(form, statusEl) {
         description: 'BALLPARK TOOL, BOOK ESTIMATE, ' + (window.__designSummary || ''),
         divisionId: TILE_DIVISION_ID,
         source: 'buddytile.com design-book',
+        verificationToken: contact ? contact.verificationToken : undefined,
       }),
     }).then(function (r) {
       status.textContent = r.ok

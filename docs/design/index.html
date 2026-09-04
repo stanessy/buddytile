@@ -7,7 +7,7 @@
   <meta name="description" content="Design your tile shower, bathroom floor, or kitchen backsplash and get an instant ballpark price for Vancouver WA &amp; Portland OR. Visual, fast, no spam." />
   <link rel="canonical" href="https://buddytile.com/design/" />
   <link rel="icon" href="/assets/img/buddy-tile-sm.png?v=3" />
-  <link rel="stylesheet" href="/assets/styles.css?v=mtnauh7d" />
+  <link rel="stylesheet" href="/assets/styles.css?v=mtney7uw" />
   <meta property="og:title" content="Instant Ballpark Price, Showers, Floors, Backsplashes &amp; Remodels | Buddy Tile" />
   <meta property="og:description" content="Design your tile shower, bathroom floor, or kitchen backsplash and get an instant ballpark price for Vancouver WA &amp; Portland OR. Visual, fast, no spam." />
   <meta property="og:image" content="https://buddytile.com/assets/img/tile-shower-remodel-vancouver-wa.jpg" />
@@ -110,6 +110,19 @@
               </div>
               <button class="btn full" type="submit">Show My Ballpark</button>
               <p class="form-status" hidden></p>
+              <p class="form-note" style="color:var(--stone);">We'll email you a 6-digit code to confirm it's really you. No spam, ever.</p>
+            </form>
+          </div>
+          <div id="design-verify" hidden>
+            <h3 style="margin-bottom:2px;">CHECK YOUR EMAIL</h3>
+            <p class="hero-card-sub">We sent a 6-digit code to <strong id="design-verify-email"></strong>. Enter it here and your ballpark appears.</p>
+            <form class="lead-form hero-lead" id="design-verify-form">
+              <input name="code" class="full code-input" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" placeholder="6-digit code" required />
+              <button class="btn full" type="submit">Verify &amp; Show Ballpark</button>
+              <p class="form-status" hidden></p>
+              <p class="form-note verify-links" style="color:var(--stone);">
+                Didn't get it? Check spam, or <a href="#" id="design-verify-resend">send a new code</a> · <a href="#" id="design-verify-edit">change email</a>
+              </p>
             </form>
           </div>
           <div id="design-result" hidden>
@@ -165,7 +178,7 @@
   <a class="mc-call" href="tel:3608996336">Call (360) 899-6336</a>
   <a class="mc-est" href="#estimate">Free Estimate</a>
 </div>
-<script src="/assets/ballpark-config.js?v=mtnauh7d"></script>
-<script src="/assets/main.js?v=mtnauh7d" defer></script>
+<script src="/assets/ballpark-config.js?v=mtney7uw"></script>
+<script src="/assets/main.js?v=mtney7uw" defer></script>
 </body>
 </html>

@@ -1001,6 +1001,19 @@ const designBody = `
               </div>
               <button class="btn full" type="submit">Show My Ballpark</button>
               <p class="form-status" hidden></p>
+              <p class="form-note" style="color:var(--stone);">We'll email you a 6-digit code to confirm it's really you. No spam, ever.</p>
+            </form>
+          </div>
+          <div id="design-verify" hidden>
+            <h3 style="margin-bottom:2px;">CHECK YOUR EMAIL</h3>
+            <p class="hero-card-sub">We sent a 6-digit code to <strong id="design-verify-email"></strong>. Enter it here and your ballpark appears.</p>
+            <form class="lead-form hero-lead" id="design-verify-form">
+              <input name="code" class="full code-input" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" placeholder="6-digit code" required />
+              <button class="btn full" type="submit">Verify &amp; Show Ballpark</button>
+              <p class="form-status" hidden></p>
+              <p class="form-note verify-links" style="color:var(--stone);">
+                Didn't get it? Check spam, or <a href="#" id="design-verify-resend">send a new code</a> · <a href="#" id="design-verify-edit">change email</a>
+              </p>
             </form>
           </div>
           <div id="design-result" hidden>
