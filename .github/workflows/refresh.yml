@@ -1,0 +1,50 @@
+# Nightly refresh: pull published blog posts, project galleries, and (when a
+# key is set) Google reviews from the Buddy Built platform, rebuild docs/, and
+# commit the result. GitHub Pages serves docs/ from main, so the commit is the
+# deploy. Also fires on demand (Actions tab) and when the platform publishes a
+# post (repository_dispatch "rebuild", sent by buddybuilt's siteRebuildService).
+name: Refresh site
+
+on:
+  schedule:
+    # 10:05 AM Pacific (17:05 UTC in summer), after the platform's 8:30 AM blog autopilot
+    - cron: '5 17 * * *'
+  workflow_dispatch:
+  repository_dispatch:
+    types: [rebuild]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-site
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Pull platform content and rebuild
+        env:
+          BT_API: https://buddybuilt.com
+          # Optional: enables real Google ratings/reviews on the homepage
+          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+        run: npm run refresh
+
+      - name: Commit if anything changed
+        run: |
+          git add -A docs src/posts.json src/projects.json src/reviews.json assets/img/projects 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Nothing new from the platform"
+            exit 0
+          fi
+          git config user.name "buddy-built-bot"
+          git config user.email "no-reply@buddybuilt.com"
+          git commit -m "Refresh site content from the platform (${{ github.event_name }})"
+          git push
