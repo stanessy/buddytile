@@ -75,7 +75,7 @@ function passesHumanCheck(form, statusEl) {
         .then(function (res) {
           if (res.ok) {
             status.style.color = '#F6B015';
-            status.innerHTML = "Got it! We'll reach out the same business day. <img src='/assets/img/buddy-tile-sm.png?v=3' alt='Buddy Tile' style='height:26px;vertical-align:-8px;margin-left:6px'>";
+            status.innerHTML = "Got it! We'll reach out the same business day. <img src='/assets/img/buddy-tile-sm.png?v=4' alt='Buddy Tile' style='height:26px;vertical-align:-8px;margin-left:6px'>";
             form.reset();
           } else {
             throw new Error(res.d && res.d.error);

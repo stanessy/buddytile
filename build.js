@@ -85,7 +85,7 @@ const header = (isHome) => `
 <header class="site-header${isHome ? ' home' : ''}">
   <div class="container">
     <a href="/" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff;">
-      <span class="badge-slot"><img class="badge" src="/assets/img/buddy-tile-sm.png?v=3" alt="Buddy Tile, a Buddy Built company" /></span>
+      <span class="badge-slot"><img class="badge" src="/assets/img/buddy-tile-sm.png?v=4" alt="Buddy Tile, a Buddy Built company" /></span>
     </a>
     <nav class="site-nav">
       <a class="hide-m" href="/#services">Services</a>
@@ -140,7 +140,7 @@ const footer = `
   <div class="container">
     <div class="cols">
       <div class="badge-lockup">
-        <img src="/assets/img/buddy-tile.png?v=3" alt="Buddy Tile badge" loading="lazy" />
+        <img src="/assets/img/buddy-tile.png?v=4" alt="Buddy Tile badge" loading="lazy" />
         <div class="caption">a BUDDY BUILT company</div>
       </div>
       <div>
@@ -186,7 +186,7 @@ const page = ({ url, title, description, jsonLd, body }) => `<!doctype html>
   <title>${esc(title)}</title>
   <meta name="description" content="${esc(description)}" />
   <link rel="canonical" href="${SITE.domain}${url}" />
-  <link rel="icon" href="/assets/img/buddy-tile-sm.png?v=3" />
+  <link rel="icon" href="/assets/img/buddy-tile-sm.png?v=4" />
   <link rel="stylesheet" href="/assets/styles.css?v=${V}" />
   <meta property="og:title" content="${esc(title)}" />
   <meta property="og:description" content="${esc(description)}" />
@@ -241,7 +241,7 @@ const businessLd = (extra = {}) => ({
     `${SITE.domain}/assets/img/marble-tile-shower-glass-door.jpg`,
     `${SITE.domain}/assets/img/kitchen-tile-backsplash-installation.jpg`,
   ],
-  logo: `${SITE.domain}/assets/img/buddy-tile.png?v=3`,
+  logo: `${SITE.domain}/assets/img/buddy-tile.png?v=4`,
   slogan: SITE.tagline,
   parentOrganization: { '@type': 'Organization', name: 'Buddy Built LLC', url: 'https://buddybuilt.com' },
   areaServed: CITIES.map((c) => ({ '@type': 'City', name: `${c.name}, ${c.state}` })),
