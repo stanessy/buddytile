@@ -294,12 +294,23 @@ const SERVICES = [
 ];
 
 const CITIES = [
-  { slug: 'vancouver', name: 'Vancouver', state: 'WA', neighborhoods: ['Salmon Creek', 'Felida', 'Cascade Park', 'Fishers Landing', 'Hazel Dell', 'Camas', 'Ridgefield', 'Battle Ground'], blurb: 'Our home base. Same-week estimates across Clark County, Salmon Creek, Felida, Cascade Park, Camas, and Ridgefield.' },
-  { slug: 'portland', name: 'Portland', state: 'OR', neighborhoods: ['Sellwood', 'the Pearl', 'Alberta', 'St. Johns', 'Mt. Tabor', 'Multnomah Village'], blurb: 'Full service across Portland, from Craftsman bathrooms in Sellwood to condo showers in the Pearl.' },
-  { slug: 'beaverton', name: 'Beaverton', state: 'OR', neighborhoods: ['Cedar Hills', 'Aloha', 'Raleigh Hills', 'Sexton Mountain'], blurb: 'Bathroom remodels and backsplashes across Beaverton, Cedar Hills, and Aloha.' },
-  { slug: 'gresham', name: 'Gresham', state: 'OR', neighborhoods: ['Troutdale', 'Fairview', 'Wood Village', 'Powell Valley'], blurb: 'Serving Gresham, Troutdale, and Fairview with the same crews and the same standard.' },
-  { slug: 'hillsboro', name: 'Hillsboro', state: 'OR', neighborhoods: ['Orenco', 'Tanasbourne', 'Jackson School', 'Reedville'], blurb: 'Tile work for Hillsboro and Orenco, fast scheduling for occupied homes.' },
-  { slug: 'salem', name: 'Salem', state: 'OR', neighborhoods: ['Keizer', 'South Salem', 'West Salem', 'Four Corners'], blurb: 'Weekly routes to Salem and Keizer, book ahead and we bundle your neighborhood.' },
+  { slug: 'vancouver', lat: 45.6387, lng: -122.6615, name: 'Vancouver', state: 'WA', neighborhoods: ['Salmon Creek', 'Felida', 'Cascade Park', 'Fishers Landing', 'Hazel Dell', 'Camas', 'Ridgefield', 'Battle Ground'], blurb: 'Our home base. Same-week estimates across Clark County, Salmon Creek, Felida, Cascade Park, Camas, and Ridgefield.' },
+  { slug: 'portland', lat: 45.5152, lng: -122.6784, name: 'Portland', state: 'OR', neighborhoods: ['Sellwood', 'the Pearl', 'Alberta', 'St. Johns', 'Mt. Tabor', 'Multnomah Village'], blurb: 'Full service across Portland, from Craftsman bathrooms in Sellwood to condo showers in the Pearl.' },
+  { slug: 'beaverton', lat: 45.4871, lng: -122.8037, name: 'Beaverton', state: 'OR', neighborhoods: ['Cedar Hills', 'Aloha', 'Raleigh Hills', 'Sexton Mountain'], blurb: 'Bathroom remodels and backsplashes across Beaverton, Cedar Hills, and Aloha.' },
+  { slug: 'gresham', lat: 45.5001, lng: -122.4302, name: 'Gresham', state: 'OR', neighborhoods: ['Troutdale', 'Fairview', 'Wood Village', 'Powell Valley'], blurb: 'Serving Gresham, Troutdale, and Fairview with the same crews and the same standard.' },
+  { slug: 'hillsboro', lat: 45.5229, lng: -122.9898, name: 'Hillsboro', state: 'OR', neighborhoods: ['Orenco', 'Tanasbourne', 'Jackson School', 'Reedville'], blurb: 'Tile work for Hillsboro and Orenco, fast scheduling for occupied homes.' },
+  { slug: 'salem', lat: 44.9429, lng: -123.0351, name: 'Salem', state: 'OR', neighborhoods: ['Keizer', 'South Salem', 'West Salem', 'Four Corners'], blurb: 'Weekly routes to Salem and Keizer, book ahead and we bundle your neighborhood.' },
+];
+
+// Smaller towns named on the city pages, plotted on the service-area map as
+// secondary pins (no page of their own).
+const NEARBY_TOWNS = [
+  { name: 'Camas', state: 'WA', lat: 45.5871, lng: -122.3995 },
+  { name: 'Battle Ground', state: 'WA', lat: 45.7807, lng: -122.5334 },
+  { name: 'Ridgefield', state: 'WA', lat: 45.8151, lng: -122.7426 },
+  { name: 'Troutdale', state: 'OR', lat: 45.5393, lng: -122.3873 },
+  { name: 'Fairview', state: 'OR', lat: 45.5387, lng: -122.434 },
+  { name: 'Keizer', state: 'OR', lat: 44.9901, lng: -123.0262 },
 ];
 
 // How you'll be treated, the emotional core of the pitch. Every line is a
@@ -318,7 +329,7 @@ const PROMISE = [
   {
     short: 'Your price is your price.',
     title: 'Your budget is safe with us',
-    body: "A written price before we start, and it doesn't move unless you change the plan. No surprise invoices, no card fees, no games.",
+    body: "A written price before we start, and it doesn't move unless you change the plan. No surprise invoices, no games.",
   },
   {
     short: "We're done when you smile.",
@@ -359,7 +370,7 @@ const TRUST = [
   { title: 'Family Owned & Operated', body: 'You talk to the owner, not a call center, and the person who quotes your job knows the crew who builds it by name.' },
   { title: 'Craftsmanship Guaranteed', body: 'Tile set to TCNA standards over flood-tested waterproofing, and we photograph the work you never see.' },
   { title: 'Free In-Home Estimates', body: 'Your written estimate the same day, approved online.' },
-  { title: 'No Card Fees. Ever.', body: 'Pay however you like. We never add a processing fee.' },
+  { title: 'Daily Progress Photos', body: "Watch your project come together from your phone, including the waterproofing you'd never otherwise see." },
   { title: 'Licensed, Bonded & Insured', body: 'Registered in Washington and Oregon.' },
   { title: 'One Warranty. One Number.', body: 'A Buddy Built company, the warranty outlives any one crew.' },
 ];
@@ -440,4 +451,4 @@ const DESIGNER = {
   remodel: { baseCents: 1650000, sizes: { small: 0.8, standard: 1, large: 1.4 } },
 };
 
-module.exports = { SITE, SERVICES, CITIES, STEPS, TRUST, PROMISE, TESTIMONIALS, BALLPARK, DESIGNER };
+module.exports = { SITE, SERVICES, CITIES, NEARBY_TOWNS, STEPS, TRUST, PROMISE, TESTIMONIALS, BALLPARK, DESIGNER };

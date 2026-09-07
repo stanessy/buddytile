@@ -518,3 +518,105 @@ function passesHumanCheck(form, statusEl) {
   });
 
 })();
+
+// ---- Service-area map: label-free basemap behind the city card ------------
+(function () {
+  var el = document.getElementById('service-map');
+  var data = window.BT_SERVICE_AREA;
+  if (!el || !data) return;
+  var LEAFLET = 'https://unpkg.com/leaflet@1.9.4/dist/';
+  var started = false;
+  function loadLeaflet() {
+    if (window.L) return Promise.resolve();
+    return new Promise(function (resolve, reject) {
+      var css = document.createElement('link');
+      css.rel = 'stylesheet';
+      css.href = LEAFLET + 'leaflet.css';
+      document.head.appendChild(css);
+      var js = document.createElement('script');
+      js.src = LEAFLET + 'leaflet.js';
+      js.onload = resolve;
+      js.onerror = reject;
+      document.head.appendChild(js);
+    });
+  }
+  function build() {
+    var L = window.L;
+    var map = L.map(el, {
+      zoomControl: false, scrollWheelZoom: false, doubleClickZoom: false, dragging: false,
+      touchZoom: false, boxZoom: false, keyboard: false, zoomSnap: 0.25,
+    });
+    // Esri's light gray base has no labels (labels live in a separate reference layer)
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 16,
+      attribution: 'Tiles &copy; Esri',
+    }).addTo(map);
+    var markers = {};
+    var pins = {};
+    var bounds = [];
+    function add(key, lat, lng, town, html) {
+      var pinEl = document.createElement('div');
+      pinEl.className = 'bt-pin' + (town ? ' town' : '');
+      var m = L.marker([lat, lng], { icon: L.divIcon({ className: '', html: pinEl, iconSize: town ? [12, 12] : [18, 18], iconAnchor: town ? [6, 6] : [9, 9] }), zIndexOffset: town ? 0 : 100 })
+        .addTo(map)
+        .bindPopup(html, { offset: [0, -8] });
+      markers[key] = m;
+      pins[key] = pinEl;
+      bounds.push([lat, lng]);
+    }
+    data.towns.forEach(function (t) {
+      add('town:' + t.name, t.lat, t.lng, true, '<div class="bt-pop"><strong>' + t.name + ', ' + t.state + '</strong><span>Covered from the nearest city</span></div>');
+    });
+    data.cities.forEach(function (c) {
+      add(c.slug, c.lat, c.lng, false, '<div class="bt-pop"><strong>' + c.name + ', ' + c.state + '</strong><span>' + c.hoods.join(' · ') + '</span><a href="' + c.url + '">Tile work in ' + c.name + ' →</a></div>');
+    });
+    // Keep the pins clear of the floating card on wide screens
+    function fit(animate) {
+      var card = document.querySelector('.area-card');
+      var mr = el.getBoundingClientRect();
+      var cr = card ? card.getBoundingClientRect() : null;
+      // Only pad for the card when it sits beside the map (desktop), not below it
+      var cy = cr ? (cr.top + cr.bottom) / 2 : 0;
+      var beside = cr && cy > mr.top && cy < mr.bottom && cr.left > mr.left + mr.width * 0.3;
+      var right = beside ? mr.right - cr.left + 40 : 40;
+      map.fitBounds(bounds, { paddingTopLeft: [40, 40], paddingBottomRight: [right, beside ? 40 : 90], maxZoom: 11, animate: !!animate });
+    }
+    fit(false);
+    var rt;
+    window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { map.invalidateSize(); fit(false); }, 150); });
+    var activeKey = null;
+    function activate(key) {
+      if (activeKey && pins[activeKey]) pins[activeKey].classList.remove('active');
+      document.querySelectorAll('.city-btn.active').forEach(function (b) { b.classList.remove('active'); });
+      activeKey = key;
+      if (!markers[key]) return;
+      pins[key].classList.add('active');
+      var btn = document.querySelector(key.indexOf('town:') === 0 ? '.city-btn[data-town="' + key.slice(5) + '"]' : '.city-btn[data-city="' + key + '"]');
+      if (btn) btn.classList.add('active');
+      markers[key].openPopup();
+    }
+    document.querySelectorAll('.city-btn').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var key = b.dataset.city || 'town:' + b.dataset.town;
+        activate(key);
+      });
+    });
+    Object.keys(markers).forEach(function (key) { markers[key].on('click', function () { activate(key); }); });
+    map.on('popupclose', function () { if (activeKey) { if (pins[activeKey]) pins[activeKey].classList.remove('active'); document.querySelectorAll('.city-btn.active').forEach(function (b) { b.classList.remove('active'); }); activeKey = null; } });
+  }
+  function start() {
+    if (started) return;
+    started = true;
+    loadLeaflet().then(build).catch(function () {
+      el.innerHTML = '';
+    });
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      if (entries.some(function (e) { return e.isIntersecting; })) { io.disconnect(); start(); }
+    }, { rootMargin: '400px 0px' });
+    io.observe(el);
+  } else {
+    start();
+  }
+})();

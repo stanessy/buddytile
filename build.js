@@ -5,7 +5,7 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { SITE, SERVICES, CITIES, STEPS, TRUST, PROMISE, TESTIMONIALS, BALLPARK, DESIGNER } = require('./src/data');
+const { SITE, SERVICES, CITIES, NEARBY_TOWNS, STEPS, TRUST, PROMISE, TESTIMONIALS, BALLPARK, DESIGNER } = require('./src/data');
 // Real jobs from two sources: the platform's portfolio feed (refresh with
 // `node scripts/fetch-projects.js`) plus the hand-curated galleries in
 // projects-manual.json. Platform jobs list first, they're local and dated.
@@ -101,7 +101,7 @@ const leadForm = (context) => `
 <section class="estimate-band" id="estimate">
   <div class="container">
     <h2>READY TO <span class="hl">START</span> YOUR PROJECT?</h2>
-    <p class="cta-sub">Two minutes now, an in-home visit this week, and your written estimate the same day. No pressure, no card fees, ever.</p>
+    <p class="cta-sub">Two minutes now, an in-home visit this week, and your written estimate the same day. No pressure, ever.</p>
     <div class="estimate-card">
     <form class="lead-form" data-context="${esc(context)}">
       <input name="name" placeholder="Your name *" required maxlength="120" />
@@ -284,7 +284,7 @@ const BEFORE_AFTER = (() => {
 })();
 const ratingLine = GOOGLE_REVIEWS && GOOGLE_REVIEWS.rating
   ? `<div class="hero-rating"><span class="stars">★★★★★</span> ${GOOGLE_REVIEWS.rating.toFixed(1)} from local homeowners on Google</div>`
-  : `<div class="hero-rating">Family owned · Same-day written estimates · No card fees, ever</div>`;
+  : `<div class="hero-rating">Family owned · Same-day written estimates · Licensed &amp; bonded</div>`;
 const featuredReview = GOOGLE_REVIEWS && GOOGLE_REVIEWS.reviews?.length
   ? { text: GOOGLE_REVIEWS.reviews[0].text, who: GOOGLE_REVIEWS.reviews[0].author, where: 'Google review' }
   : { text: TESTIMONIALS[0].quote, who: TESTIMONIALS[0].name, where: TESTIMONIALS[0].where };
@@ -495,7 +495,6 @@ ${
           : `<div class="stat"><div class="n">Same day</div><p>Written estimate, in your inbox before dinner</p></div>`
       }
       <div class="stat"><div class="n">100%</div><p>Showers flood-tested and photographed before tile</p></div>
-      <div class="stat"><div class="n">$0</div><p>Card fees, surprise invoices, or price changes</p></div>
       <a class="link-arrow dark" href="${GOOGLE_REVIEWS ? esc(GOOGLE_REVIEWS.mapsUrl || 'https://www.google.com/maps/place/?q=place_id:' + GOOGLE_REVIEWS.placeId) : '/about/'}"${GOOGLE_REVIEWS ? ' target="_blank" rel="noopener"' : ''}>${GOOGLE_REVIEWS ? 'Read All Reviews →' : 'Meet the Company →'}</a>
     </div>
   </div>
@@ -517,35 +516,45 @@ ${
   </div>
 </section>
 
-<section class="sec" id="service-area">
-  <div class="container wide">
-    <div class="sec-head reveal">
+<section class="area-sec" id="service-area">
+  <div id="service-map" class="area-bg" aria-label="Map of Buddy Tile service cities in Washington and Oregon"></div>
+  <div class="container wide area-over">
+    <div class="area-card reveal">
       <p class="eyebrow">Service Area</p>
-      <h2 class="h-xl">Two states. One standard.</h2>
-    </div>
-    <div class="area-grid">
-      ${['WA', 'OR']
-        .map(
-          (st, i) => `<div class="area-state reveal" style="--i:${i}">
-        <div class="state">${st === 'WA' ? 'Washington' : 'Oregon'}</div>
-        <ul class="cities">
-          ${CITIES.filter((c) => c.state === st)
-            .map((c) => `<li><a href="/tile-contractor/${c.slug}/">${esc(c.name)}</a><span>${esc(c.neighborhoods.slice(0, 4).join(' · '))}</span></li>`)
-            .join('')}
-        </ul>
-      </div>`
-        )
-        .join('')}
+      <h2>Two states. One standard.</h2>
+      <p class="area-sub">Crews roll out of Vancouver every morning. Tap a city to find it on the map, gold pins have their own page.</p>
+      <div class="area-cols">
+        ${['WA', 'OR']
+          .map(
+            (st) => `<div class="area-col">
+          <div class="state">${st === 'WA' ? 'Washington' : 'Oregon'}</div>
+          <ul class="city-list">
+            ${CITIES.filter((c) => c.state === st)
+              .map((c) => `<li><button type="button" class="city-btn" data-city="${c.slug}">${esc(c.name)}</button><a class="city-go" href="/tile-contractor/${c.slug}/" aria-label="Tile work in ${esc(c.name)}">→</a></li>`)
+              .join('')}
+            ${NEARBY_TOWNS.filter((t) => t.state === st)
+              .map((t) => `<li class="town"><button type="button" class="city-btn" data-town="${esc(t.name)}">${esc(t.name)}</button></li>`)
+              .join('')}
+          </ul>
+        </div>`
+          )
+          .join('')}
+      </div>
+      <p class="map-note">Don't see your town? <a href="#estimate" data-open-estimate>Ask us</a>, we may still come to you.</p>
     </div>
   </div>
 </section>
+<script>window.BT_SERVICE_AREA = ${JSON.stringify({
+  cities: CITIES.map((c) => ({ slug: c.slug, name: c.name, state: c.state, lat: c.lat, lng: c.lng, url: `/tile-contractor/${c.slug}/`, hoods: c.neighborhoods.slice(0, 4) })),
+  towns: NEARBY_TOWNS,
+})};</script>
 
 <section class="final" id="estimate">
   <img class="final-mascot" src="/assets/img/buddy-tile.png?v=4" alt="" aria-hidden="true" />
   <div class="container reveal">
     <p class="eyebrow light">Free In-Home Estimate</p>
     <h2 class="h-xl light">Let's build a bathroom<br/>you'll love.</h2>
-    <p class="sub light">Two minutes now, an in-home visit this week, and your written estimate the same day. No pressure, no card fees, ever.</p>
+    <p class="sub light">Two minutes now, an in-home visit this week, and your written estimate the same day. No pressure, ever.</p>
     <div class="estimate-card">
       ${estimateForm('home')}
     </div>
@@ -720,7 +729,6 @@ ${pageHero({
         <li>Licensed, bonded &amp; insured in Washington and Oregon</li>
         <li>Schluter-system waterproofing on every shower, flood-tested</li>
         <li>Approve your estimate online; watch daily progress photos</li>
-        <li>No credit card fees, ever</li>
       </ul>
       <p><a class="btn" href="#estimate">Get My ${c.name} Estimate</a></p>
     </div>
@@ -837,7 +845,7 @@ const add = (url, opts) => {
 add('/', {
   title: 'Buddy Tile, Custom Tile Showers & Bathroom Remodels | Vancouver WA & Portland OR',
   description:
-    'Custom tile showers, bathroom floors, backsplashes, and heated floors in Vancouver WA and Portland OR. Free in-home estimates, online approval, no card fees. A Buddy Built company.',
+    'Custom tile showers, bathroom floors, backsplashes, and heated floors in Vancouver WA and Portland OR. Free in-home estimates, online approval. A Buddy Built company.',
   jsonLd: businessLd(),
   body: homeBody,
 });
@@ -863,7 +871,7 @@ for (const s of SERVICES) {
   for (const c of CITIES) {
     add(`/services/${s.slug}/${c.slug}/`, {
       title: `${s.name} in ${c.name}, ${c.state} | Buddy Tile`,
-      description: `${s.name} for ${c.name}, ${c.state} homeowners, free in-home estimates, licensed & bonded, no card fees. ${s.metaDescription}`.slice(0, 300),
+      description: `${s.name} for ${c.name}, ${c.state} homeowners, free in-home estimates, licensed & bonded. ${s.metaDescription}`.slice(0, 300),
       jsonLd: [
         {
           '@context': 'https://schema.org',
@@ -883,7 +891,7 @@ for (const s of SERVICES) {
 for (const c of CITIES) {
   add(`/tile-contractor/${c.slug}/`, {
     title: `Tile Contractor in ${c.name}, ${c.state} | Showers, Floors, Backsplashes | Buddy Tile`,
-    description: `Buddy Tile installs custom showers, bathroom tile, and backsplashes in ${c.name}, ${c.state}. Free in-home estimates, licensed & bonded, no card fees.`,
+    description: `Buddy Tile installs custom showers, bathroom tile, and backsplashes in ${c.name}, ${c.state}. Free in-home estimates, licensed & bonded.`,
     jsonLd: businessLd({ areaServed: { '@type': 'City', name: `${c.name}, ${c.state}` } }),
     body: cityPage(c),
   });
@@ -920,7 +928,7 @@ const payBody = `
 <section style="padding-top:26px;">
   <div class="container" style="max-width:640px;">
     <h1>MAKE A <span class="hl">PAYMENT</span></h1>
-    <p class="lead">Pay your deposit or invoice online. Enter your invoice number and the email we have on file, and we'll send your secure payment page, card or Zelle, no fees either way.</p>
+    <p class="lead">Pay your deposit or invoice online. Enter your invoice number and the email we have on file, and we'll send your secure payment page, card or Zelle.</p>
     <form id="pay-lookup" class="lead-form" style="max-width:520px;">
       <input name="number" placeholder="Invoice number *" required maxlength="40" />
       <input name="email" type="email" placeholder="Email on the invoice *" required maxlength="200" />
@@ -938,7 +946,7 @@ const payBody = `
 add('/pay/', {
   title: 'Make a Payment | Buddy Tile',
   description:
-    'Pay your Buddy Tile deposit or invoice online, card or Zelle, no fees. Enter your invoice number and we email your secure payment link.',
+    'Pay your Buddy Tile deposit or invoice online, card or Zelle. Enter your invoice number and we email your secure payment link.',
   jsonLd: null,
   body: payBody,
 });

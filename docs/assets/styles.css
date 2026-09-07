@@ -933,3 +933,40 @@ body.modal-open { overflow: hidden; }
   .js .reveal, .js .reveal-img img, .js .home-hero .enter { opacity: 1; transform: none; animation: none; transition: none; }
   .home-hero .bg.parallax { transform: none; }
 }
+
+/* Service area: label-free map as the section background, city card floating over it */
+.area-sec { position: relative; min-height: 700px; background: #E9EDF2; overflow: hidden; }
+.area-bg { position: absolute; inset: 0; z-index: 0; }
+.area-over { position: relative; z-index: 1; display: flex; justify-content: flex-end; padding-top: 64px; padding-bottom: 64px; pointer-events: none; }
+.area-card { pointer-events: auto; width: min(480px, 100%); background: #fff; border-radius: 22px; padding: clamp(26px, 3vw, 38px); box-shadow: 0 24px 60px rgba(8, 18, 33, 0.22); }
+.area-card .eyebrow { margin-bottom: 6px; }
+.area-card h2 { margin: 0 0 8px; font-size: clamp(1.9rem, 3vw, 2.4rem); line-height: 1; }
+.area-sub { color: var(--stone); font-size: 15px; margin: 0 0 20px; }
+.area-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.area-col .state { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; line-height: 1; margin-bottom: 10px; color: var(--navy); }
+.city-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.city-list li { display: flex; align-items: center; gap: 6px; }
+.city-btn { border: 0; background: transparent; padding: 4px 8px; margin-left: -8px; border-radius: 8px; font: inherit; font-size: 15.5px; font-weight: 700; color: var(--navy); cursor: pointer; text-align: left; }
+.city-btn:hover, .city-btn.active { background: rgba(246, 176, 21, 0.18); }
+.city-btn.active { color: var(--gold-dark); }
+.city-list li.town .city-btn { font-weight: 500; color: var(--ink-soft); font-size: 14.5px; }
+.city-go { color: var(--gold-dark); font-weight: 700; text-decoration: none; opacity: 0; transition: opacity 0.15s; }
+.city-list li:hover .city-go, .city-btn.active + .city-go { opacity: 1; }
+.map-note { margin: 18px 0 0; font-size: 13.5px; color: var(--stone); }
+.map-note a { color: var(--gold-dark); font-weight: 700; text-decoration: none; }
+@media (max-width: 900px) {
+  .area-sec { min-height: 0; }
+  .area-bg { position: relative; height: 380px; }
+  .area-over { padding-top: 0; padding-bottom: 40px; margin-top: -48px; }
+  .area-card { width: 100%; }
+}
+@media (max-width: 480px) { .area-cols { grid-template-columns: 1fr; } }
+.bt-pin { width: 18px; height: 18px; border-radius: 50%; background: var(--gold); border: 3px solid #fff; box-shadow: 0 2px 8px rgba(8, 18, 33, 0.45); transition: transform 0.2s; }
+.bt-pin.town { width: 12px; height: 12px; background: var(--navy); border-width: 2px; }
+.bt-pin.active { transform: scale(1.6); box-shadow: 0 0 0 6px rgba(246, 176, 21, 0.3), 0 2px 8px rgba(8, 18, 33, 0.45); }
+.bt-pop { font-family: 'Montserrat', system-ui, sans-serif; font-size: 13.5px; color: var(--navy); }
+.bt-pop strong { display: block; font-size: 15px; }
+.bt-pop span { display: block; color: var(--stone); margin: 2px 0 4px; }
+.bt-pop a { color: var(--gold-dark); font-weight: 700; text-decoration: none; }
+.leaflet-container { font-family: 'Montserrat', system-ui, sans-serif; }
+.area-bg .leaflet-control-attribution { font-size: 10px; background: rgba(255,255,255,0.7); }
