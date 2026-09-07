@@ -894,3 +894,33 @@ body.modal-open { overflow: hidden; }
 .home-hero .hero-card .lead-form button { justify-self: stretch; width: 100%; }
 @media (max-width: 900px) { .home-hero .hero-grid { grid-template-columns: 1fr; } }
 @media (max-width: 700px) { .home-hero .scrim { background: linear-gradient(180deg, rgba(10, 22, 38, 0.93) 0%, rgba(10, 22, 38, 0.88) 100%); } }
+
+/* ---- Motion: slow, weighted, and only when JS + motion are welcome -------
+   One easing everywhere, long durations, small distances. Nothing bounces. */
+:root { --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1); }
+.js .reveal {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 110ms);
+}
+.js .reveal.in { opacity: 1; transform: none; }
+.js .reveal-img img { transform: scale(1.07); transition: transform 1.6s var(--ease-out); transition-delay: calc(var(--i, 0) * 110ms); }
+.js .reveal-img.in img { transform: scale(1); }
+.js .reveal-img.in:hover img { transform: scale(1.03); transition-duration: 0.7s; transition-delay: 0s; }
+.js .tile.reveal-img.in:hover img { transform: scale(1.04); }
+
+/* Hero: the copy and the card arrive, the photo drifts as you scroll */
+.js .home-hero .enter { opacity: 0; transform: translate3d(0, 22px, 0); animation: heroIn 1.1s var(--ease-out) forwards; animation-delay: calc(var(--i, 0) * 140ms + 80ms); }
+@keyframes heroIn { to { opacity: 1; transform: none; } }
+.js .home-hero .bg { will-change: transform; transform: translate3d(0, 0, 0) scale(1.08); transition: none; }
+.home-hero .bg.parallax { transform: translate3d(0, var(--py, 0px), 0) scale(1.08); }
+
+/* Header settles into a thin line once you leave the hero */
+.site-header { transition: box-shadow 0.4s ease; }
+.site-header.scrolled { box-shadow: 0 4px 14px rgba(8, 18, 33, 0.14); }
+
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal, .js .reveal-img img, .js .home-hero .enter { opacity: 1; transform: none; animation: none; transition: none; }
+  .home-hero .bg.parallax { transform: none; }
+}

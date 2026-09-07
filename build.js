@@ -318,7 +318,7 @@ const homeBody = `
   <div class="bg" style="background-image:url('/assets/img/hero-master-bath-remodel.jpg')"></div>
   <div class="scrim"></div>
   <div class="container hero-grid">
-    <div class="hero-copy">
+    <div class="hero-copy enter">
       <p class="eyebrow light">Vancouver, WA · Portland, OR</p>
       <h1>CUSTOM TILE SHOWERS &amp;<br/><span class="gold">GROUT CLEANING</span><span class="h1-states">IN WASHINGTON &amp; OREGON</span></h1>
       <p class="lead">Buddy Tile builds custom tile showers, bathroom remodels, tub-to-shower conversions, heated tile floors, and backsplashes. We also bring tired tile back to life with grout deep cleaning, sealing, and shower regrouts. Our licensed, bonded tile craftsmen serve Vancouver, Camas, and Battle Ground in Washington and the Portland metro in Oregon. Every shower gets flood-tested waterproofing, and your written estimate arrives the same day we measure.</p>
@@ -330,7 +330,7 @@ const homeBody = `
         ${GOOGLE_REVIEWS && GOOGLE_REVIEWS.rating ? ratingLine : ''}
       </div>
     </div>
-    <div class="hero-card">
+    <div class="hero-card enter" style="--i:2">
       <p class="eyebrow">Free In-Home Estimate</p>
       <h3>Tell us about your project.</h3>
       <p class="hero-card-sub">We measure in person, and your written estimate arrives the same day.</p>
@@ -352,14 +352,14 @@ const homeBody = `
 
 <section class="sec" id="work">
   <div class="container wide">
-    <div class="sec-head">
+    <div class="sec-head reveal">
       <p class="eyebrow">Built by Buddy</p>
       <h2 class="h-xl">Bathrooms you'll want to show off.</h2>
     </div>
-    <a class="showcase-hero" href="${projectHref(SHOWCASE[0].slug)}">
+    <a class="showcase-hero reveal reveal-img" href="${projectHref(SHOWCASE[0].slug)}">
       <img src="/assets/img/projects/${SHOWCASE[0].photo}" alt="${esc(SHOWCASE[0].title)}" />
     </a>
-    <div class="showcase-cap">
+    <div class="showcase-cap reveal">
       <div>
         <h3>${esc(SHOWCASE[0].title)}</h3>
         <p>${esc(SHOWCASE[0].specs)}</p>
@@ -369,25 +369,25 @@ const homeBody = `
     <div class="showcase-pair">
       ${SHOWCASE.slice(1)
         .map(
-          (sc) => `<a class="showcase-card" href="${projectHref(sc.slug)}">
+          (sc, i) => `<a class="showcase-card reveal reveal-img" style="--i:${i}" href="${projectHref(sc.slug)}">
         <img src="/assets/img/projects/${sc.photo}" alt="${esc(sc.title)}" loading="lazy" />
         <div class="cap"><h3>${esc(sc.title)}</h3><p>${esc(sc.specs)}</p></div>
       </a>`
         )
         .join('')}
     </div>
-    <div class="sec-foot"><a class="btn ghost-dark" href="/projects/">See All Projects →</a></div>
+    <div class="sec-foot reveal"><a class="btn ghost-dark" href="/projects/">See All Projects →</a></div>
   </div>
 </section>
 
 <section class="sec paper" id="services">
   <div class="container wide">
-    <div class="sec-head">
+    <div class="sec-head reveal">
       <p class="eyebrow">What We Build</p>
       <h2 class="h-xl">From waterproofing to the final grout line.</h2>
     </div>
     <div class="svc-layout">
-      <a class="tile tile-feature" href="/services/${svc(FEATURED[0]).slug}/">
+      <a class="tile tile-feature reveal reveal-img" href="/services/${svc(FEATURED[0]).slug}/">
         <img src="/assets/img/${svc(FEATURED[0]).photo}" alt="${esc(svc(FEATURED[0]).name)}" loading="lazy" />
         <div class="ov"></div>
         <div class="tx"><h3>${esc(svc(FEATURED[0]).name)}</h3><p>Schluter waterproofing, flood-tested pans, niches, benches, curbless entries, and glass, planned before demo.</p><span class="go">Explore showers →</span></div>
@@ -395,7 +395,7 @@ const homeBody = `
       <div class="tile-grid">
         ${FEATURED.slice(1)
           .map(
-            (slug) => `<a class="tile" href="/services/${svc(slug).slug}/">
+            (slug, i) => `<a class="tile reveal reveal-img" style="--i:${i + 1}" href="/services/${svc(slug).slug}/">
           <img src="/assets/img/${svc(slug).photo}" alt="${esc(svc(slug).name)}" loading="lazy" />
           <div class="ov"></div>
           <div class="tx"><h3>${esc(svc(slug).name)}</h3></div>
@@ -404,7 +404,7 @@ const homeBody = `
           .join('')}
       </div>
     </div>
-    <div class="sec-foot">
+    <div class="sec-foot reveal">
       <a class="btn ghost-dark" href="/services/${svc(FEATURED[0]).slug}/#all-services" data-services-toggle>Explore All ${SERVICES.length} Services →</a>
     </div>
     <div class="all-services" id="all-services" hidden>
@@ -417,18 +417,18 @@ ${
   BEFORE_AFTER
     ? `<section class="sec" id="before-after">
   <div class="container wide">
-    <div class="sec-head">
+    <div class="sec-head reveal">
       <p class="eyebrow">See What's Possible</p>
       <h2 class="h-xl">Drag to see the transformation.</h2>
     </div>
-    <div class="ba" data-ba>
+    <div class="ba reveal reveal-img" data-ba>
       <img class="ba-after" src="/assets/img/projects/${BEFORE_AFTER.after.file}" alt="After: ${esc(BEFORE_AFTER.after.caption || BEFORE_AFTER.pr.title)}" loading="lazy" />
       <div class="ba-before" style="width:50%"><img src="/assets/img/projects/${BEFORE_AFTER.before.file}" alt="Before: ${esc(BEFORE_AFTER.before.caption || BEFORE_AFTER.pr.title)}" loading="lazy" /></div>
       <div class="ba-handle" style="left:50%"><span></span></div>
       <span class="ba-tag l">Before</span><span class="ba-tag r">After</span>
       <input type="range" min="0" max="100" value="50" aria-label="Before and after slider" />
     </div>
-    <div class="showcase-cap">
+    <div class="showcase-cap reveal">
       <div><h3>${esc(BEFORE_AFTER.pr.title)}</h3><p>${esc(projectByline(BEFORE_AFTER.pr))}</p></div>
       <a class="link-arrow dark" href="/projects/${BEFORE_AFTER.pr.slug}/">View Project →</a>
     </div>
@@ -439,22 +439,22 @@ ${
 
 <section class="sec navy" id="standard">
   <div class="container wide">
-    <div class="sec-head">
+    <div class="sec-head reveal">
       <p class="eyebrow">The Buddy Standard</p>
       <h2 class="h-xl light">No disappearing contractors.<br/>No mystery schedules.<br/>No wondering what's next.</h2>
     </div>
     <div class="standard-grid">
-      ${PROMISE.map((pr, i) => `<div class="std"><div class="num">0${i + 1}</div><h3>${esc(pr.short)}</h3><p>${esc(pr.body)}</p></div>`).join('')}
+      ${PROMISE.map((pr, i) => `<div class="std reveal" style="--i:${i}"><div class="num">0${i + 1}</div><h3>${esc(pr.short)}</h3><p>${esc(pr.body)}</p></div>`).join('')}
     </div>
   </div>
 </section>
 
 <section class="sec" id="crew">
   <div class="container wide crew-grid">
-    <figure class="crew-photo">
+    <figure class="crew-photo reveal reveal-img">
       <img src="/assets/img/craft-tile-hands.jpg" alt="Buddy Tile installer setting tile over prepared substrate" loading="lazy" />
     </figure>
-    <div class="crew-copy">
+    <div class="crew-copy reveal" style="--i:1">
       <p class="eyebrow">Real Crews, Real Process</p>
       <h2 class="h-xl">Professional from driveway to grout line.</h2>
       <p class="sub">Floor runners go down before the first tool comes in. Dust walls go up before demo. The site is vacuumed every night, and the work you'll never see, the waterproofing and the flat substrate, is photographed and sent to your phone before tile covers it.</p>
@@ -469,24 +469,24 @@ ${
 
 <section class="sec paper" id="how-it-works">
   <div class="container wide">
-    <div class="sec-head">
+    <div class="sec-head reveal">
       <p class="eyebrow">How It Works</p>
       <h2 class="h-xl">From quote to new shower.</h2>
     </div>
     <div class="proc-grid">
-      ${STEPS.map((st, i) => `<div class="proc"><div class="num">0${i + 1}</div><h3>${esc(st.short)}</h3><p>${esc(st.body)}</p></div>`).join('')}
+      ${STEPS.map((st, i) => `<div class="proc reveal" style="--i:${i}"><div class="num">0${i + 1}</div><h3>${esc(st.short)}</h3><p>${esc(st.body)}</p></div>`).join('')}
     </div>
   </div>
 </section>
 
 <section class="sec" id="story">
   <div class="container wide story">
-    <blockquote class="story-quote">
+    <blockquote class="story-quote reveal">
       <div class="stars">★★★★★</div>
       <p>“${esc(featuredReview.text)}”</p>
       <footer><strong>${esc(featuredReview.who)}</strong> · ${esc(featuredReview.where)}</footer>
     </blockquote>
-    <div class="story-stats">
+    <div class="story-stats reveal" style="--i:1">
       ${
         GOOGLE_REVIEWS && GOOGLE_REVIEWS.rating
           ? `<div class="stat"><div class="n">${GOOGLE_REVIEWS.rating.toFixed(1)} ★</div><p>Google rating from ${GOOGLE_REVIEWS.total} homeowners</p></div>`
@@ -501,7 +501,7 @@ ${
 
 <section class="sec paper" id="financing">
   <div class="container wide">
-    <div class="fin">
+    <div class="fin reveal">
       <div>
         <p class="eyebrow light">Financing</p>
         <h2 class="h-xl light">Build it now.<br/>Pay over time.</h2>
@@ -517,14 +517,14 @@ ${
 
 <section class="sec" id="service-area">
   <div class="container wide">
-    <div class="sec-head">
+    <div class="sec-head reveal">
       <p class="eyebrow">Service Area</p>
       <h2 class="h-xl">Two states. One standard.</h2>
     </div>
     <div class="area-grid">
       ${['WA', 'OR']
         .map(
-          (st) => `<div class="area-state">
+          (st, i) => `<div class="area-state reveal" style="--i:${i}">
         <div class="state">${st === 'WA' ? 'Washington' : 'Oregon'}</div>
         <ul class="cities">
           ${CITIES.filter((c) => c.state === st)
@@ -540,7 +540,7 @@ ${
 
 <section class="final" id="estimate">
   <img class="final-mascot" src="/assets/img/buddy-tile.png?v=4" alt="" aria-hidden="true" />
-  <div class="container">
+  <div class="container reveal">
     <p class="eyebrow light">Free In-Home Estimate</p>
     <h2 class="h-xl light">Let's build a bathroom<br/>you'll love.</h2>
     <p class="sub light">Two minutes now, an in-home visit this week, and your written estimate the same day. No pressure, no card fees, ever.</p>

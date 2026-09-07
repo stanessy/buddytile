@@ -431,6 +431,45 @@ function passesHumanCheck(form, statusEl) {
 
 // ---- Premium homepage: estimate modal, before/after slider, reveals -------
 (function () {
+  document.documentElement.classList.add('js');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Reveal on scroll: staggered by --i, never re-hidden, and a safety net
+  // so nothing can stay invisible if the observer misses.
+  var reveals = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  function showAll() { reveals.forEach(function (el) { el.classList.add('in'); }); }
+  if (!reveals.length || reduce || !('IntersectionObserver' in window)) {
+    showAll();
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
+    reveals.forEach(function (el) { io.observe(el); });
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        reveals.forEach(function (el) {
+          if (!el.classList.contains('in') && el.getBoundingClientRect().top < window.innerHeight) el.classList.add('in');
+        });
+      }, 1500);
+    });
+  }
+
+  // Hero parallax: the room drifts at a quarter of scroll speed (desktop only)
+  var heroBg = document.querySelector('.home-hero .bg');
+  if (heroBg && !reduce && window.innerWidth > 900) {
+    heroBg.classList.add('parallax');
+    var ticking = false;
+    function drift() {
+      var y = window.scrollY || window.pageYOffset;
+      var h = heroBg.parentNode.offsetHeight || 1;
+      if (y <= h) heroBg.style.setProperty('--py', Math.round(y * 0.25) + 'px');
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(drift); } }, { passive: true });
+    drift();
+  }
   var modal = document.getElementById('estimate-modal');
   if (modal) {
     var lastFocus = null;
