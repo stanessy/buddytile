@@ -92,7 +92,7 @@ const header = (isHome) => `
       <a class="hide-m" href="/projects/">Our Work</a>
       <a class="hide-m" href="/design/">Ballpark Price</a>
       <a class="phone-link" href="tel:${SITE.phone.replace(/[^0-9+]/g, '')}">${SITE.phone}</a>
-      <a class="btn" href="#estimate">Free Estimate</a>
+      <a class="btn" href="#estimate"${isHome ? ' data-open-estimate' : ''}>Free Estimate</a>
     </nav>
   </div>
 </header>`;
@@ -260,183 +260,295 @@ const HIW_ICONS = [
   hiwSvg('M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z'),
 ];
 
+// Featured on the homepage: one hero service, then four. Everything else is
+// one click away on "Explore all services" (and still gets its own SEO page).
+const FEATURED = ['shower-remodel', 'bathroom-tile', 'heated-floors', 'kitchen-backsplash', 'grout-cleaning'];
+const svc = (slug) => SERVICES.find((x) => x.slug === slug);
+const projectBySlug = (slug) => PROJECTS.find((x) => x.slug === slug);
+const SHOWCASE = [
+  { slug: 'whole-home-bathroom-remodel', photo: 'work-whole-home-bathroom-remodel-3.jpg', title: 'Herringbone shower, whole-home bathroom remodel', specs: 'Large-format porcelain · Herringbone accent band · Flood-tested pan · Frameless glass' },
+  { slug: 'navy-brass-bathroom', photo: 'work-navy-brass-bathroom-4.jpg', title: 'Navy & brass bath', specs: 'Sculpted tile walls · Custom vanity · Brass fixtures' },
+  { slug: 'chefs-kitchen-lattice-backsplash', photo: 'work-chefs-kitchen-lattice-backsplash-2.jpg', title: "Chef's kitchen, lattice backsplash", specs: 'Statement lattice · Full-height behind the range' },
+];
+const projectHref = (slug) => (projectBySlug(slug) ? `/projects/${slug}/` : '/projects/');
+// Before/after only renders when a gallery actually has a "before" photo.
+const BEFORE_AFTER = (() => {
+  for (const pr of PROJECTS) {
+    const before = (pr.photos || []).find((ph) => ph.phase === 'before');
+    const after = (pr.photos || []).find((ph) => ph.phase === 'after');
+    if (before && after) return { pr, before, after };
+  }
+  return null;
+})();
+const ratingLine = GOOGLE_REVIEWS && GOOGLE_REVIEWS.rating
+  ? `<div class="hero-rating"><span class="stars">★★★★★</span> ${GOOGLE_REVIEWS.rating.toFixed(1)} from local homeowners on Google</div>`
+  : `<div class="hero-rating">Family owned · Same-day written estimates · No card fees, ever</div>`;
+const featuredReview = GOOGLE_REVIEWS && GOOGLE_REVIEWS.reviews?.length
+  ? { text: GOOGLE_REVIEWS.reviews[0].text, who: GOOGLE_REVIEWS.reviews[0].author, where: 'Google review' }
+  : { text: TESTIMONIALS[0].quote, who: TESTIMONIALS[0].name, where: TESTIMONIALS[0].where };
+
+const estimateForm = (context, { compact = false } = {}) => `
+<form class="lead-form hero-lead" data-context="${esc(context)}">
+  <input name="name" placeholder="Your name *" required maxlength="120" class="full" />
+  <input name="phone" type="tel" placeholder="Phone *" required maxlength="30" />
+  <input name="email" type="email" placeholder="Email" maxlength="200" />
+  <select name="projectType" class="full">
+    <option value="">What are we building?</option>
+    <option>Tile shower remodel</option>
+    <option>Full bathroom remodel</option>
+    <option>Bathroom floor / wall tile</option>
+    <option>Kitchen backsplash</option>
+    <option>Heated floors</option>
+    <option>Repair / regrout</option>
+  </select>
+  ${compact ? '' : '<textarea name="description" placeholder="Tell us about the project…" maxlength="3000"></textarea>'}
+  <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" />
+  <div class="human-check full">
+    <label>Quick human check: what is <span class="hc-q">…</span>?
+      <input name="humanCheck" inputmode="numeric" autocomplete="off" placeholder="?" required />
+    </label>
+  </div>
+  <button class="btn full" type="submit">Get My Free Estimate</button>
+  <p class="form-status" hidden></p>
+  <p class="form-note">We reply the same business day. Your info never gets sold. You're a neighbor, not a lead.</p>
+</form>`;
+
 const homeBody = `
-<div class="hero">
-  <div class="bg" style="background-image:url('/assets/img/hero-master-bath-remodel.jpg')"></div>
+<div class="home-hero">
+  <div class="bg" style="background-image:url('/assets/img/tile-shower-remodel-vancouver-wa.jpg')"></div>
   <div class="scrim"></div>
-  <div class="container hero-grid">
-    <div>
-      <h1>CUSTOM TILE SHOWERS &amp;<br/><span class="gold">GROUT CLEANING</span><span class="h1-states">IN WASHINGTON &amp; OREGON</span></h1>
-      <hr class="gold-bar" />
-      <p class="lead">Buddy Tile builds custom tile showers, bathroom remodels, tub-to-shower conversions, heated tile floors, and backsplashes. We also bring tired tile back to life with grout deep cleaning, sealing, and shower regrouts. Our licensed, bonded tile craftsmen serve Vancouver, Camas, and Battle Ground in Washington and the Portland metro in Oregon. Every shower gets flood-tested waterproofing, and your written estimate arrives the same day we measure.</p>
-      <div class="chips">
-        <span>Family owned</span><span>Licensed &amp; bonded</span><span>Flood-tested waterproofing</span><span>Same-day written estimates</span>
-      </div>
+  <div class="container">
+    <p class="eyebrow light">Vancouver, WA · Portland, OR</p>
+    <h1>CUSTOM TILE SHOWERS<br/><span class="gold">BUILT TO LAST.</span></h1>
+    <p class="lead">Design, waterproofing, tile installation, and finishing, handled by one specialized tile team. Every shower flood-tested before a single tile goes on.</p>
+    <div class="hero-actions">
+      <a class="btn btn-lg" href="#estimate" data-open-estimate>Get My Free Estimate</a>
+      <a class="link-arrow" href="/projects/">View Our Work →</a>
     </div>
-    <div class="hero-card">
-      <h3>GET A FREE IN-HOME ESTIMATE</h3>
-      <p class="hero-card-sub">We measure in person, and your written estimate arrives the same day.</p>
-      <form class="lead-form hero-lead" data-context="hero">
-        <input name="name" placeholder="Your name *" required maxlength="120" class="full" />
-        <input name="phone" type="tel" placeholder="Phone *" required maxlength="30" />
-        <select name="projectType">
-          <option value="">Project…</option>
-          <option>Tile shower remodel</option>
-          <option>Bathroom floor / wall tile</option>
-          <option>Kitchen backsplash</option>
-          <option>Heated floors</option>
-          <option>Repair / regrout</option>
-        </select>
-        <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" />
-        <div class="human-check full">
-        <label>Quick human check: what is <span class="hc-q">…</span>?
-          <input name="humanCheck" inputmode="numeric" autocomplete="off" placeholder="?" required />
-        </label>
-      </div>
-        <button class="btn full" type="submit">Get My Free Estimate</button>
-        <p class="form-status" hidden></p>
-      </form>
-      <p class="hero-card-alt">Just browsing? <a href="/design/">Design your shower &amp; get an instant ballpark →</a></p>
-    </div>
+    ${ratingLine}
   </div>
 </div>
 
-<div class="stat-band">
-  <div class="container stat-grid">
-    <div class="stat"><div class="n">SAME DAY</div><p>Written estimates, in your inbox before dinner</p></div>
-    <div class="stat"><div class="n">5&ndash;8 DAYS</div><p>Demo to grout on most showers</p></div>
-    <div class="stat"><div class="n">100%</div><p>Every shower flood-tested &amp; photographed before tile</p></div>
-    <div class="stat"><div class="n">1</div><p>Number, one warranty, one standard</p></div>
+<div class="trust-strip">
+  <div class="container">
+    <span>Licensed, Bonded &amp; Insured</span>
+    <span>5–8 Day Shower Installs</span>
+    <span>Flood-Tested Waterproofing</span>
+    <span>Warrantied by Name</span>
+    <span>WA + OR</span>
   </div>
 </div>
 
-<section id="services">
-  <div class="container center">
-    <h2>WHAT WE <span class="hl">BUILD</span></h2>
-    <hr class="gold-bar" />
-    <p class="section-sub">Showers, kitchens, floors, and the waterproofing underneath it all, set by dedicated tile crews, not whoever answered the ad.</p>
-    <div class="grid cols-3" style="text-align:left;">
-      ${SERVICES.map(
-        (s) => `<a class="card" href="/services/${s.slug}/">
-        <img src="/assets/img/${s.photo}" alt="${esc(s.name)}" loading="lazy" />
-        <div class="body"><h3>${s.name.toUpperCase()}</h3><p>${esc(s.metaDescription.split('.')[0])}.</p><div class="go">Learn more →</div></div>
-      </a>`
-      ).join('')}
+<section class="sec" id="work">
+  <div class="container wide">
+    <div class="sec-head">
+      <p class="eyebrow">Built by Buddy</p>
+      <h2 class="h-xl">Bathrooms you'll want to show off.</h2>
     </div>
-  </div>
-</section>
-
-<section class="navy-block">
-  <div class="container center">
-    <h2>HOW YOU'LL BE <span class="hl">TREATED</span></h2>
-    <hr class="gold-bar" />
-    <p class="section-sub">Anyone can show you tile photos. Here's what it feels like to have Buddy Tile in your home.</p>
-    <div class="promise-grid">
-      ${PROMISE.map((p) => `<div class="promise"><h3>${p.title.toUpperCase()}</h3><p>${esc(p.body)}</p></div>`).join('')}
+    <a class="showcase-hero" href="${projectHref(SHOWCASE[0].slug)}">
+      <img src="/assets/img/projects/${SHOWCASE[0].photo}" alt="${esc(SHOWCASE[0].title)}" />
+    </a>
+    <div class="showcase-cap">
+      <div>
+        <h3>${esc(SHOWCASE[0].title)}</h3>
+        <p>${esc(SHOWCASE[0].specs)}</p>
+      </div>
+      <a class="link-arrow dark" href="${projectHref(SHOWCASE[0].slug)}">View Project →</a>
     </div>
-  </div>
-</section>
-
-<section>
-  <div class="container center">
-    <h2>HOW IT <span class="hl">WORKS</span></h2>
-    <p class="section-sub">One call is all it takes. Here's the whole ride, start to finish.</p>
-    <div class="hiw-grid">
-      ${STEPS.map(
-        (st, i) => `<div class="hiw"><div class="circ">${HIW_ICONS[i] || ''}<span class="num">${i + 1}</span></div><h3>${st.title.toUpperCase()}</h3><p>${esc(st.body)}</p></div>`
-      ).join('')}
-    </div>
-    <div style="max-width:640px;margin:44px auto 0;">
-      <h3>YOU'RE A NEIGHBOR, NOT A LEAD</h3>
-      <p style="color:var(--stone);">Lead-generation sites sell your phone number to five strangers. Call Buddy Tile and you get Buddy Tile, our crews, our warranty, our number, from the first hello to the final walkthrough.</p>
-    </div>
-  </div>
-</section>
-
-<section class="alt">
-  <div class="container center">
-    <h2>WHAT YOUR <span class="hl">NEIGHBORS</span> SAY</h2>
-    <hr class="gold-bar" />
-    ${
-      GOOGLE_REVIEWS
-        ? `<p class="section-sub">${GOOGLE_REVIEWS.rating ? `<strong>${GOOGLE_REVIEWS.rating.toFixed(1)} ★</strong> from ${GOOGLE_REVIEWS.total} Google review${GOOGLE_REVIEWS.total === 1 ? '' : 's'} · ` : ''}<a href="${esc(GOOGLE_REVIEWS.mapsUrl || 'https://www.google.com/maps/place/?q=place_id:' + GOOGLE_REVIEWS.placeId)}" target="_blank" rel="noopener">Read them all on Google →</a></p>
-    <div class="quote-grid">
-      ${GOOGLE_REVIEWS.reviews
+    <div class="showcase-pair">
+      ${SHOWCASE.slice(1)
         .map(
-          (t) => `<div class="quote-card"><div class="stars">${'★'.repeat(t.rating)}</div><blockquote>"${esc(t.text)}"</blockquote><div class="who">- ${esc(t.author)}</div><div class="where">Google review · ${esc(t.when)}</div></div>`
+          (sc) => `<a class="showcase-card" href="${projectHref(sc.slug)}">
+        <img src="/assets/img/projects/${sc.photo}" alt="${esc(sc.title)}" loading="lazy" />
+        <div class="cap"><h3>${esc(sc.title)}</h3><p>${esc(sc.specs)}</p></div>
+      </a>`
         )
         .join('')}
-    </div>`
-        : `<div class="quote-grid">
-      ${TESTIMONIALS.map(
-        (t) => `<div class="quote-card"><div class="stars">★★★★★</div><blockquote>"${esc(t.quote)}"</blockquote><div class="who">- ${esc(t.name)}</div><div class="where">${esc(t.where)}</div></div>`
-      ).join('')}
-    </div>`
-    }
+    </div>
+    <div class="sec-foot"><a class="btn ghost-dark" href="/projects/">See All Projects →</a></div>
   </div>
 </section>
 
-<section>
-  <div class="container center">
-    <h2>THE <span class="hl">CRAFT</span> BEHIND THE FINISH</h2>
-    <hr class="gold-bar" />
-    <p class="section-sub">Anyone can show you a pretty "after." We're just as proud of what goes underneath, and we photograph both for you.</p>
-    <div class="craft-pair">
-      <figure>
-        <img src="/assets/img/craft-tile-hands.jpg" alt="Buddy Tile installer setting tile over prepared substrate" loading="lazy" />
-        <figcaption>
-          <span class="craft-tag">THE WORK YOU NEVER SEE</span>
-          <p>Waterproofing, flat substrates, tight layout, every hidden step photographed and sent to your phone before tile covers it.</p>
-        </figcaption>
-      </figure>
-      <figure>
-        <img src="/assets/img/marble-tile-shower-glass-door.jpg" alt="Finished marble tile shower with glass door" loading="lazy" />
-        <figcaption>
-          <span class="craft-tag gold">THE FINISH YOU LIVE WITH</span>
-          <p>Set to TCNA standards over a flood-tested pan, built to look this good for decades, and warrantied by name.</p>
-        </figcaption>
-      </figure>
+<section class="sec paper" id="services">
+  <div class="container wide">
+    <div class="sec-head">
+      <p class="eyebrow">What We Build</p>
+      <h2 class="h-xl">From waterproofing to the final grout line.</h2>
     </div>
-    <div style="margin-top:38px;">
-      <div class="finance-band">
-        <div class="fb-icon" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/></svg>
-        </div>
-        <div class="fb-copy">
-          <div class="fb-title">PROJECT FINANCING AVAILABLE</div>
-          <p>Pre-qualify in about 60 seconds through Acorn Finance.</p>
-        </div>
-        <a class="btn" href="${SITE.acornUrl}" target="_blank" rel="noopener">Check My Financing Options →</a>
+    <div class="svc-layout">
+      <a class="tile tile-feature" href="/services/${svc(FEATURED[0]).slug}/">
+        <img src="/assets/img/${svc(FEATURED[0]).photo}" alt="${esc(svc(FEATURED[0]).name)}" loading="lazy" />
+        <div class="ov"></div>
+        <div class="tx"><h3>${esc(svc(FEATURED[0]).name)}</h3><p>Schluter waterproofing, flood-tested pans, niches, benches, curbless entries, and glass, planned before demo.</p><span class="go">Explore showers →</span></div>
+      </a>
+      <div class="tile-grid">
+        ${FEATURED.slice(1)
+          .map(
+            (slug) => `<a class="tile" href="/services/${svc(slug).slug}/">
+          <img src="/assets/img/${svc(slug).photo}" alt="${esc(svc(slug).name)}" loading="lazy" />
+          <div class="ov"></div>
+          <div class="tx"><h3>${esc(svc(slug).name)}</h3></div>
+        </a>`
+          )
+          .join('')}
       </div>
-      <p class="finance-note">Financing offered through Acorn Finance's network of lenders and subject to credit approval. Pre-qualifying uses a soft credit inquiry that does not affect your credit score; proceeding with a lender's offer involves a hard credit pull, which can.</p>
+    </div>
+    <div class="sec-foot">
+      <a class="btn ghost-dark" href="/services/${svc(FEATURED[0]).slug}/#all-services" data-services-toggle>Explore All ${SERVICES.length} Services →</a>
+    </div>
+    <div class="all-services" id="all-services" hidden>
+      ${SERVICES.map((s) => `<a href="/services/${s.slug}/">${esc(s.name)}</a>`).join('')}
     </div>
   </div>
 </section>
 
-<section class="alt" id="service-area">
+${
+  BEFORE_AFTER
+    ? `<section class="sec" id="before-after">
+  <div class="container wide">
+    <div class="sec-head">
+      <p class="eyebrow">See What's Possible</p>
+      <h2 class="h-xl">Drag to see the transformation.</h2>
+    </div>
+    <div class="ba" data-ba>
+      <img class="ba-after" src="/assets/img/projects/${BEFORE_AFTER.after.file}" alt="After: ${esc(BEFORE_AFTER.after.caption || BEFORE_AFTER.pr.title)}" loading="lazy" />
+      <div class="ba-before" style="width:50%"><img src="/assets/img/projects/${BEFORE_AFTER.before.file}" alt="Before: ${esc(BEFORE_AFTER.before.caption || BEFORE_AFTER.pr.title)}" loading="lazy" /></div>
+      <div class="ba-handle" style="left:50%"><span></span></div>
+      <span class="ba-tag l">Before</span><span class="ba-tag r">After</span>
+      <input type="range" min="0" max="100" value="50" aria-label="Before and after slider" />
+    </div>
+    <div class="showcase-cap">
+      <div><h3>${esc(BEFORE_AFTER.pr.title)}</h3><p>${esc(projectByline(BEFORE_AFTER.pr))}</p></div>
+      <a class="link-arrow dark" href="/projects/${BEFORE_AFTER.pr.slug}/">View Project →</a>
+    </div>
+  </div>
+</section>`
+    : ''
+}
+
+<section class="sec navy" id="standard">
+  <div class="container wide">
+    <div class="sec-head">
+      <p class="eyebrow">The Buddy Standard</p>
+      <h2 class="h-xl light">No disappearing contractors.<br/>No mystery schedules.<br/>No wondering what's next.</h2>
+    </div>
+    <div class="standard-grid">
+      ${PROMISE.map((pr, i) => `<div class="std"><div class="num">0${i + 1}</div><h3>${esc(pr.short)}</h3><p>${esc(pr.body)}</p></div>`).join('')}
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="crew">
+  <div class="container wide crew-grid">
+    <figure class="crew-photo">
+      <img src="/assets/img/craft-tile-hands.jpg" alt="Buddy Tile installer setting tile over prepared substrate" loading="lazy" />
+    </figure>
+    <div class="crew-copy">
+      <p class="eyebrow">Real Crews, Real Process</p>
+      <h2 class="h-xl">Professional from driveway to grout line.</h2>
+      <p class="sub">Floor runners go down before the first tool comes in. Dust walls go up before demo. The site is vacuumed every night, and the work you'll never see, the waterproofing and the flat substrate, is photographed and sent to your phone before tile covers it.</p>
+      <ul class="proof">
+        <li><strong>Licensed, bonded &amp; insured crews</strong><span>Registered in Washington and Oregon, warrantied by name.</span></li>
+        <li><strong>Your home protected daily</strong><span>Runners, dust walls, nightly cleanup. You live here.</span></li>
+        <li><strong>Daily progress photos</strong><span>Including the waterproofing you'd otherwise never see.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec paper" id="how-it-works">
+  <div class="container wide">
+    <div class="sec-head">
+      <p class="eyebrow">How It Works</p>
+      <h2 class="h-xl">From quote to new shower.</h2>
+    </div>
+    <div class="proc-grid">
+      ${STEPS.map((st, i) => `<div class="proc"><div class="num">0${i + 1}</div><h3>${esc(st.short)}</h3><p>${esc(st.body)}</p></div>`).join('')}
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="story">
+  <div class="container wide story">
+    <blockquote class="story-quote">
+      <div class="stars">★★★★★</div>
+      <p>“${esc(featuredReview.text)}”</p>
+      <footer><strong>${esc(featuredReview.who)}</strong> · ${esc(featuredReview.where)}</footer>
+    </blockquote>
+    <div class="story-stats">
+      ${
+        GOOGLE_REVIEWS && GOOGLE_REVIEWS.rating
+          ? `<div class="stat"><div class="n">${GOOGLE_REVIEWS.rating.toFixed(1)} ★</div><p>Google rating from ${GOOGLE_REVIEWS.total} homeowners</p></div>`
+          : `<div class="stat"><div class="n">Same day</div><p>Written estimate, in your inbox before dinner</p></div>`
+      }
+      <div class="stat"><div class="n">100%</div><p>Showers flood-tested and photographed before tile</p></div>
+      <div class="stat"><div class="n">$0</div><p>Card fees, surprise invoices, or price changes</p></div>
+      <a class="link-arrow dark" href="${GOOGLE_REVIEWS ? esc(GOOGLE_REVIEWS.mapsUrl || 'https://www.google.com/maps/place/?q=place_id:' + GOOGLE_REVIEWS.placeId) : '/about/'}"${GOOGLE_REVIEWS ? ' target="_blank" rel="noopener"' : ''}>${GOOGLE_REVIEWS ? 'Read All Reviews →' : 'Meet the Company →'}</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec paper" id="financing">
+  <div class="container wide">
+    <div class="fin">
+      <div>
+        <p class="eyebrow light">Financing</p>
+        <h2 class="h-xl light">Build it now.<br/>Pay over time.</h2>
+        <p class="sub">Pre-qualify in about 60 seconds through Acorn Finance. A soft credit inquiry that doesn't touch your score.</p>
+      </div>
+      <div class="fin-cta">
+        <a class="btn btn-lg" href="${SITE.acornUrl}" target="_blank" rel="noopener">Check My Options →</a>
+        <p class="finance-note light">Offered through Acorn Finance's network of lenders, subject to credit approval. Proceeding with a lender's offer involves a hard credit pull.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="service-area">
+  <div class="container wide">
+    <div class="sec-head">
+      <p class="eyebrow">Service Area</p>
+      <h2 class="h-xl">Two states. One standard.</h2>
+    </div>
+    <div class="area-grid">
+      ${['WA', 'OR']
+        .map(
+          (st) => `<div class="area-state">
+        <div class="state">${st === 'WA' ? 'Washington' : 'Oregon'}</div>
+        <ul class="cities">
+          ${CITIES.filter((c) => c.state === st)
+            .map((c) => `<li><a href="/tile-contractor/${c.slug}/">${esc(c.name)}</a><span>${esc(c.neighborhoods.slice(0, 4).join(' · '))}</span></li>`)
+            .join('')}
+        </ul>
+      </div>`
+        )
+        .join('')}
+    </div>
+  </div>
+</section>
+
+<section class="final" id="estimate">
+  <img class="final-mascot" src="/assets/img/buddy-tile.png?v=4" alt="" aria-hidden="true" />
   <div class="container">
-    <h2>SERVICE AREA</h2>
-    <hr class="gold-bar" />
-    <p style="max-width:40em;color:var(--stone);">${SITE.serviceAreaBlurb}</p>
-    <div class="grid cols-3">
-      ${CITIES.map(
-        (c) => `<a class="card" href="/tile-contractor/${c.slug}/"><div class="body"><h3>${c.name.toUpperCase()}, ${c.state}</h3><p>${esc(c.blurb)}</p><div class="go">Tile work in ${c.name} →</div></div></a>`
-      ).join('')}
+    <p class="eyebrow light">Free In-Home Estimate</p>
+    <h2 class="h-xl light">Let's build a bathroom<br/>you'll love.</h2>
+    <p class="sub light">Two minutes now, an in-home visit this week, and your written estimate the same day. No pressure, no card fees, ever.</p>
+    <div class="estimate-card">
+      ${estimateForm('home')}
     </div>
   </div>
 </section>
 
-<section>
-  <div class="container">
-    <h2>WHY HOMEOWNERS PICK BUDDY</h2>
-    <hr class="gold-bar" />
-    <div class="grid cols-3">
-      ${TRUST.map((t) => `<div><h3>${t.title.toUpperCase()}</h3><p style="color:var(--stone);margin:0;">${t.body}</p></div>`).join('')}
-    </div>
+<div class="modal" id="estimate-modal" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="estimate-modal-title">
+    <button class="modal-x" type="button" aria-label="Close" data-close-estimate>×</button>
+    <p class="eyebrow">Free In-Home Estimate</p>
+    <h3 id="estimate-modal-title">Tell us about your project.</h3>
+    <p class="hero-card-sub">We measure in person, and your written estimate arrives the same day.</p>
+    ${estimateForm('modal', { compact: true })}
+    <p class="hero-card-alt">Just browsing? <a href="/design/">Design your shower &amp; get an instant ballpark →</a></p>
   </div>
-</section>
-
-${leadForm('home')}`;
+</div>`;
 
 
 const HERO_CHIPS = `<div class="chips">

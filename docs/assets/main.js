@@ -428,3 +428,54 @@ function passesHumanCheck(form, statusEl) {
   );
   update();
 })();
+
+// ---- Premium homepage: estimate modal, before/after slider, reveals -------
+(function () {
+  var modal = document.getElementById('estimate-modal');
+  if (modal) {
+    var lastFocus = null;
+    function openModal(e) {
+      if (e) e.preventDefault();
+      lastFocus = document.activeElement;
+      modal.hidden = false;
+      document.body.classList.add('modal-open');
+      var first = modal.querySelector('input[name=name]');
+      if (first) { try { first.focus({ preventScroll: true }); } catch (e) { first.focus(); } }
+    }
+    function closeModal() {
+      modal.hidden = true;
+      document.body.classList.remove('modal-open');
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    document.querySelectorAll('[data-open-estimate]').forEach(function (a) { a.addEventListener('click', openModal); });
+    modal.querySelectorAll('[data-close-estimate]').forEach(function (b) { b.addEventListener('click', closeModal); });
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+  }
+
+  // "Explore all services" expands the full list in place instead of leaving
+  var toggle = document.querySelector('[data-services-toggle]');
+  var all = document.getElementById('all-services');
+  if (toggle && all) {
+    toggle.addEventListener('click', function (e) {
+      e.preventDefault();
+      all.hidden = !all.hidden;
+      toggle.textContent = all.hidden ? toggle.dataset.label || toggle.textContent : 'Hide services';
+      if (!toggle.dataset.label) toggle.dataset.label = 'Explore All Services →';
+    });
+  }
+
+  document.querySelectorAll('[data-ba]').forEach(function (ba) {
+    var range = ba.querySelector('input[type=range]');
+    var before = ba.querySelector('.ba-before');
+    var handle = ba.querySelector('.ba-handle');
+    var beforeImg = before && before.querySelector('img');
+    function size() { if (beforeImg) beforeImg.style.width = ba.clientWidth + 'px'; }
+    function set(v) { before.style.width = v + '%'; handle.style.left = v + '%'; }
+    if (range) range.addEventListener('input', function () { set(range.value); });
+    window.addEventListener('resize', size);
+    size();
+    set(range ? range.value : 50);
+  });
+
+})();

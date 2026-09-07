@@ -306,18 +306,22 @@ const CITIES = [
 // promise about the homeowner's experience, not a feature.
 const PROMISE = [
   {
+    short: 'We protect your home.',
     title: "We protect your home like it's ours",
     body: 'Floor runners from the front door to the work, dust walls up before demo starts, and a vacuumed job site every single night. You live here. We never forget that.',
   },
   {
+    short: "You'll always know what's next.",
     title: "You'll never wonder what's happening",
     body: "Daily progress photos land on your phone, including the waterproofing you'd otherwise never see. No chasing your contractor for updates. Ever.",
   },
   {
+    short: 'Your price is your price.',
     title: 'Your budget is safe with us',
     body: "A written price before we start, and it doesn't move unless you change the plan. No surprise invoices, no card fees, no games.",
   },
   {
+    short: "We're done when you smile.",
     title: "We're not done until you smile",
     body: "You walk the finished room with your crew lead, and the invoice only comes after you've signed off happy. That's the order it should happen in.",
   },
@@ -345,10 +349,10 @@ const TESTIMONIALS = [
 ];
 
 const STEPS = [
-  { title: 'Request an estimate', body: 'Two minutes online or one phone call. Tell us the room and what you have in mind.' },
-  { title: 'In-home visit, same-day estimate', body: 'We measure and sketch your Tile Plan in your bathroom, and your written estimate lands in your inbox the same day.' },
-  { title: 'Approve from your phone', body: 'Your estimate arrives by email. Review the scope and approve online in one tap, or sign a paper copy if you prefer.' },
-  { title: 'We build it', body: 'Licensed crews, daily progress photos, and a final walkthrough you sign off on. The invoice only comes after you\'re happy.' },
+  { short: 'Show us your space', title: 'Request an estimate', body: 'Two minutes online or one phone call. Tell us the room and what you have in mind.' },
+  { short: 'Design it', title: 'In-home visit, same-day estimate', body: 'We measure and sketch your Tile Plan in your bathroom, and your written estimate lands in your inbox the same day.' },
+  { short: 'We build it', title: 'Approve from your phone', body: 'Approve online in one tap. Licensed crews, floor protection, and daily progress photos to your phone.' },
+  { short: 'Enjoy it', title: 'Final walkthrough', body: "You walk the finished room with your crew lead. The invoice only comes after you've signed off happy, and the warranty is by name." },
 ];
 
 const TRUST = [
