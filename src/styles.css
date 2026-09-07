@@ -949,7 +949,6 @@ body.modal-open { overflow: hidden; }
 .city-btn { border: 0; background: transparent; padding: 4px 8px; margin-left: -8px; border-radius: 8px; font: inherit; font-size: 15.5px; font-weight: 700; color: var(--navy); cursor: pointer; text-align: left; }
 .city-btn:hover, .city-btn.active { background: rgba(246, 176, 21, 0.18); }
 .city-btn.active { color: var(--gold-dark); }
-.city-list li.town .city-btn { font-weight: 500; color: var(--ink-soft); font-size: 14.5px; }
 .city-go { color: var(--gold-dark); font-weight: 700; text-decoration: none; opacity: 0; transition: opacity 0.15s; }
 .city-list li:hover .city-go, .city-btn.active + .city-go { opacity: 1; }
 .map-note { margin: 18px 0 0; font-size: 13.5px; color: var(--stone); }
@@ -962,7 +961,6 @@ body.modal-open { overflow: hidden; }
 }
 @media (max-width: 480px) { .area-cols { grid-template-columns: 1fr; } }
 .bt-pin { width: 18px; height: 18px; border-radius: 50%; background: var(--gold); border: 3px solid #fff; box-shadow: 0 2px 8px rgba(8, 18, 33, 0.45); transition: transform 0.2s; }
-.bt-pin.town { width: 12px; height: 12px; background: var(--navy); border-width: 2px; }
 .bt-pin.active { transform: scale(1.6); box-shadow: 0 0 0 6px rgba(246, 176, 21, 0.3), 0 2px 8px rgba(8, 18, 33, 0.45); }
 .bt-pop { font-family: 'Montserrat', system-ui, sans-serif; font-size: 13.5px; color: var(--navy); }
 .bt-pop strong { display: block; font-size: 15px; }

@@ -522,7 +522,7 @@ ${
     <div class="area-card reveal">
       <p class="eyebrow">Service Area</p>
       <h2>Two states. One standard.</h2>
-      <p class="area-sub">Crews roll out of Vancouver every morning. Tap a city to find it on the map, gold pins have their own page.</p>
+      <p class="area-sub">Crews roll out of Vancouver every morning. Tap a city to find it on the map.</p>
       <div class="area-cols">
         ${['WA', 'OR']
           .map(
@@ -533,7 +533,7 @@ ${
               .map((c) => `<li><button type="button" class="city-btn" data-city="${c.slug}">${esc(c.name)}</button><a class="city-go" href="/tile-contractor/${c.slug}/" aria-label="Tile work in ${esc(c.name)}">→</a></li>`)
               .join('')}
             ${NEARBY_TOWNS.filter((t) => t.state === st)
-              .map((t) => `<li class="town"><button type="button" class="city-btn" data-town="${esc(t.name)}">${esc(t.name)}</button></li>`)
+              .map((t) => `<li><button type="button" class="city-btn" data-town="${esc(t.name)}">${esc(t.name)}</button></li>`)
               .join('')}
           </ul>
         </div>`

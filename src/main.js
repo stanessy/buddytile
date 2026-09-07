@@ -556,8 +556,8 @@ function passesHumanCheck(form, statusEl) {
     var bounds = [];
     function add(key, lat, lng, town, html) {
       var pinEl = document.createElement('div');
-      pinEl.className = 'bt-pin' + (town ? ' town' : '');
-      var m = L.marker([lat, lng], { icon: L.divIcon({ className: '', html: pinEl, iconSize: town ? [12, 12] : [18, 18], iconAnchor: town ? [6, 6] : [9, 9] }), zIndexOffset: town ? 0 : 100 })
+      pinEl.className = 'bt-pin';
+      var m = L.marker([lat, lng], { icon: L.divIcon({ className: '', html: pinEl, iconSize: [18, 18], iconAnchor: [9, 9] }), zIndexOffset: town ? 0 : 100 })
         .addTo(map)
         .bindPopup(html, { offset: [0, -8] });
       markers[key] = m;
@@ -565,7 +565,7 @@ function passesHumanCheck(form, statusEl) {
       bounds.push([lat, lng]);
     }
     data.towns.forEach(function (t) {
-      add('town:' + t.name, t.lat, t.lng, true, '<div class="bt-pop"><strong>' + t.name + ', ' + t.state + '</strong><span>Covered from the nearest city</span></div>');
+      add('town:' + t.name, t.lat, t.lng, true, '<div class="bt-pop"><strong>' + t.name + ', ' + t.state + '</strong><span>Tile showers, floors, and backsplashes</span></div>');
     });
     data.cities.forEach(function (c) {
       add(c.slug, c.lat, c.lng, false, '<div class="bt-pop"><strong>' + c.name + ', ' + c.state + '</strong><span>' + c.hoods.join(' · ') + '</span><a href="' + c.url + '">Tile work in ' + c.name + ' →</a></div>');
