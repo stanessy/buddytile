@@ -315,17 +315,28 @@ const estimateForm = (context, { compact = false } = {}) => `
 
 const homeBody = `
 <div class="home-hero">
-  <div class="bg" style="background-image:url('/assets/img/tile-shower-remodel-vancouver-wa.jpg')"></div>
+  <div class="bg" style="background-image:url('/assets/img/hero-master-bath-remodel.jpg')"></div>
   <div class="scrim"></div>
-  <div class="container">
-    <p class="eyebrow light">Vancouver, WA · Portland, OR</p>
-    <h1>CUSTOM TILE SHOWERS<br/><span class="gold">BUILT TO LAST.</span></h1>
-    <p class="lead">Design, waterproofing, tile installation, and finishing, handled by one specialized tile team. Every shower flood-tested before a single tile goes on.</p>
-    <div class="hero-actions">
-      <a class="btn btn-lg" href="#estimate" data-open-estimate>Get My Free Estimate</a>
-      <a class="link-arrow" href="/projects/">View Our Work →</a>
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow light">Vancouver, WA · Portland, OR</p>
+      <h1>CUSTOM TILE SHOWERS &amp;<br/><span class="gold">GROUT CLEANING</span><span class="h1-states">IN WASHINGTON &amp; OREGON</span></h1>
+      <p class="lead">Buddy Tile builds custom tile showers, bathroom remodels, tub-to-shower conversions, heated tile floors, and backsplashes. We also bring tired tile back to life with grout deep cleaning, sealing, and shower regrouts. Our licensed, bonded tile craftsmen serve Vancouver, Camas, and Battle Ground in Washington and the Portland metro in Oregon. Every shower gets flood-tested waterproofing, and your written estimate arrives the same day we measure.</p>
+      <div class="chips">
+        <span>Family owned</span><span>Licensed &amp; bonded</span><span>Flood-tested waterproofing</span><span>Same-day written estimates</span>
+      </div>
+      <div class="hero-actions">
+        <a class="link-arrow" href="/projects/">View Our Work →</a>
+        ${GOOGLE_REVIEWS && GOOGLE_REVIEWS.rating ? ratingLine : ''}
+      </div>
     </div>
-    ${ratingLine}
+    <div class="hero-card">
+      <p class="eyebrow">Free In-Home Estimate</p>
+      <h3>Tell us about your project.</h3>
+      <p class="hero-card-sub">We measure in person, and your written estimate arrives the same day.</p>
+      ${estimateForm('hero', { compact: true })}
+      <p class="hero-card-alt">Just browsing? <a href="/design/">Design your shower &amp; get an instant ballpark →</a></p>
+    </div>
   </div>
 </div>
 
