@@ -85,7 +85,7 @@ const header = (isHome) => `
 <header class="site-header${isHome ? ' home' : ''}">
   <div class="container">
     <a href="/" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff;">
-      <span class="badge-slot"><img class="badge" src="/assets/img/buddy-tile-sm.png?v=4" alt="Buddy Tile, a Buddy Built company" /></span>
+      <span class="badge-slot"><img class="badge" src="/assets/img/buddy-tile-md.png?v=4" alt="Buddy Tile, a Buddy Built company" /></span>
     </a>
     <nav class="site-nav">
       <a class="hide-m" href="/#services">Services</a>
@@ -157,11 +157,13 @@ const footer = `
           <li><a href="tel:${SITE.phone.replace(/[^0-9+]/g, '')}">${SITE.phone}</a></li>
           <li><a href="mailto:${SITE.email}">${SITE.email}</a></li>
           <li><a href="/about/">About Buddy Tile</a></li>
-          <li><a class="pay-link" href="/pay/"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>Make a Payment</a></li>
           <li><a href="/blog/">Tile Talk, advice from the crew</a></li>
-          <li><a href="https://buddybuilt.com/portal" target="_blank" rel="noopener">Customer Portal, track your project</a></li>
           <li><a href="https://buddybuilt.com" rel="noopener">The Buddy Built family</a></li>
           <li><a href="/privacy/">Privacy Policy</a></li>
+          <li class="pay-row">
+            <a href="https://buddybuilt.com/portal" target="_blank" rel="noopener">Customer Portal, track your project</a>
+            <a class="pay-link" href="/pay/"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>Make a Payment</a>
+          </li>
         </ul>
       </div>
     </div>

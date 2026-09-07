@@ -221,9 +221,11 @@ section.alt { background: #F3F4F6; }
 .site-footer ul { list-style: none; margin: 0; padding: 0; }
 .site-footer li { margin-bottom: 7px; }
 /* "Make a Payment": the one footer link homeowners come back for, so it wears gold */
+.site-footer .pay-row { margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.12); }
+.site-footer .pay-row > a:first-child { display: block; margin-bottom: 10px; }
 .site-footer a.pay-link {
   display: inline-flex; align-items: center; gap: 8px;
-  margin: 4px 0 6px; padding: 8px 14px; border-radius: 999px;
+  padding: 9px 16px; border-radius: 999px;
   background: var(--gold); color: var(--navy); font-weight: 700; font-size: 14px;
 }
 .site-footer a.pay-link:hover { background: #E3A512; color: var(--navy); }
@@ -682,20 +684,20 @@ h2 { margin-bottom: 0.55em; }
 .site-header .container { padding-top: 12px; padding-bottom: 12px; }
 .site-nav { gap: 26px; }
 .site-nav .btn { padding: 11px 24px; font-size: 14.5px; }
-.badge-slot { width: 108px; height: 56px; transition: width 0.3s ease; }
+.badge-slot { width: 148px; height: 56px; transition: width 0.3s ease; }
 .badge-slot img.badge {
   position: absolute;
   top: 0;
   left: 0;
-  height: 108px;
+  height: 148px;
   transition: height 0.3s ease, filter 0.3s ease;
   filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.35));
 }
 .site-header.scrolled .badge-slot { width: 56px; }
 .site-header.scrolled .badge-slot img.badge { height: 56px; filter: none; }
 @media (max-width: 840px) {
-  .badge-slot { width: 84px; height: 48px; }
-  .badge-slot img.badge { height: 84px; }
+  .badge-slot { width: 100px; height: 48px; }
+  .badge-slot img.badge { height: 100px; }
   .site-header.scrolled .badge-slot { width: 48px; }
   .site-header.scrolled .badge-slot img.badge { height: 48px; }
 }
