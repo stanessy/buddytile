@@ -241,11 +241,13 @@ section.alt { background: #F3F4F6; }
 .badge-lockup img { height: 84px; margin: 0 auto 6px; }
 .badge-lockup .caption { font-size: 10.5px; font-weight: 600; letter-spacing: 0.05em; color: rgba(255,255,255,0.75); }
 
-/* Left offset keeps the crumbs clear of the header badge overhanging above */
-.breadcrumbs { font-size: 13px; color: var(--stone); padding: 18px 22px 0 150px; }
-@media (max-width: 840px) { .breadcrumbs { padding-left: 118px; } }
+/* The header badge (148px) hangs ~68px below the 80px bar plus its drop
+   shadow. Crumbs sit to the right of it, and the row reserves enough height
+   that the page h1 starts below it instead of under it. */
+.breadcrumbs { font-size: 13px; color: var(--stone); padding: 18px 22px 0 172px; min-height: 84px; box-sizing: border-box; }
+@media (max-width: 840px) { .breadcrumbs { padding-left: 122px; min-height: 48px; } }
 /* Crumbs that sit below a hero have no badge overhead, no offset needed */
-.breadcrumbs.crumbs-after-hero { padding-left: 22px; }
+.breadcrumbs.crumbs-after-hero { padding-left: 22px; min-height: 0; }
 
 /* States line inside the hero h1: present for SEO, visually quieter */
 .hero h1 .h1-states {
