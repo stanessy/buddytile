@@ -119,6 +119,7 @@ const header = (isHome) => `
   <div class="container wide">
     <a class="brand" href="/">
       <img class="brand-mark" src="/assets/img/buddy-tile-wordmark-white.png" alt="Buddy Tile" width="413" height="160" />
+      <span class="brand-caption">a BUDDY BUILT company</span>
     </a>
     <nav class="site-nav">
       <a class="hide-m" href="/#services">Services</a>
