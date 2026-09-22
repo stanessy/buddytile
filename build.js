@@ -384,7 +384,7 @@ const homeBody = `
       </div>
     </div>
     <div class="hero-mascot enter" style="--i:2">
-      <img src="/assets/img/buddy-tile.png?v=4" alt="Buddy, the Buddy Tile mascot" />
+      <img src="/assets/img/buddy-mascot-thumbs.webp" alt="Buddy, the Buddy Tile mascot, giving a thumbs up" width="735" height="1000" />
     </div>
   </div>
 </div>
@@ -472,7 +472,7 @@ ${
 }
 
 <section class="cta-band">
-  <img class="cta-buddy" src="/assets/img/buddy-tile.png?v=4" alt="" aria-hidden="true" />
+  <img class="cta-buddy" src="/assets/img/buddy-mascot-thumbs.webp" alt="" aria-hidden="true" loading="lazy" />
   <div class="container center reveal">
     <p class="eyebrow light">We're ready when you are</p>
     <h2 class="h-xl light">Let's build something <span class="hl">strong</span> for your home.</h2>
@@ -515,7 +515,7 @@ ${
 </section>
 
 <section class="area-gold" id="service-area">
-  <img class="area-buddy" src="/assets/img/buddy-tile.png?v=4" alt="" aria-hidden="true" />
+  <img class="area-buddy" src="/assets/img/buddy-mascot-thumbs.webp" alt="" aria-hidden="true" loading="lazy" />
   <div class="container wide area-in">
     <div class="reveal">
       <p class="eyebrow dark">Service area</p>
@@ -599,7 +599,7 @@ ${
         <a href="${telHref()}">${ico('phone', 20)} ${SITE.phone}</a>
         <a href="mailto:${SITE.email}">${ico('mail', 20)} ${SITE.email}</a>
       </div>
-      <img class="final-buddy" src="/assets/img/buddy-tile.png?v=4" alt="" aria-hidden="true" />
+      <img class="final-buddy" src="/assets/img/buddy-mascot-thumbs.webp" alt="" aria-hidden="true" loading="lazy" />
     </div>
     <div class="estimate-card reveal" style="--i:1">
       ${estimateForm('home')}
