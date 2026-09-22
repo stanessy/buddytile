@@ -376,15 +376,22 @@ const homeBody = `
       <h1>CUSTOM TILE SHOWERS, BATHROOMS &amp; <span class="gold">BACKSPLASHES</span><span class="h1-states">BUILT FOR WASHINGTON &amp; OREGON HOMES</span></h1>
       <p class="lead">Licensed, bonded tile craftsmen who build on flood-tested waterproofing, protect your home every day they're in it, and put a written price in your inbox the same day we measure.</p>
       <div class="hero-btns">
-        <a class="btn btn-lg" href="#estimate" data-open-estimate>Get a Free Estimate</a>
-        <a class="btn ghost btn-lg" href="${telHref()}">${ico('phone', 18)} ${SITE.phone}</a>
+        <a class="btn btn-lg" href="${telHref()}">${ico('phone', 18)} ${SITE.phone}</a>
+        <a class="btn ghost btn-lg" href="/design/">Instant ballpark price →</a>
       </div>
       <div class="hero-proof">
         ${['Family owned', 'Licensed &amp; bonded', 'Flood-tested waterproofing', 'Same-day written estimates'].map((t) => `<span>${ico('checkCircle', 16)}${t}</span>`).join('')}
       </div>
     </div>
-    <div class="hero-mascot enter" style="--i:2">
+    <div class="hero-mascot enter" style="--i:1">
       <img src="/assets/img/buddy-mascot-thumbs.webp" alt="Buddy, the Buddy Tile mascot, giving a thumbs up" width="735" height="1000" />
+    </div>
+    <div class="hero-card enter" style="--i:2">
+      <p class="eyebrow">Free In-Home Estimate</p>
+      <h3>Tell us about your project.</h3>
+      <p class="hero-card-sub">We measure in person, and your written estimate arrives the same day.</p>
+      ${estimateForm('hero', { compact: true })}
+      <p class="hero-card-alt">Just browsing? <a href="/design/">Design your shower &amp; get an instant ballpark →</a></p>
     </div>
   </div>
 </div>
@@ -395,7 +402,7 @@ const homeBody = `
       <div class="ht">${iconCircle('users')}<h3>Family owned &amp; local</h3><p>You talk to the owner, and the person who quotes your job knows the crew by name.</p></div>
       <div class="ht">${iconCircle('droplet')}<h3>Flood-tested waterproofing</h3><p>Every shower pan is flood-tested and photographed before a single tile goes on.</p></div>
       <div class="ht">${iconCircle('file')}<h3>Same-day written estimates</h3><p>We measure in person, and your written price is in your inbox before dinner.</p></div>
-      <div class="ht gold"><div class="big">5–8</div><h3>Days for a full shower install</h3><p>Start to finish, with daily photos to your phone.</p></div>
+      <div class="ht gold"><div class="big">5–8 <span>days</span></div><h3>For most shower installs</h3><p>Start to finish, with daily photos to your phone. Larger or more complex jobs take longer, and we tell you that before we start.</p></div>
     </div>
   </div>
 </div>
