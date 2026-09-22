@@ -1184,10 +1184,10 @@ body.modal-open { overflow: hidden; }
 .site-footer .badge-lockup img.foot-mark { height: 52px; width: auto; }
 
 /* Wordmark header + footer (2026-09-22) */
-.brand { flex-direction: column; align-items: center; gap: 0; }
-.brand-mark { height: 48px; width: auto; display: block; }
-.brand-caption { font-size: 9.5px; font-weight: 700; letter-spacing: 0.1em; color: rgba(255, 255, 255, 0.75); margin-top: 5px; white-space: nowrap; }
-@media (max-width: 840px) { .brand-mark { height: 38px; } .brand-caption { font-size: 8.5px; margin-top: 4px; } }
+.brand-mark { height: 54px; width: auto; display: block; }
+@media (max-width: 840px) { .brand-mark { height: 42px; } }
+.topbar .tb-brand { letter-spacing: 0.04em; }
+.topbar .tb-brand b { color: var(--gold); font-weight: 800; letter-spacing: 0.08em; }
 .site-footer .badge-lockup { text-align: left; }
 .site-footer .foot-mark { height: 52px; width: auto; margin: 0 0 8px; }
 .site-footer .foot-lockup { display: inline-flex; flex-direction: column; align-items: center; }

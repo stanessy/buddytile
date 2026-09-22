@@ -111,7 +111,7 @@ const telHref = () => `tel:${SITE.phone.replace(/[^0-9+]/g, '')}`;
 const header = (isHome) => `
 <div class="topbar">
   <div class="container wide">
-    <span class="tb-left">${ico('pin', 14)} Serving Vancouver, WA &amp; the Portland, OR metro <span class="tb-sep">·</span> ${ico('shield', 14)} Licensed, bonded &amp; insured in WA + OR</span>
+    <span class="tb-left"><span class="tb-brand">a <b>BUDDY BUILT</b> company</span> <span class="tb-sep">·</span> ${ico('pin', 14)} Serving Vancouver, WA &amp; the Portland, OR metro <span class="tb-sep">·</span> ${ico('shield', 14)} Licensed, bonded &amp; insured in WA + OR</span>
     <span class="tb-right"><a href="mailto:${SITE.email}">${ico('mail', 14)} ${SITE.email}</a><a href="/pay/">Make a Payment</a></span>
   </div>
 </div>
@@ -119,7 +119,6 @@ const header = (isHome) => `
   <div class="container wide">
     <a class="brand" href="/">
       <img class="brand-mark" src="/assets/img/buddy-tile-wordmark-white.png" alt="Buddy Tile" width="413" height="160" />
-      <span class="brand-caption">a BUDDY BUILT company</span>
     </a>
     <nav class="site-nav">
       <a class="hide-m" href="/#services">Services</a>
