@@ -281,7 +281,7 @@ const businessLd = (extra = {}) => ({
   logo: `${SITE.domain}/assets/img/buddy-tile.png?v=4`,
   slogan: SITE.tagline,
   parentOrganization: { '@type': 'Organization', name: 'Buddy Built LLC', url: 'https://buddybuilt.com' },
-  areaServed: CITIES.map((c) => ({ '@type': 'City', name: `${c.name}, ${c.state}` })),
+  areaServed: [...CITIES, ...NEARBY_TOWNS].map((c) => ({ '@type': 'City', name: `${c.name}, ${c.state}` })),
   priceRange: '$$',
   ...extra,
 });
@@ -524,27 +524,38 @@ ${
   </div>
 </section>
 
-<section class="area-gold" id="service-area">
-  <img class="area-buddy" src="/assets/img/buddy-mascot-thumbs.webp" alt="" aria-hidden="true" loading="lazy" />
-  <div class="container wide area-in">
-    <div class="reveal">
-      <p class="eyebrow dark">Service area</p>
-      <h2 class="h-xl">Proudly serving Vancouver, Portland &amp; nearby communities</h2>
-      <p class="sub dark">Crews roll out of Vancouver every morning and cover both sides of the river. Tap a city for local pricing and recent work.</p>
-      <div class="area-lists">
-        ${['WA', 'OR']
+<section class="area-sec" id="service-area">
+  <div id="service-map" class="area-bg" aria-label="Map of Buddy Tile service cities in Washington and Oregon"></div>
+  <div class="container wide area-over">
+    <div class="area-card reveal">
+      <p class="eyebrow">Service area</p>
+      <h2>Proudly serving Portland, Vancouver &amp; nearby communities</h2>
+      <p class="area-sub">Buddy Tile is rooted in the Pacific Northwest. Crews roll out of Vancouver every morning and cover both sides of the river, the Willamette Valley, the Gorge, and the north Oregon coast. Tap a city to find it on the map.</p>
+      <div class="area-cols">
+        ${['OR', 'WA']
           .map(
-            (st) => `<div class="area-list">
-          <h3>${st === 'WA' ? 'Washington' : 'Oregon'}</h3>
-          <ul>${CITIES.filter((c) => c.state === st).map(cityLink).join('')}${NEARBY_TOWNS.filter((t) => t.state === st).map(townItem).join('')}</ul>
+            (st) => `<div class="area-col ${st === 'OR' ? 'or' : 'wa'}">
+          <div class="state">${st === 'WA' ? 'Washington' : 'Oregon'}</div>
+          <ul class="city-list${st === 'OR' ? ' cols2' : ''}">
+            ${CITIES.filter((c) => c.state === st)
+              .map((c) => `<li><button type="button" class="city-btn" data-city="${c.slug}">${esc(c.name)}</button><a class="city-go" href="/tile-contractor/${c.slug}/" aria-label="Tile work in ${esc(c.name)}">→</a></li>`)
+              .join('')}
+            ${NEARBY_TOWNS.filter((t) => t.state === st)
+              .map((t) => `<li><button type="button" class="city-btn" data-town="${esc(t.name)}">${esc(t.name)}</button></li>`)
+              .join('')}
+          </ul>
         </div>`
           )
           .join('')}
       </div>
-      <p class="area-note">Don't see your town? <a href="#estimate" data-open-estimate>Ask us</a>, we may still come to you.</p>
+      <p class="map-note">Area not listed? <a href="#estimate" data-open-estimate>Give us a call</a>, we may still come to you.</p>
     </div>
   </div>
 </section>
+<script>window.BT_SERVICE_AREA = ${JSON.stringify({
+  cities: CITIES.map((c) => ({ slug: c.slug, name: c.name, state: c.state, lat: c.lat, lng: c.lng, url: `/tile-contractor/${c.slug}/`, hoods: c.neighborhoods.slice(0, 4) })),
+  towns: NEARBY_TOWNS,
+})};</script>
 
 <section class="sec" id="reviews">
   <div class="container wide">
