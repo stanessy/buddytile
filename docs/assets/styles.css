@@ -1007,11 +1007,19 @@ body.modal-open { overflow: hidden; }
 .hero-proof .ico { color: var(--gold); }
 .hero-side { position: relative; align-self: end; }
 .hero-mascot { display: none; }
-.card-buddy { position: absolute; top: -36px; right: 6px; height: 168px; width: auto; filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.25)); pointer-events: none; }
-.hero-card-head { padding-right: 160px; min-height: 118px; display: flex; flex-direction: column; justify-content: center; }
+/* Buddy pops out of a gold badge: the circle sits behind him, and a CSS
+   mask (circle + the rectangle above it) trims his body to the circle's arc. */
+.card-buddy-wrap { position: absolute; top: -44px; right: 8px; width: 186px; height: 200px; pointer-events: none; }
+.card-buddy-wrap::before { content: ''; position: absolute; left: 18px; top: 50px; width: 150px; height: 150px; border-radius: 50%; background: var(--gold); box-shadow: 0 8px 18px rgba(8, 18, 33, 0.18); }
+.card-buddy { position: relative; display: block; height: 200px; width: 186px; object-fit: contain; object-position: center bottom;
+  -webkit-mask-image: radial-gradient(circle at 93px 125px, #000 74px, transparent 75.5px), linear-gradient(#000, #000);
+  -webkit-mask-size: 100% 100%, 100% 125px; -webkit-mask-repeat: no-repeat; -webkit-mask-position: 0 0, 0 0;
+  mask-image: radial-gradient(circle at 93px 125px, #000 74px, transparent 75.5px), linear-gradient(#000, #000);
+  mask-size: 100% 100%, 100% 125px; mask-repeat: no-repeat; mask-position: 0 0, 0 0; }
+.hero-card-head { padding-right: 170px; min-height: 148px; display: flex; flex-direction: column; justify-content: center; }
 .home-hero.v3 .hero-card .hero-card-head h3 { font-size: 1.7rem; line-height: 1; }
 .home-hero.v3 .hero-card { overflow: visible; }
-@media (max-width: 900px) { .card-buddy { height: 150px; top: -28px; } .hero-card-head { padding-right: 140px; } }
+@media (max-width: 900px) { .card-buddy-wrap { transform: scale(0.86); transform-origin: top right; } .hero-card-head { padding-right: 150px; } }
 .home-hero.v3 .hero-card { position: relative; z-index: 3; align-self: end; border-radius: 16px; padding: 24px 24px 18px; box-shadow: 0 20px 50px rgba(8, 18, 33, 0.45); }
 .home-hero.v3 .hero-card .eyebrow { margin-bottom: 4px; }
 .home-hero.v3 .hero-card h3 { font-size: 1.8rem; margin: 0 0 2px; }

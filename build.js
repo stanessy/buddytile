@@ -386,7 +386,7 @@ const homeBody = `
     </div>
     <div class="hero-side">
     <div class="hero-card enter" style="--i:2">
-      <img class="card-buddy" src="/assets/img/buddy-bust.webp" alt="Buddy, the Buddy Tile mascot, giving a thumbs up" width="284" height="360" />
+      <span class="card-buddy-wrap"><img class="card-buddy" src="/assets/img/buddy-bust.webp" alt="Buddy, the Buddy Tile mascot, giving a thumbs up" width="372" height="400" /></span>
       <div class="hero-card-head">
         <p class="eyebrow">Free Estimate</p>
         <h3>Tell us about your project.</h3>
