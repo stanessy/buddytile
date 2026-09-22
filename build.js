@@ -384,6 +384,7 @@ const homeBody = `
         ${['Family owned', 'Licensed &amp; bonded', 'Flood-tested waterproofing', 'Same-day written estimates'].map((t) => `<span>${ico('checkCircle', 16)}${t}</span>`).join('')}
       </div>
     </div>
+    <div class="hero-side">
     <div class="hero-mascot enter" style="--i:1">
       <img src="/assets/img/buddy-mascot-thumbs.webp" alt="Buddy, the Buddy Tile mascot, giving a thumbs up" width="735" height="1000" />
     </div>
@@ -393,6 +394,7 @@ const homeBody = `
       <p class="hero-card-sub">We measure in person, and your written estimate arrives the same day.</p>
       ${estimateForm('hero', { compact: true })}
       <p class="hero-card-alt">Just browsing? <a href="/design/">Design your shower &amp; get an instant ballpark →</a></p>
+    </div>
     </div>
   </div>
 </div>
