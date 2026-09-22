@@ -1206,3 +1206,23 @@ body.modal-open { overflow: hidden; }
 /* Belt and braces against tile seams on high-DPI screens */
 .area-bg .leaflet-tile { image-rendering: auto; }
 .area-bg .leaflet-tile-container img { outline: 1px solid transparent; }
+
+/* Human check: the question never breaks mid-sum; the box wraps under it on phones */
+.human-check label { flex-wrap: wrap; row-gap: 8px; }
+.human-check .hc-text { flex: 1 1 200px; }
+.human-check .hc-q { white-space: nowrap; }
+
+/* Hero tiles as one bar card */
+.ht-grid { gap: 0; background: #fff; border: 1px solid var(--line-strong); border-radius: 14px; box-shadow: 0 10px 24px rgba(8, 18, 33, 0.08); overflow: hidden; }
+.ht { border: 0; border-radius: 0; box-shadow: none; padding: 26px 26px 24px; }
+.ht + .ht { border-left: 1px solid var(--line); }
+.ht.gold { border-left: 0; margin: -1px; }
+@media (max-width: 960px) {
+  .ht:nth-child(3) { border-left: 0; }
+  .ht:nth-child(n + 3) { border-top: 1px solid var(--line); }
+  .ht.gold { margin: 0 -1px -1px 0; border-top: 0; }
+}
+@media (max-width: 520px) {
+  .ht + .ht { border-left: 0; border-top: 1px solid var(--line); }
+  .ht.gold { margin: 0; border-top: 0; }
+}

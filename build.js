@@ -157,7 +157,7 @@ const leadForm = (context) => `
       <textarea name="description" placeholder="Tell us about the project…" maxlength="3000"></textarea>
       <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" />
       <div class="human-check full">
-        <label>Quick human check: what is <span class="hc-q">…</span>?
+        <label><span class="hc-text">Quick human check: what is <span class="hc-q">…</span>?</span>
           <input name="humanCheck" inputmode="numeric" autocomplete="off" placeholder="?" required />
         </label>
       </div>
@@ -344,8 +344,8 @@ const estimateForm = (context, { compact = false } = {}) => `
   ${compact ? '' : '<textarea name="description" placeholder="Tell us about the project…" maxlength="3000"></textarea>'}
   <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" />
   <div class="human-check full">
-    <label>Quick human check: what is <span class="hc-q">…</span>?
-      <input name="humanCheck" inputmode="numeric" autocomplete="off" placeholder="?" required />
+    <label><span class="hc-text">Quick human check: what is <span class="hc-q">…</span>?</span>
+          <input name="humanCheck" inputmode="numeric" autocomplete="off" placeholder="?" required />
     </label>
   </div>
   <button class="btn full" type="submit">Get My Free Estimate</button>
@@ -661,7 +661,7 @@ const heroCard = (context) => `
         </select>
         <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" />
         <div class="human-check full">
-        <label>Quick human check: what is <span class="hc-q">…</span>?
+        <label><span class="hc-text">Quick human check: what is <span class="hc-q">…</span>?</span>
           <input name="humanCheck" inputmode="numeric" autocomplete="off" placeholder="?" required />
         </label>
       </div>
@@ -1195,8 +1195,8 @@ const designBody = `
               <input name="phone" type="tel" placeholder="Phone (optional)" maxlength="30" />
               <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" />
               <div class="human-check full">
-                <label>Quick human check: what is <span class="hc-q">…</span>?
-                  <input name="humanCheck" inputmode="numeric" autocomplete="off" placeholder="?" required />
+                <label><span class="hc-text">Quick human check: what is <span class="hc-q">…</span>?</span>
+          <input name="humanCheck" inputmode="numeric" autocomplete="off" placeholder="?" required />
                 </label>
               </div>
               <button class="btn full" type="submit">Show My Ballpark</button>
