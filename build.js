@@ -385,12 +385,12 @@ const homeBody = `
       </div>
     </div>
     <div class="hero-side">
-    <div class="hero-mascot enter" style="--i:1">
-      <img src="/assets/img/buddy-mascot-thumbs.webp" alt="Buddy, the Buddy Tile mascot, giving a thumbs up" width="735" height="1000" />
-    </div>
     <div class="hero-card enter" style="--i:2">
-      <p class="eyebrow">Free In-Home Estimate</p>
-      <h3>Tell us about your project.</h3>
+      <img class="card-buddy" src="/assets/img/buddy-bust.webp" alt="Buddy, the Buddy Tile mascot, giving a thumbs up" width="284" height="360" />
+      <div class="hero-card-head">
+        <p class="eyebrow">Free Estimate</p>
+        <h3>Tell us about your project.</h3>
+      </div>
       <p class="hero-card-sub">We measure in person, and your written estimate arrives the same day.</p>
       ${estimateForm('hero', { compact: true })}
       <p class="hero-card-alt">Just browsing? <a href="/design/">Design your shower &amp; get an instant ballpark →</a></p>
