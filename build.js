@@ -79,19 +79,54 @@ const OUT = path.join(__dirname, 'docs');
 const V = Date.now().toString(36); // cache-buster for css/js
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+// ---- Icon set: one stroke style everywhere (Lucide-style paths) -----------
+const ICON_PATHS = {
+  check: '<polyline points="20 6 9 17 4 12"/>',
+  checkCircle: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
+  shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>',
+  home: '<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
+  camera: '<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>',
+  clock: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+  phone: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>',
+  mail: '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/>',
+  users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  droplet: '<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>',
+  pencil: '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
+  hammer: '<path d="m15 12-8.5 8.5a2.12 2.12 0 1 1-3-3L12 9"/><path d="M17.64 15 22 10.64"/><path d="m20.91 11.7-1.25-1.25c-.6-.6-.93-1.4-.93-2.25v-.86L16.01 4.6a5.56 5.56 0 0 0-3.94-1.64H9l.92.82A6.18 6.18 0 0 1 12 8.4v1.56l2 2h2.47l2.26 1.91"/>',
+  smile: '<circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>',
+  pin: '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',
+  lock: '<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+  award: '<circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>',
+  file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
+  chev: '<polyline points="6 9 12 15 18 9"/>',
+  star: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+};
+const ico = (name, size = 24) =>
+  `<svg class="ico" viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON_PATHS[name]}</svg>`;
+const iconCircle = (name) => `<span class="ic">${ico(name, 26)}</span>`;
+const telHref = () => `tel:${SITE.phone.replace(/[^0-9+]/g, '')}`;
+
 // ---------- shared chrome ----------------------------------------------------
 
 const header = (isHome) => `
+<div class="topbar">
+  <div class="container wide">
+    <span class="tb-left">${ico('pin', 14)} Serving Vancouver, WA &amp; the Portland, OR metro <span class="tb-sep">·</span> ${ico('shield', 14)} Licensed, bonded &amp; insured in WA + OR</span>
+    <span class="tb-right"><a href="mailto:${SITE.email}">${ico('mail', 14)} ${SITE.email}</a><a href="/pay/">Make a Payment</a></span>
+  </div>
+</div>
 <header class="site-header${isHome ? ' home' : ''}">
-  <div class="container">
-    <a href="/" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff;">
-      <span class="badge-slot"><img class="badge" src="/assets/img/buddy-tile-md.png?v=4" alt="Buddy Tile, a Buddy Built company" /></span>
+  <div class="container wide">
+    <a class="brand" href="/">
+      <img class="brand-badge" src="/assets/img/buddy-tile-md.png?v=4" alt="Buddy Tile" />
+      <span class="brand-text"><span class="brand-name">Buddy Tile</span><span class="brand-sub">A Buddy Built Company</span></span>
     </a>
     <nav class="site-nav">
       <a class="hide-m" href="/#services">Services</a>
       <a class="hide-m" href="/projects/">Our Work</a>
+      <a class="hide-m" href="/#reviews">Reviews</a>
       <a class="hide-m" href="/design/">Ballpark Price</a>
-      <a class="phone-link" href="tel:${SITE.phone.replace(/[^0-9+]/g, '')}">${SITE.phone}</a>
+      <a class="phone-link" href="${telHref()}">${ico('phone', 16)} ${SITE.phone}</a>
       <a class="btn" href="#estimate"${isHome ? ' data-open-estimate' : ''}>Free Estimate</a>
     </nav>
   </div>
@@ -315,247 +350,258 @@ const estimateForm = (context, { compact = false } = {}) => `
   <p class="form-note">We reply the same business day. Your info never gets sold. You're a neighbor, not a lead.</p>
 </form>`;
 
+// Homepage v3 (2026-09): contractor-marketing rhythm. Every section carries a
+// photo, an icon, or brand color; Buddy appears three times; one CTA repeats.
+const HOME_SERVICES = ['shower-remodel', 'bathroom-tile', 'kitchen-backsplash', 'heated-floors', 'tub-to-shower', 'grout-cleaning'];
+const firstSentence = (t) => {
+  const m = String(t || '').match(/^(.+?[.!?])(\s|$)/);
+  return m ? m[1] : String(t || '');
+};
+const PROC_PHOTOS = ['real-bathroom-tile.jpg', 'craft-setting.jpg', 'craft-tile-hands.jpg', 'hero-master-bath-remodel.jpg'];
+const PROC_ICONS = ['phone', 'pencil', 'hammer', 'smile'];
+const WHY_ICONS = ['home', 'camera', 'lock', 'smile'];
+const BLOG_FALLBACK = ['real-tile-shower.jpg', 'real-kitchen-backsplash.jpg', 'real-floor-tile.jpg'];
+const HOME_FAQS = [...(svc('shower-remodel').faqs || []), ...(svc('grout-cleaning').faqs || []).slice(0, 1), ...(svc('heated-floors').faqs || []).slice(0, 1)];
+const GOOGLE_REVIEWS_URL = GOOGLE_REVIEWS ? GOOGLE_REVIEWS.mapsUrl || `https://www.google.com/maps/place/?q=place_id:${GOOGLE_REVIEWS.placeId}` : 'https://www.google.com/maps/search/Buddy+Tile+Vancouver+WA';
+const cityLink = (c) => `<li><a href="/tile-contractor/${c.slug}/">${ico('check', 14)} ${esc(c.name)}</a></li>`;
+const townItem = (t) => `<li><span>${ico('check', 14)} ${esc(t.name)}</span></li>`;
+
 const homeBody = `
-<div class="home-hero">
+<div class="home-hero v3">
   <div class="bg" style="background-image:url('/assets/img/hero-master-bath-remodel.jpg')"></div>
   <div class="scrim"></div>
-  <div class="container hero-grid">
+  <div class="container wide hero-v3">
     <div class="hero-copy enter">
       <p class="eyebrow light">Vancouver, WA · Portland, OR</p>
-      <h1>CUSTOM TILE SHOWERS &amp;<br/><span class="gold">GROUT CLEANING</span><span class="h1-states">IN WASHINGTON &amp; OREGON</span></h1>
-      <p class="lead">Buddy Tile builds custom tile showers, bathroom remodels, tub-to-shower conversions, heated tile floors, and backsplashes. We also bring tired tile back to life with grout deep cleaning, sealing, and shower regrouts. Our licensed, bonded tile craftsmen serve Vancouver, Camas, and Battle Ground in Washington and the Portland metro in Oregon. Every shower gets flood-tested waterproofing, and your written estimate arrives the same day we measure.</p>
-      <div class="chips">
-        <span>Family owned</span><span>Licensed &amp; bonded</span><span>Flood-tested waterproofing</span><span>Same-day written estimates</span>
+      <h1>CUSTOM TILE SHOWERS, BATHROOMS &amp; <span class="gold">BACKSPLASHES</span><span class="h1-states">BUILT FOR WASHINGTON &amp; OREGON HOMES</span></h1>
+      <p class="lead">Licensed, bonded tile craftsmen who build on flood-tested waterproofing, protect your home every day they're in it, and put a written price in your inbox the same day we measure.</p>
+      <div class="hero-btns">
+        <a class="btn btn-lg" href="#estimate" data-open-estimate>Get a Free Estimate</a>
+        <a class="btn ghost btn-lg" href="${telHref()}">${ico('phone', 18)} ${SITE.phone}</a>
       </div>
-      <div class="hero-actions">
-        <a class="link-arrow" href="/projects/">View Our Work →</a>
-        ${GOOGLE_REVIEWS && GOOGLE_REVIEWS.rating ? ratingLine : ''}
+      <div class="hero-proof">
+        ${['Family owned', 'Licensed &amp; bonded', 'Flood-tested waterproofing', 'Same-day written estimates'].map((t) => `<span>${ico('checkCircle', 16)}${t}</span>`).join('')}
       </div>
     </div>
-    <div class="hero-card enter" style="--i:2">
-      <p class="eyebrow">Free In-Home Estimate</p>
-      <h3>Tell us about your project.</h3>
-      <p class="hero-card-sub">We measure in person, and your written estimate arrives the same day.</p>
-      ${estimateForm('hero', { compact: true })}
-      <p class="hero-card-alt">Just browsing? <a href="/design/">Design your shower &amp; get an instant ballpark →</a></p>
+    <div class="hero-mascot enter" style="--i:2">
+      <img src="/assets/img/buddy-tile.png?v=4" alt="Buddy, the Buddy Tile mascot" />
     </div>
   </div>
 </div>
 
-<div class="trust-strip">
-  <div class="container">
-    <span>Licensed, Bonded &amp; Insured</span>
-    <span>5–8 Day Shower Installs</span>
-    <span>Flood-Tested Waterproofing</span>
-    <span>Warrantied by Name</span>
-    <span>WA + OR</span>
-  </div>
-</div>
-
-<section class="sec" id="work">
+<div class="hero-tiles">
   <div class="container wide">
-    <div class="sec-head reveal">
-      <p class="eyebrow">Built by Buddy</p>
-      <h2 class="h-xl">Bathrooms you'll want to show off.</h2>
+    <div class="ht-grid">
+      <div class="ht">${iconCircle('users')}<h3>Family owned &amp; local</h3><p>You talk to the owner, and the person who quotes your job knows the crew by name.</p></div>
+      <div class="ht">${iconCircle('droplet')}<h3>Flood-tested waterproofing</h3><p>Every shower pan is flood-tested and photographed before a single tile goes on.</p></div>
+      <div class="ht">${iconCircle('file')}<h3>Same-day written estimates</h3><p>We measure in person, and your written price is in your inbox before dinner.</p></div>
+      <div class="ht gold"><div class="big">5–8</div><h3>Days for a full shower install</h3><p>Start to finish, with daily photos to your phone.</p></div>
     </div>
-    <a class="showcase-hero reveal reveal-img" href="${projectHref(SHOWCASE[0].slug)}">
-      <img src="/assets/img/projects/${SHOWCASE[0].photo}" alt="${esc(SHOWCASE[0].title)}" />
-    </a>
-    <div class="showcase-cap reveal">
-      <div>
-        <h3>${esc(SHOWCASE[0].title)}</h3>
-        <p>${esc(SHOWCASE[0].specs)}</p>
-      </div>
-      <a class="link-arrow dark" href="${projectHref(SHOWCASE[0].slug)}">View Project →</a>
+  </div>
+</div>
+
+<section class="sec" id="about">
+  <div class="container wide intro-grid">
+    <div class="reveal">
+      <p class="eyebrow">Tile work built the right way</p>
+      <h2 class="h-xl">Showers and floors that <span class="hl">outlast</span> the house.</h2>
+      <p class="sub">Buddy Tile is a family-owned tile contractor serving Vancouver, Camas, and Battle Ground in Washington and the Portland metro in Oregon. We build custom tile showers, bathroom remodels, tub-to-shower conversions, heated floors, and backsplashes, and we bring tired tile back to life with grout cleaning, sealing, and regrouts.</p>
+      <p class="sub">Every shower is built on a full Schluter-system membrane and flood-tested before tile. Every job gets floor runners, dust walls, and a vacuumed site each night. And every price is written down before we start.</p>
+      <ul class="check-list">
+        ${TRUST.slice(0, 4).map((t) => `<li>${ico('checkCircle', 20)}<div><strong>${esc(t.title)}</strong><span>${esc(t.body)}</span></div></li>`).join('')}
+      </ul>
+      <a class="btn" href="#estimate" data-open-estimate>Get a Free Estimate</a>
     </div>
-    <div class="showcase-pair">
-      ${SHOWCASE.slice(1)
-        .map(
-          (sc, i) => `<a class="showcase-card reveal reveal-img" style="--i:${i}" href="${projectHref(sc.slug)}">
-        <img src="/assets/img/projects/${sc.photo}" alt="${esc(sc.title)}" loading="lazy" />
-        <div class="cap"><h3>${esc(sc.title)}</h3><p>${esc(sc.specs)}</p></div>
-      </a>`
-        )
-        .join('')}
-    </div>
-    <div class="sec-foot reveal"><a class="btn ghost-dark" href="/projects/">See All Projects →</a></div>
+    <figure class="intro-photo reveal reveal-img" style="--i:1">
+      <div class="frame"><img src="/assets/img/craft-setting.jpg" alt="Buddy Tile installer setting large-format tile" loading="lazy" /></div>
+      <figcaption>The work you never see: waterproofing and a flat substrate, photographed before tile covers it.</figcaption>
+    </figure>
   </div>
 </section>
 
+<div class="trust-row">
+  <div class="container wide">
+    <span>${ico('shield', 22)} Licensed, bonded &amp; insured</span>
+    <span>${ico('award', 22)} Warrantied by name</span>
+    <span>${ico('camera', 22)} Daily progress photos</span>
+    <span>${ico('pin', 22)} Crews in WA + OR</span>
+  </div>
+</div>
+
 <section class="sec paper" id="services">
   <div class="container wide">
-    <div class="sec-head reveal">
-      <p class="eyebrow">What We Build</p>
-      <h2 class="h-xl">From waterproofing to the final grout line.</h2>
+    <div class="sec-head center reveal">
+      <p class="eyebrow">What we build</p>
+      <h2 class="h-xl">Showers, floors &amp; backsplashes built for the <span class="hl">Pacific Northwest</span></h2>
+      <p class="sub">Wet climate, old houses, and a lot of tile that was set over drywall. We build for the room you have, on the waterproofing it should have had.</p>
     </div>
-    <div class="svc-layout">
-      <a class="tile tile-feature reveal reveal-img" href="/services/${svc(FEATURED[0]).slug}/">
-        <img src="/assets/img/${svc(FEATURED[0]).photo}" alt="${esc(svc(FEATURED[0]).name)}" loading="lazy" />
-        <div class="ov"></div>
-        <div class="tx"><h3>${esc(svc(FEATURED[0]).name)}</h3><p>Schluter waterproofing, flood-tested pans, niches, benches, curbless entries, and glass, planned before demo.</p><span class="go">Explore showers →</span></div>
-      </a>
-      <div class="tile-grid">
-        ${FEATURED.slice(1)
-          .map(
-            (slug, i) => `<a class="tile reveal reveal-img" style="--i:${i + 1}" href="/services/${svc(slug).slug}/">
-          <img src="/assets/img/${svc(slug).photo}" alt="${esc(svc(slug).name)}" loading="lazy" />
-          <div class="ov"></div>
-          <div class="tx"><h3>${esc(svc(slug).name)}</h3></div>
-        </a>`
-          )
-          .join('')}
-      </div>
+    <div class="svc-cards">
+      ${HOME_SERVICES.map((slug, i) => {
+        const x = svc(slug);
+        return `<a class="svc-card reveal" style="--i:${i}" href="/services/${x.slug}/">
+        <div class="svc-img"><img src="/assets/img/${x.photo}" alt="${esc(x.name)}" loading="lazy" /></div>
+        <div class="svc-body">
+          <h3>${esc(x.name)}</h3>
+          <p>${esc(firstSentence(x.intro))}</p>
+          <span class="btn sm">Explore ${esc(x.name.split(' ')[0].toLowerCase() === 'custom' ? 'showers' : x.name.toLowerCase())} →</span>
+        </div>
+      </a>`;
+      }).join('')}
     </div>
-    <div class="sec-foot reveal">
-      <a class="btn ghost-dark" href="/services/${svc(FEATURED[0]).slug}/#all-services" data-services-toggle>Explore All ${SERVICES.length} Services →</a>
-    </div>
-    <div class="all-services" id="all-services" hidden>
-      ${SERVICES.map((s) => `<a href="/services/${s.slug}/">${esc(s.name)}</a>`).join('')}
+    <div class="all-services v3 reveal">
+      <span class="all-label">All ${SERVICES.length} services:</span>
+      ${SERVICES.map((x) => `<a href="/services/${x.slug}/">${esc(x.name)}</a>`).join('')}
     </div>
   </div>
 </section>
 
 ${
-  BEFORE_AFTER
-    ? `<section class="sec" id="before-after">
+  PROJECTS.length
+    ? `<section class="sec" id="work">
   <div class="container wide">
-    <div class="sec-head reveal">
-      <p class="eyebrow">See What's Possible</p>
-      <h2 class="h-xl">Drag to see the transformation.</h2>
+    <div class="sec-head center reveal">
+      <p class="eyebrow">Our work</p>
+      <h2 class="h-xl">Real jobs. Real homes. <span class="hl">Real photos.</span></h2>
+      <p class="sub">Photographed by the crew that built it, including the waterproofing you'd never otherwise see. No stock photos, ever.</p>
     </div>
-    <div class="ba reveal reveal-img" data-ba>
-      <img class="ba-after" src="/assets/img/projects/${BEFORE_AFTER.after.file}" alt="After: ${esc(BEFORE_AFTER.after.caption || BEFORE_AFTER.pr.title)}" loading="lazy" />
-      <div class="ba-before" style="width:50%"><img src="/assets/img/projects/${BEFORE_AFTER.before.file}" alt="Before: ${esc(BEFORE_AFTER.before.caption || BEFORE_AFTER.pr.title)}" loading="lazy" /></div>
-      <div class="ba-handle" style="left:50%"><span></span></div>
-      <span class="ba-tag l">Before</span><span class="ba-tag r">After</span>
-      <input type="range" min="0" max="100" value="50" aria-label="Before and after slider" />
-    </div>
-    <div class="showcase-cap reveal">
-      <div><h3>${esc(BEFORE_AFTER.pr.title)}</h3><p>${esc(projectByline(BEFORE_AFTER.pr))}</p></div>
-      <a class="link-arrow dark" href="/projects/${BEFORE_AFTER.pr.slug}/">View Project →</a>
-    </div>
+    <div class="grid cols-3">${PROJECTS.slice(0, 3).map(projectCard).join('')}</div>
+    <div class="sec-foot center reveal"><a class="btn ghost-dark" href="/projects/">See all projects →</a></div>
   </div>
 </section>`
     : ''
 }
 
-<section class="sec navy" id="standard">
+<section class="cta-band">
+  <img class="cta-buddy" src="/assets/img/buddy-tile.png?v=4" alt="" aria-hidden="true" />
+  <div class="container center reveal">
+    <p class="eyebrow light">We're ready when you are</p>
+    <h2 class="h-xl light">Let's build something <span class="hl">strong</span> for your home.</h2>
+    <a class="btn btn-lg" href="#estimate" data-open-estimate>Get a Free Estimate</a>
+  </div>
+</section>
+
+<section class="sec" id="how-it-works">
   <div class="container wide">
-    <div class="sec-head reveal">
-      <p class="eyebrow">The Buddy Standard</p>
-      <h2 class="h-xl light">No disappearing contractors.<br/>No mystery schedules.<br/>No wondering what's next.</h2>
+    <div class="sec-head center reveal">
+      <p class="eyebrow">How it works</p>
+      <h2 class="h-xl">A simple, stress-free process from <span class="hl">start to finish</span></h2>
+      <p class="sub">From your first call to the final walkthrough, you always know what happens next and who's doing it.</p>
     </div>
-    <div class="standard-grid">
-      ${PROMISE.map((pr, i) => `<div class="std reveal" style="--i:${i}"><div class="num">0${i + 1}</div><h3>${esc(pr.short)}</h3><p>${esc(pr.body)}</p></div>`).join('')}
-    </div>
-  </div>
-</section>
-
-<section class="sec" id="crew">
-  <div class="container wide crew-grid">
-    <figure class="crew-photo reveal reveal-img">
-      <img src="/assets/img/craft-tile-hands.jpg" alt="Buddy Tile installer setting tile over prepared substrate" loading="lazy" />
-    </figure>
-    <div class="crew-copy reveal" style="--i:1">
-      <p class="eyebrow">Real Crews, Real Process</p>
-      <h2 class="h-xl">Professional from driveway to grout line.</h2>
-      <p class="sub">Floor runners go down before the first tool comes in. Dust walls go up before demo. The site is vacuumed every night, and the work you'll never see, the waterproofing and the flat substrate, is photographed and sent to your phone before tile covers it.</p>
-      <ul class="proof">
-        <li><strong>Licensed, bonded &amp; insured crews</strong><span>Registered in Washington and Oregon, warrantied by name.</span></li>
-        <li><strong>Your home protected daily</strong><span>Runners, dust walls, nightly cleanup. You live here.</span></li>
-        <li><strong>Daily progress photos</strong><span>Including the waterproofing you'd otherwise never see.</span></li>
-      </ul>
+    <div class="proc-cards">
+      ${STEPS.map(
+        (st, i) => `<div class="pc reveal" style="--i:${i}">
+        <div class="pc-photo"><img src="/assets/img/${PROC_PHOTOS[i]}" alt="" loading="lazy" /><span class="pc-num">${i + 1}</span></div>
+        ${iconCircle(PROC_ICONS[i])}
+        <h3>${esc(st.title)}</h3>
+        <p>${esc(st.body)}</p>
+      </div>`
+      ).join('')}
     </div>
   </div>
 </section>
 
-<section class="sec paper" id="how-it-works">
-  <div class="container wide">
-    <div class="sec-head reveal">
-      <p class="eyebrow">How It Works</p>
-      <h2 class="h-xl">From quote to new shower.</h2>
+<section class="why" id="standard">
+  <div class="why-bg" style="background-image:url('/assets/img/real-walkin-shower.jpg')"></div>
+  <div class="container wide why-in">
+    <div class="sec-head center reveal">
+      <p class="eyebrow light">The Buddy standard</p>
+      <h2 class="h-xl light">Why homeowners trust <span class="hl">Buddy Tile</span></h2>
+      <p class="sub light">No disappearing contractors. No mystery schedules. No wondering what's next.</p>
     </div>
-    <div class="proc-grid">
-      ${STEPS.map((st, i) => `<div class="proc reveal" style="--i:${i}"><div class="num">0${i + 1}</div><h3>${esc(st.short)}</h3><p>${esc(st.body)}</p></div>`).join('')}
-    </div>
-  </div>
-</section>
-
-<section class="sec" id="story">
-  <div class="container wide story">
-    <blockquote class="story-quote reveal">
-      <div class="stars">★★★★★</div>
-      <p>“${esc(featuredReview.text)}”</p>
-      <footer><strong>${esc(featuredReview.who)}</strong> · ${esc(featuredReview.where)}</footer>
-    </blockquote>
-    <div class="story-stats reveal" style="--i:1">
-      ${
-        GOOGLE_REVIEWS && GOOGLE_REVIEWS.rating
-          ? `<div class="stat"><div class="n">${GOOGLE_REVIEWS.rating.toFixed(1)} ★</div><p>Google rating from ${GOOGLE_REVIEWS.total} homeowners</p></div>`
-          : `<div class="stat"><div class="n">Same day</div><p>Written estimate, in your inbox before dinner</p></div>`
-      }
-      <div class="stat"><div class="n">100%</div><p>Showers flood-tested and photographed before tile</p></div>
-      <a class="link-arrow dark" href="${GOOGLE_REVIEWS ? esc(GOOGLE_REVIEWS.mapsUrl || 'https://www.google.com/maps/place/?q=place_id:' + GOOGLE_REVIEWS.placeId) : '/about/'}"${GOOGLE_REVIEWS ? ' target="_blank" rel="noopener"' : ''}>${GOOGLE_REVIEWS ? 'Read All Reviews →' : 'Meet the Company →'}</a>
+    <div class="why-grid">
+      ${PROMISE.map((pr, i) => `<div class="wc reveal" style="--i:${i}">${iconCircle(WHY_ICONS[i])}<div><h3>${esc(pr.title)}</h3><p>${esc(pr.body)}</p></div></div>`).join('')}
     </div>
   </div>
 </section>
 
-<section class="sec paper" id="financing">
-  <div class="container wide">
-    <div class="fin reveal">
-      <div>
-        <p class="eyebrow light">Financing</p>
-        <h2 class="h-xl light">Build it now.<br/>Pay over time.</h2>
-        <p class="sub">Pre-qualify in about 60 seconds through Acorn Finance. A soft credit inquiry that doesn't touch your score.</p>
-      </div>
-      <div class="fin-cta">
-        <a class="btn btn-lg" href="${SITE.acornUrl}" target="_blank" rel="noopener">Check My Options →</a>
-        <p class="finance-note light">Offered through Acorn Finance's network of lenders, subject to credit approval. Proceeding with a lender's offer involves a hard credit pull.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="area-sec" id="service-area">
-  <div id="service-map" class="area-bg" aria-label="Map of Buddy Tile service cities in Washington and Oregon"></div>
-  <div class="container wide area-over">
-    <div class="area-card reveal">
-      <p class="eyebrow">Service Area</p>
-      <h2>Two states. One standard.</h2>
-      <p class="area-sub">Crews roll out of Vancouver every morning. Tap a city to find it on the map.</p>
-      <div class="area-cols">
+<section class="area-gold" id="service-area">
+  <img class="area-buddy" src="/assets/img/buddy-tile.png?v=4" alt="" aria-hidden="true" />
+  <div class="container wide area-in">
+    <div class="reveal">
+      <p class="eyebrow dark">Service area</p>
+      <h2 class="h-xl">Proudly serving Vancouver, Portland &amp; nearby communities</h2>
+      <p class="sub dark">Crews roll out of Vancouver every morning and cover both sides of the river. Tap a city for local pricing and recent work.</p>
+      <div class="area-lists">
         ${['WA', 'OR']
           .map(
-            (st) => `<div class="area-col">
-          <div class="state">${st === 'WA' ? 'Washington' : 'Oregon'}</div>
-          <ul class="city-list">
-            ${CITIES.filter((c) => c.state === st)
-              .map((c) => `<li><button type="button" class="city-btn" data-city="${c.slug}">${esc(c.name)}</button><a class="city-go" href="/tile-contractor/${c.slug}/" aria-label="Tile work in ${esc(c.name)}">→</a></li>`)
-              .join('')}
-            ${NEARBY_TOWNS.filter((t) => t.state === st)
-              .map((t) => `<li><button type="button" class="city-btn" data-town="${esc(t.name)}">${esc(t.name)}</button></li>`)
-              .join('')}
-          </ul>
+            (st) => `<div class="area-list">
+          <h3>${st === 'WA' ? 'Washington' : 'Oregon'}</h3>
+          <ul>${CITIES.filter((c) => c.state === st).map(cityLink).join('')}${NEARBY_TOWNS.filter((t) => t.state === st).map(townItem).join('')}</ul>
         </div>`
           )
           .join('')}
       </div>
-      <p class="map-note">Don't see your town? <a href="#estimate" data-open-estimate>Ask us</a>, we may still come to you.</p>
+      <p class="area-note">Don't see your town? <a href="#estimate" data-open-estimate>Ask us</a>, we may still come to you.</p>
     </div>
   </div>
 </section>
-<script>window.BT_SERVICE_AREA = ${JSON.stringify({
-  cities: CITIES.map((c) => ({ slug: c.slug, name: c.name, state: c.state, lat: c.lat, lng: c.lng, url: `/tile-contractor/${c.slug}/`, hoods: c.neighborhoods.slice(0, 4) })),
-  towns: NEARBY_TOWNS,
-})};</script>
 
-<section class="final" id="estimate">
-  <img class="final-mascot" src="/assets/img/buddy-tile.png?v=4" alt="" aria-hidden="true" />
-  <div class="container reveal">
-    <p class="eyebrow light">Free In-Home Estimate</p>
-    <h2 class="h-xl light">Let's build a bathroom<br/>you'll love.</h2>
-    <p class="sub light">Two minutes now, an in-home visit this week, and your written estimate the same day. No pressure, ever.</p>
-    <div class="estimate-card">
+<section class="sec" id="reviews">
+  <div class="container wide">
+    <div class="sec-head center reveal">
+      <p class="eyebrow">Reviews</p>
+      <h2 class="h-xl">Trusted by families across <span class="hl">Vancouver &amp; Portland</span></h2>
+      <p class="sub">We treat every home like it's ours. Here's what that looks like from the homeowner's side.</p>
+    </div>
+    <div class="quote-grid">
+      ${(GOOGLE_REVIEWS && GOOGLE_REVIEWS.reviews?.length ? GOOGLE_REVIEWS.reviews.slice(0, 3).map((r) => ({ quote: r.text, name: r.author, where: 'Google review' })) : TESTIMONIALS)
+        .map((t, i) => `<div class="quote-card reveal" style="--i:${i}"><div class="stars">★★★★★</div><blockquote>“${esc(t.quote)}”</blockquote><div class="who">${esc(t.name)}</div><div class="where">${esc(t.where)}</div></div>`)
+        .join('')}
+    </div>
+    <div class="sec-foot center reveal"><a class="btn ghost-dark" href="${esc(GOOGLE_REVIEWS_URL)}" target="_blank" rel="noopener">Read our Google reviews →</a></div>
+  </div>
+</section>
+
+${
+  POSTS.length
+    ? `<section class="sec navy" id="tile-talk">
+  <div class="container wide">
+    <div class="sec-head center reveal">
+      <p class="eyebrow light">Tile Talk</p>
+      <h2 class="h-xl light">Straight answers for Northwest <span class="hl">homeowners</span></h2>
+      <p class="sub light">Prices, materials, and what to expect, written by the people who set the tile.</p>
+    </div>
+    <div class="post-cards">
+      ${POSTS.slice(0, 3)
+        .map(
+          (p, i) => `<a class="post-card reveal" style="--i:${i}" href="/blog/${p.slug}/">
+        <img src="/assets/img/${BLOG_FALLBACK[i % BLOG_FALLBACK.length]}" alt="" loading="lazy" />
+        <div class="body"><div class="date">${postDate(p.publishedAt)}</div><h3>${esc(p.title)}</h3><p>${esc(p.excerpt || '')}</p><span class="btn sm">Read more →</span></div>
+      </a>`
+        )
+        .join('')}
+    </div>
+    <div class="sec-foot center reveal"><a class="btn ghost" href="/blog/">All articles →</a></div>
+  </div>
+</section>`
+    : ''
+}
+
+<section class="sec paper" id="faq">
+  <div class="container faq-wrap">
+    <div class="sec-head center reveal">
+      <p class="eyebrow">FAQ</p>
+      <h2 class="h-xl">Questions we hear <span class="hl">every week</span></h2>
+    </div>
+    <div class="faq-list reveal">
+      ${HOME_FAQS.map((f) => `<details class="faq"><summary>${esc(f.q)}${ico('chev', 20)}</summary><p>${esc(f.a)}</p></details>`).join('')}
+    </div>
+  </div>
+</section>
+
+<section class="final v3" id="estimate">
+  <div class="container wide final-grid">
+    <div class="final-copy reveal">
+      <p class="eyebrow light">Free in-home estimate</p>
+      <h2 class="h-xl light">Ready to upgrade your <span class="hl">bathroom?</span></h2>
+      <p class="sub light">Two minutes now, an in-home visit this week, and your written estimate the same day. No pressure, ever.</p>
+      <div class="final-contact">
+        <a href="${telHref()}">${ico('phone', 20)} ${SITE.phone}</a>
+        <a href="mailto:${SITE.email}">${ico('mail', 20)} ${SITE.email}</a>
+      </div>
+      <img class="final-buddy" src="/assets/img/buddy-tile.png?v=4" alt="" aria-hidden="true" />
+    </div>
+    <div class="estimate-card reveal" style="--i:1">
       ${estimateForm('home')}
     </div>
   </div>
@@ -571,7 +617,6 @@ ${
     <p class="hero-card-alt">Just browsing? <a href="/design/">Design your shower &amp; get an instant ballpark →</a></p>
   </div>
 </div>`;
-
 
 const HERO_CHIPS = `<div class="chips">
         <span>Family owned</span><span>Licensed &amp; bonded</span><span>Flood-tested waterproofing</span><span>Same-day written estimates</span>
