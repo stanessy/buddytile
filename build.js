@@ -118,8 +118,7 @@ const header = (isHome) => `
 <header class="site-header${isHome ? ' home' : ''}">
   <div class="container wide">
     <a class="brand" href="/">
-      <img class="brand-badge" src="/assets/img/buddy-tile-md.png?v=4" alt="Buddy Tile" />
-      <span class="brand-text"><span class="brand-name">Buddy Tile</span><span class="brand-sub">A Buddy Built Company</span></span>
+      <img class="brand-mark" src="/assets/img/buddy-tile-wordmark-white.png" alt="Buddy Tile" width="413" height="160" />
     </a>
     <nav class="site-nav">
       <a class="hide-m" href="/#services">Services</a>
@@ -175,8 +174,9 @@ const footer = `
   <div class="container">
     <div class="cols">
       <div class="badge-lockup">
-        <img src="/assets/img/buddy-tile.png?v=4" alt="Buddy Tile badge" loading="lazy" />
+        <img class="foot-mark" src="/assets/img/buddy-tile-wordmark-white.png" alt="Buddy Tile" loading="lazy" />
         <div class="caption">a BUDDY BUILT company</div>
+        <p class="foot-blurb">Custom tile showers, bathroom remodels, backsplashes, and heated floors for Vancouver, WA and the Portland, OR metro. Family owned, licensed, bonded, and insured.</p>
       </div>
       <div>
         <h3>SERVICES</h3>
