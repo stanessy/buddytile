@@ -336,6 +336,7 @@ const estimateForm = (context, { compact = false } = {}) => `
     <option>Bathroom floor / wall tile</option>
     <option>Kitchen backsplash</option>
     <option>Heated floors</option>
+    <option>Grout cleaning &amp; sealing</option>
     <option>Repair / regrout</option>
   </select>
   ${compact ? '' : '<textarea name="description" placeholder="Tell us about the project…" maxlength="3000"></textarea>'}
@@ -373,8 +374,8 @@ const homeBody = `
   <div class="container wide hero-v3">
     <div class="hero-copy enter">
       <p class="eyebrow light">Vancouver, WA · Portland, OR</p>
-      <h1>CUSTOM TILE SHOWERS, BATHROOMS &amp; <span class="gold">BACKSPLASHES</span><span class="h1-states">BUILT FOR WASHINGTON &amp; OREGON HOMES</span></h1>
-      <p class="lead">Licensed, bonded tile craftsmen who build on flood-tested waterproofing, protect your home every day they're in it, and put a written price in your inbox the same day we measure.</p>
+      <h1>CUSTOM TILE SHOWERS, BATHROOMS &amp; <span class="gold">GROUT CLEANING</span><span class="h1-states">BUILT FOR WASHINGTON &amp; OREGON HOMES</span></h1>
+      <p class="lead">Licensed, bonded tile craftsmen who build showers, bathroom remodels, backsplashes, and heated floors on flood-tested waterproofing, and bring tired tile back with grout cleaning, sealing, and regrouts. Written price in your inbox the same day we measure.</p>
       <div class="hero-btns">
         <a class="btn btn-lg" href="${telHref()}">${ico('phone', 18)} ${SITE.phone}</a>
         <a class="btn ghost btn-lg" href="/design/">Instant ballpark price →</a>
