@@ -1181,13 +1181,15 @@ body.modal-open { overflow: hidden; }
 @media (max-width: 860px) { .final-grid { grid-template-columns: 1fr; } .final-buddy { height: 240px; } }
 
 /* Footer: bigger lockup */
-.site-footer .badge-lockup img { height: 110px; }
+.site-footer .badge-lockup img.foot-mark { height: 52px; width: auto; }
 
 /* Wordmark header + footer (2026-09-22) */
 .brand-mark { height: 54px; width: auto; display: block; }
 @media (max-width: 840px) { .brand-mark { height: 42px; } }
 .site-footer .badge-lockup { text-align: left; }
-.site-footer .foot-mark { height: 64px; width: auto; margin: 0 0 8px; }
+.site-footer .foot-mark { height: 52px; width: auto; margin: 0 0 8px; }
+.site-footer .foot-lockup { display: inline-flex; flex-direction: column; align-items: center; }
+.site-footer .foot-lockup .caption { text-align: center; }
 .site-footer .foot-blurb { margin: 12px 0 0; font-size: 13px; color: rgba(255,255,255,0.6); max-width: 30em; line-height: 1.55; }
 
 /* Service area map card holds the full town list (2026-09-22) */

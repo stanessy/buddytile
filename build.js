@@ -174,8 +174,10 @@ const footer = `
   <div class="container">
     <div class="cols">
       <div class="badge-lockup">
-        <img class="foot-mark" src="/assets/img/buddy-tile-wordmark-white.png" alt="Buddy Tile" loading="lazy" />
-        <div class="caption">a BUDDY BUILT company</div>
+        <div class="foot-lockup">
+          <img class="foot-mark" src="/assets/img/buddy-tile-wordmark-white.png" alt="Buddy Tile" loading="lazy" />
+          <div class="caption">a BUDDY BUILT company</div>
+        </div>
         <p class="foot-blurb">Custom tile showers, bathroom remodels, backsplashes, and heated floors for Vancouver, WA and the Portland, OR metro. Family owned, licensed, bonded, and insured.</p>
       </div>
       <div>
