@@ -544,12 +544,17 @@ function passesHumanCheck(form, statusEl) {
     var L = window.L;
     var map = L.map(el, {
       zoomControl: false, scrollWheelZoom: false, doubleClickZoom: false, dragging: false,
-      touchZoom: false, boxZoom: false, keyboard: false, zoomSnap: 0.25,
+      touchZoom: false, boxZoom: false, keyboard: false,
+      // Whole-number zooms only: fractional zoom scales the 256px tiles and
+      // leaves hairline seams between them.
+      zoomSnap: 1,
+      attributionControl: false,
     });
+    // Esri's tile terms require a credit; keep it, but only the credit.
+    L.control.attribution({ prefix: false, position: 'bottomright' }).addAttribution('Tiles &copy; Esri').addTo(map);
     // Esri's light gray base has no labels (labels live in a separate reference layer)
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
       maxZoom: 16,
-      attribution: 'Tiles &copy; Esri',
     }).addTo(map);
     var markers = {};
     var pins = {};

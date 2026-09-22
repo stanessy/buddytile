@@ -943,7 +943,8 @@ body.modal-open { overflow: hidden; }
 .bt-pop span { display: block; color: var(--stone); margin: 2px 0 4px; }
 .bt-pop a { color: var(--gold-dark); font-weight: 700; text-decoration: none; }
 .leaflet-container { font-family: 'Montserrat', system-ui, sans-serif; }
-.area-bg .leaflet-control-attribution { font-size: 10px; background: rgba(255,255,255,0.7); }
+.area-bg .leaflet-control-attribution { font-size: 9px; color: rgba(28, 46, 68, 0.45); background: transparent; padding: 2px 6px; margin: 0; }
+.area-bg .leaflet-control-attribution a { color: inherit; text-decoration: none; }
 
 
 /* =====================================================================
@@ -1198,3 +1199,7 @@ body.modal-open { overflow: hidden; }
 .city-list.cols2 li { break-inside: avoid; margin-bottom: 4px; }
 .city-btn { font-size: 15px; padding: 3px 8px; }
 @media (max-width: 600px) { .area-cols { grid-template-columns: 1fr; } .city-list.cols2 { column-count: 2; } }
+
+/* Belt and braces against tile seams on high-DPI screens */
+.area-bg .leaflet-tile { image-rendering: auto; }
+.area-bg .leaflet-tile-container img { outline: 1px solid transparent; }
