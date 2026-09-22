@@ -1191,10 +1191,9 @@ body.modal-open { overflow: hidden; }
 .site-footer .foot-blurb { margin: 12px 0 0; font-size: 13px; color: rgba(255,255,255,0.6); max-width: 30em; line-height: 1.55; }
 
 /* Service area map card holds the full town list (2026-09-22) */
-.area-sec { min-height: 760px; }
-.area-card { width: min(700px, 100%); }
-.area-card h2 { text-wrap: balance; }
-.area-cols { grid-template-columns: 2fr 1fr; gap: 20px 28px; }
+.area-sec { min-height: 700px; }
+.area-card { width: min(560px, 100%); }
+.area-cols { grid-template-columns: 1.6fr 1fr; gap: 20px 24px; }
 .city-list.cols2 { display: block; column-count: 2; column-gap: 18px; }
 .city-list.cols2 li { break-inside: avoid; margin-bottom: 4px; }
 .city-btn { font-size: 15px; padding: 3px 8px; }

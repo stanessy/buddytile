@@ -311,8 +311,7 @@ const NEARBY_TOWNS = [
   { name: 'Ridgefield', state: 'WA', lat: 45.8151, lng: -122.7426 },
   { name: 'Longview', state: 'WA', lat: 46.1382, lng: -122.9382 },
   { name: 'Castle Rock', state: 'WA', lat: 46.2751, lng: -122.9076 },
-  { name: 'Long Beach', state: 'WA', lat: 46.3523, lng: -124.0543 },
-  // Oregon, Portland metro
+  // Oregon
   { name: 'Tigard', state: 'OR', lat: 45.4312, lng: -122.7715 },
   { name: 'Lake Oswego', state: 'OR', lat: 45.4207, lng: -122.6706 },
   { name: 'Happy Valley', state: 'OR', lat: 45.4468, lng: -122.5303 },
@@ -323,18 +322,6 @@ const NEARBY_TOWNS = [
   { name: 'McMinnville', state: 'OR', lat: 45.2101, lng: -123.1987 },
   { name: 'Keizer', state: 'OR', lat: 44.9901, lng: -123.0262 },
   { name: 'Hood River', state: 'OR', lat: 45.7054, lng: -121.5215 },
-  // Oregon coast
-  { name: 'Astoria', state: 'OR', lat: 46.1879, lng: -123.8313 },
-  { name: 'Warrenton', state: 'OR', lat: 46.1651, lng: -123.9238 },
-  { name: 'Seaside', state: 'OR', lat: 45.9932, lng: -123.9226 },
-  { name: 'Cannon Beach', state: 'OR', lat: 45.8918, lng: -123.9615 },
-  { name: 'Manzanita', state: 'OR', lat: 45.7187, lng: -123.9346 },
-  { name: 'Rockaway Beach', state: 'OR', lat: 45.6132, lng: -123.9429 },
-  { name: 'Tillamook', state: 'OR', lat: 45.4562, lng: -123.844 },
-  { name: 'Pacific City', state: 'OR', lat: 45.202, lng: -123.9626 },
-  { name: 'Lincoln City', state: 'OR', lat: 44.9582, lng: -124.0179 },
-  { name: 'Depoe Bay', state: 'OR', lat: 44.8085, lng: -124.0629 },
-  { name: 'Newport', state: 'OR', lat: 44.6368, lng: -124.0535 },
 ];
 
 // How you'll be treated, the emotional core of the pitch. Every line is a

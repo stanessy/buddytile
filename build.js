@@ -528,9 +528,9 @@ ${
   <div id="service-map" class="area-bg" aria-label="Map of Buddy Tile service cities in Washington and Oregon"></div>
   <div class="container wide area-over">
     <div class="area-card reveal">
-      <p class="eyebrow">Service area</p>
-      <h2>Proudly serving Portland, Vancouver &amp; nearby communities</h2>
-      <p class="area-sub">Buddy Tile is rooted in the Pacific Northwest. Crews roll out of Vancouver every morning and cover both sides of the river, the Willamette Valley, the Gorge, and the north Oregon coast. Tap a city to find it on the map.</p>
+      <p class="eyebrow">Service Area</p>
+      <h2>Two states. One standard.</h2>
+      <p class="area-sub">Crews roll out of Vancouver every morning and cover both sides of the river. Tap a city to find it on the map.</p>
       <div class="area-cols">
         ${['OR', 'WA']
           .map(
@@ -548,7 +548,7 @@ ${
           )
           .join('')}
       </div>
-      <p class="map-note">Area not listed? <a href="#estimate" data-open-estimate>Give us a call</a>, we may still come to you.</p>
+      <p class="map-note">Don't see your town? <a href="#estimate" data-open-estimate>Ask us</a>, we may still come to you.</p>
     </div>
   </div>
 </section>
@@ -620,7 +620,6 @@ ${
         <a href="${telHref()}">${ico('phone', 20)} ${SITE.phone}</a>
         <a href="mailto:${SITE.email}">${ico('mail', 20)} ${SITE.email}</a>
       </div>
-      <img class="final-buddy" src="/assets/img/buddy-mascot-thumbs.webp" alt="" aria-hidden="true" loading="lazy" />
     </div>
     <div class="estimate-card reveal" style="--i:1">
       ${estimateForm('home')}
