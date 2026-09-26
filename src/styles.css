@@ -997,7 +997,8 @@ body.modal-open { overflow: hidden; }
 
 /* Hero v3: dark photo, big headline, two buttons, Buddy on the right */
 .home-hero.v3 { min-height: 0; align-items: stretch; }
-.home-hero.v3 .scrim { background: linear-gradient(90deg, rgba(10, 22, 38, 0.96) 0%, rgba(10, 22, 38, 0.9) 45%, rgba(10, 22, 38, 0.72) 100%); }
+.home-hero.v3 .scrim { background: linear-gradient(90deg, rgba(10, 22, 38, 0.94) 0%, rgba(10, 22, 38, 0.84) 40%, rgba(10, 22, 38, 0.55) 70%, rgba(10, 22, 38, 0.38) 100%); }
+.home-hero.v3 .bg { background-position: 62% 55%; }
 .hero-v3 { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 380px); gap: 48px; align-items: end; padding-top: clamp(56px, 6vw, 84px) !important; padding-bottom: clamp(110px, 11vw, 150px) !important; }
 .home-hero.v3 h1 { font-size: clamp(2.9rem, 5.6vw, 5rem); line-height: 0.94; margin: 0 0 20px; max-width: none; }
 .home-hero.v3 h1 .h1-states { font-size: 0.38em; letter-spacing: 0.12em; color: rgba(255, 255, 255, 0.78); margin-top: 14px; }
