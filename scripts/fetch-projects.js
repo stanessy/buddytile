@@ -26,7 +26,7 @@ const slugify = (s) =>
 (async () => {
   let projects;
   try {
-    const res = await fetch(`${API}/api/public/projects`, { signal: AbortSignal.timeout(15000) });
+    const res = await fetch(`${API}/api/public/projects?division=tile`, { signal: AbortSignal.timeout(15000) });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     projects = await res.json();
   } catch (e) {
