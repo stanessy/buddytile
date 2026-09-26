@@ -225,7 +225,7 @@ const page = ({ url, title, description, jsonLd, body }) => `<!doctype html>
   <title>${esc(title)}</title>
   <meta name="description" content="${esc(description)}" />
   <link rel="canonical" href="${SITE.domain}${url}" />
-  <link rel="icon" href="/assets/img/buddy-tile-sm.png?v=4" />
+  <link rel="icon" href="/assets/img/buddy-tile-icon.png" />
   <link rel="stylesheet" href="/assets/styles.css?v=${V}" />
   <meta property="og:title" content="${esc(title)}" />
   <meta property="og:description" content="${esc(description)}" />
