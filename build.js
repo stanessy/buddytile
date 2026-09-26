@@ -897,10 +897,15 @@ fs.copyFileSync(path.join(__dirname, 'src/styles.css'), path.join(OUT, 'assets/s
 fs.copyFileSync(path.join(__dirname, 'src/main.js'), path.join(OUT, 'assets/main.js'));
 fs.writeFileSync(path.join(OUT, 'assets/ballpark-config.js'), `window.BT_BALLPARK = ${JSON.stringify(BALLPARK)};\nwindow.BT_DESIGNER = ${JSON.stringify(DESIGNER)};`);
 
+// Stamp every local image URL with the build version. Without it a browser
+// keeps serving the copy it cached the first time, so swapping a photo looks
+// like "nothing changed" until a hard refresh.
+const bustImages = (html) => html.replace(/\/assets\/img\/([A-Za-z0-9_\-./]+?\.(?:jpg|jpeg|png|webp|svg))(\?v=[A-Za-z0-9]+)?/g, `/assets/img/$1?v=${V}`);
+
 const write = (url, html) => {
   const dir = path.join(OUT, url);
   fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(path.join(dir, 'index.html'), html);
+  fs.writeFileSync(path.join(dir, 'index.html'), bustImages(html));
 };
 
 const urls = [];
