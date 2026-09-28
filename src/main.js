@@ -74,7 +74,7 @@ function passesHumanCheck(form, statusEl) {
         .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
         .then(function (res) {
           if (res.ok) {
-            status.style.color = '#F6B015';
+            status.style.color = '#C0AE99';
             status.innerHTML = "Got it! We'll reach out the same business day. <img src='/assets/img/buddy-tile-sm.png?v=4' alt='Buddy Tile' style='height:26px;vertical-align:-8px;margin-left:6px'>";
             form.reset();
           } else {
