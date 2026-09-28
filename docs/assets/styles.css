@@ -1256,3 +1256,10 @@ body.modal-open { overflow: hidden; }
 .svc-card, .pc, .quote-card, .faq, .post-card { background: #fff; }
 .sec.navy, .why, .cta-band, .final { background: var(--navy); }
 .why-bg { opacity: 0.18; }
+
+/* Navy stat cell sits flush with the card edge: no white hairline around it */
+.ht-grid { overflow: visible; }
+.ht.gold { margin: -1px -1px -1px 0; border-radius: 0 14px 14px 0; box-shadow: 0 10px 24px rgba(8, 18, 33, 0.08); }
+.ht.gold h3 { color: var(--gold-light); }
+@media (max-width: 960px) { .ht.gold { margin: 0 -1px -1px 0; border-radius: 0 0 14px 0; } }
+@media (max-width: 520px) { .ht.gold { margin: 0 -1px -1px -1px; border-radius: 0 0 14px 14px; } }
