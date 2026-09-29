@@ -42,7 +42,7 @@ function passesHumanCheck(form, statusEl) {
       var f = new FormData(form);
       if (!f.get('phone') && !f.get('email')) {
         status.hidden = false;
-        status.style.color = '#FFB4A2';
+        status.style.color = '#7A8B6F';
         status.textContent = 'Please add a phone number or an email so we can reach you about your estimate.';
         return;
       }

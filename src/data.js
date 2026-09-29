@@ -10,7 +10,7 @@ const SITE = {
   // Platform API, the lead form posts straight into the Buddy Built CRM
   apiBase: 'https://buddybuilt.com',
   tileDivisionId: 1,
-  accent: '#A8734B',
+  accent: '#7A8B6F',
   navy: '#1C2E44',
   // Acorn Finance dealer pre-qual link (blocks iframing, always open a new tab)
   acornUrl: 'https://www.acornfinance.com/pre-qualify/?d=2T7C4&utm_medium=web_pre_qual_link_copy_welcome',
