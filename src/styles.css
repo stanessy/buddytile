@@ -1336,3 +1336,8 @@ h2 .hl { color: var(--sage-dark); }
 /* Eucalyptus: walnut tokens retired site-wide so no old rule can surface it */
 :root { --gold: #7A8B6F; --gold-light: #A9B8A0; --gold-dark: #5B6B52; }
 .modal-card .lead-form input:focus, .modal-card .lead-form select:focus { border-color: var(--sage); }
+
+/* Tile bar: first cell carries the card's left radius now that overflow is visible */
+.ht:first-child { border-radius: 14px 0 0 14px; }
+@media (max-width: 960px) { .ht:first-child { border-radius: 14px 0 0 0; } .ht:nth-child(2) { border-radius: 0 14px 0 0; } .ht:nth-child(3) { border-radius: 0 0 0 14px; } }
+@media (max-width: 520px) { .ht:first-child { border-radius: 14px 14px 0 0; } .ht:nth-child(2), .ht:nth-child(3) { border-radius: 0; } }
