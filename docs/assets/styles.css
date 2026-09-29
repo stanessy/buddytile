@@ -1352,3 +1352,40 @@ h2 .hl { color: var(--sage-dark); }
   .hero-tags span + span::before { content: none; }
   .hero-tags span:not(:last-child)::after { content: '\2022'; margin: 0 8px; color: var(--gold-light); }
 }
+
+/* ---- Contrast + simplification pass (2026-09-28): tokens per the critique -------------- */
+:root {
+  --navy: #0B2233; --deep: #081A28; --navy-deep: #061421; --navy2: #14344D;
+  --warm: #F5F2EC;
+  --sage: #748568; --sage-light: #98A88B; --sage-dark: #4F5D47;
+  --gold: #748568; --gold-light: #98A88B; --gold-dark: #4F5D47;
+  --warm-accent: #C99A60;
+}
+body { background: var(--warm); }
+.sec { background: var(--warm); }
+/* accent words: a touch deeper, and a soft shadow where they sit over the photo */
+.home-hero.v3 h1 { text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35); }
+.home-hero.v3 h1 .gold { color: var(--sage-light); }
+h2 .hl { color: var(--sage-dark); }
+/* small warm accent: review stars, the 5-8 figure, the parent brand word */
+.quote-card .stars, .story-quote .stars { color: var(--warm-accent); }
+.ht.gold .big { color: var(--warm-accent); }
+.topbar .tb-brand b { color: var(--warm-accent); }
+/* 4. mascot: personality, not focal point */
+.card-buddy-wrap { transform: scale(0.68); top: -38px; right: -4px; }
+.hero-card-head { padding-right: 128px; min-height: 112px; }
+@media (max-width: 900px) { .card-buddy-wrap { transform: scale(0.60); top: -30px; } .hero-card-head { padding-right: 108px; min-height: 96px; } }
+/* 3. simplified card */
+.home-hero.v3 .hero-card .hero-card-head h3 { font-size: 1.85rem; }
+.hero-simple input, .hero-simple select { padding: 14px 16px; font-size: 15.5px; }
+.hero-simple button { margin-top: 2px; }
+.hero-checks { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 6px; }
+.hero-checks li { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--stone); }
+.hero-checks .ico { color: var(--sage); }
+/* 5. quieter top bar */
+.topbar .container { justify-content: space-between; }
+.topbar .tb-brand { letter-spacing: 0.12em; font-size: 11.5px; }
+.topbar .tb-mid { color: rgba(255, 255, 255, 0.72); font-weight: 600; }
+.topbar .tb-dot { margin: 0 6px; color: var(--sage-light); }
+.topbar .tb-bar { margin: 0 12px; opacity: 0.4; }
+@media (max-width: 1100px) { .topbar .tb-mid { display: none; } }

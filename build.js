@@ -111,8 +111,9 @@ const telHref = () => `tel:${SITE.phone.replace(/[^0-9+]/g, '')}`;
 const header = (isHome) => `
 <div class="topbar">
   <div class="container wide">
-    <span class="tb-left"><span class="tb-brand">a <b>BUDDY BUILT</b> company</span> <span class="tb-sep">·</span> ${ico('pin', 14)} Serving Vancouver, WA &amp; the Portland, OR metro <span class="tb-sep">·</span> ${ico('shield', 14)} Licensed, bonded &amp; insured in WA + OR</span>
-    <span class="tb-right"><a href="mailto:${SITE.email}">${ico('mail', 14)} ${SITE.email}</a><a href="/pay/">Make a Payment</a></span>
+    <span class="tb-left"><span class="tb-brand">A <b>BUDDY BUILT</b> COMPANY</span></span>
+    <span class="tb-mid">Vancouver, WA <span class="tb-dot">&bull;</span> Portland, OR <span class="tb-bar">|</span> Licensed in WA + OR</span>
+    <span class="tb-right"><a href="https://buddybuilt.com/portal" target="_blank" rel="noopener">Customer Login</a><a href="/pay/">Make a Payment</a></span>
   </div>
 </div>
 <header class="site-header${isHome ? ' home' : ''}">
@@ -326,7 +327,31 @@ const featuredReview = GOOGLE_REVIEWS && GOOGLE_REVIEWS.reviews?.length
   ? { text: GOOGLE_REVIEWS.reviews[0].text, who: GOOGLE_REVIEWS.reviews[0].author, where: 'Google review' }
   : { text: TESTIMONIALS[0].quote, who: TESTIMONIALS[0].name, where: TESTIMONIALS[0].where };
 
-const estimateForm = (context, { compact = false } = {}) => `
+const HERO_FORM = (context) => `
+<form class="lead-form hero-lead hero-simple" data-context="${esc(context)}">
+  <input name="name" placeholder="Your name" required maxlength="120" class="full" />
+  <input name="phone" type="tel" placeholder="Phone" required maxlength="30" class="full" />
+  <select name="projectType" class="full">
+    <option value="">Project type</option>
+    <option>Tile shower remodel</option>
+    <option>Full bathroom remodel</option>
+    <option>Bathroom floor / wall tile</option>
+    <option>Kitchen backsplash</option>
+    <option>Heated floors</option>
+    <option>Grout cleaning &amp; sealing</option>
+    <option>Repair / regrout</option>
+  </select>
+  <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" />
+  <button class="btn full" type="submit">Get My Free Estimate</button>
+  <p class="form-status" hidden></p>
+  <ul class="hero-checks full">
+    <li>${ico('check', 15)} Same-day response</li>
+    <li>${ico('check', 15)} No pressure</li>
+    <li>${ico('check', 15)} Your information stays private</li>
+  </ul>
+</form>`;
+
+const estimateForm = (context, { compact = false, hero = false } = {}) => hero ? HERO_FORM(context) : `
 <form class="lead-form hero-lead" data-context="${esc(context)}">
   <input name="name" placeholder="Your name *" required maxlength="120" class="full" />
   <input name="phone" type="tel" placeholder="Phone *" required maxlength="30" />
@@ -394,9 +419,7 @@ const homeBody = `
         <p class="eyebrow">Free Estimate</p>
         <h3>Tell us about your project.</h3>
       </div>
-      <p class="hero-card-sub">We measure in person, and your written estimate arrives the same day.</p>
-      ${estimateForm('hero', { compact: true })}
-      <p class="hero-card-alt">Just browsing? <a href="/design/">Design your shower &amp; get an instant ballpark →</a></p>
+      ${estimateForm('hero', { hero: true })}
     </div>
     </div>
   </div>
@@ -416,8 +439,8 @@ const homeBody = `
 <section class="sec" id="about">
   <div class="container wide intro-grid">
     <div class="reveal">
-      <p class="eyebrow">Tile work built the right way</p>
-      <h2 class="h-xl">Showers and floors that <span class="hl">outlast</span> the house.</h2>
+      <p class="eyebrow">Craftsmanship, not shortcuts</p>
+      <h2 class="h-xl">Tile work built to <span class="hl">outlast</span> the house.</h2>
       <p class="sub">Buddy Tile is a family-owned tile contractor serving Vancouver, Camas, and Battle Ground in Washington and the Portland metro in Oregon. We build custom tile showers, bathroom remodels, tub-to-shower conversions, heated floors, and backsplashes, and we bring tired tile back to life with grout cleaning, sealing, and regrouts.</p>
       <p class="sub">Every shower is built on a full RedGard liquid membrane and flood-tested before tile. Every job gets floor runners, dust walls, and a vacuumed site each night. And every price is written down before we start.</p>
       <ul class="check-list">
