@@ -38,9 +38,10 @@
   --evergreen: #425C50;
   /* Travertine rebrand 2026-09-28: --gold now carries the logo's natural stone
      tone (old gold #F6B015 kept in git tag pre-travertine-rebrand-2026-09-28) */
-  --gold: #C49A6C;        /* cedar: buttons, icons, stat tile */
-  --gold-light: #D7BE9B;  /* light cedar: accent words on navy, small labels */
-  --gold-dark: #8A6A45;   /* accent words on light sections */
+  /* Walnut palette 2026-09-28: sampled from the hero vanity (median #805A40); cedar kept in tag pre-walnut-palette-2026-09-28 */
+  --gold: #A8734B;        /* walnut, lifted: buttons, icon circles, focus rings */
+  --gold-light: #D4A77C;  /* walnut highlight: accent words + labels on navy */
+  --gold-dark: #805A40;   /* vanity walnut: accent words + links on light sections */
   --gold-deep: #6A5A46;
   --stone: #546170;
   --warm: #F7F5F1;
@@ -107,7 +108,7 @@ img { max-width: 100%; display: block; }
   border: 0;
   cursor: pointer;
 }
-.btn:hover { background: #B48758; }
+.btn:hover { background: #8F5F3C; }
 .btn.ghost { background: transparent; border: 1px solid rgba(255,255,255,0.4); color: #fff; }
 .phone-link { color: var(--gold) !important; white-space: nowrap; }
 @media (max-width: 840px) {
@@ -236,7 +237,7 @@ section.alt { background: #F3F4F6; }
   padding: 9px 16px; border-radius: 999px;
   background: var(--gold); color: var(--navy); font-weight: 700; font-size: 14px;
 }
-.site-footer a.pay-link:hover { background: #B48758; color: var(--navy); }
+.site-footer a.pay-link:hover { background: #8F5F3C; color: #fff; }
 .legal {
   border-top: 1px solid rgba(255,255,255,0.12);
   padding-top: 18px;
@@ -531,7 +532,7 @@ section.alt { background: #F3F4F6; }
 .hero-card .lead-form select:focus, .human-check input:focus {
   outline: none;
   border-color: var(--gold) !important;
-  box-shadow: 0 0 0 3px rgba(192, 174, 153, 0.35);
+  box-shadow: 0 0 0 3px rgba(168, 115, 75, 0.22);
 }
 
 
@@ -602,7 +603,7 @@ h2 .hl { color: var(--gold-dark); }
 #pay-lookup input:focus {
   outline: none;
   border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(192, 174, 153, 0.35);
+  box-shadow: 0 0 0 3px rgba(168, 115, 75, 0.22);
 }
 #pay-lookup .form-note { color: var(--stone); }
 
@@ -678,7 +679,7 @@ h2 .hl { color: var(--gold-dark); }
 .estimate-card .lead-form textarea:focus {
   outline: none;
   border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(192, 174, 153, 0.35);
+  box-shadow: 0 0 0 3px rgba(168, 115, 75, 0.22);
 }
 .estimate-card .human-check label { color: var(--navy); }
 .estimate-card .human-check .hc-q { color: var(--gold-dark); }
@@ -856,7 +857,7 @@ h2 .hl { color: var(--gold-dark); }
 .modal-card h3 { font-size: 2rem; margin: 0 0 2px; }
 .modal-card .lead-form { max-width: none; }
 .modal-card .lead-form input, .modal-card .lead-form select, .modal-card .lead-form textarea { background: var(--warm); border: 1px solid #D5D9E0; color: var(--navy); }
-.modal-card .lead-form input:focus, .modal-card .lead-form select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(192, 174, 153, 0.35); }
+.modal-card .lead-form input:focus, .modal-card .lead-form select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(168, 115, 75, 0.22); }
 .modal-card .form-note { color: var(--stone); }
 .modal-card .form-status { color: var(--navy); }
 .modal-card .human-check label { color: var(--navy); }
@@ -931,7 +932,7 @@ body.modal-open { overflow: hidden; }
 .city-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
 .city-list li { display: flex; align-items: center; gap: 6px; }
 .city-btn { border: 0; background: transparent; padding: 4px 8px; margin-left: -8px; border-radius: 8px; font: inherit; font-size: 15.5px; font-weight: 700; color: var(--navy); cursor: pointer; text-align: left; }
-.city-btn:hover, .city-btn.active { background: rgba(192, 174, 153, 0.35); }
+.city-btn:hover, .city-btn.active { background: rgba(168, 115, 75, 0.22); }
 .city-btn.active { color: var(--gold-dark); }
 .city-go { color: var(--gold-dark); font-weight: 700; text-decoration: none; opacity: 0; transition: opacity 0.15s; }
 .city-list li:hover .city-go, .city-btn.active + .city-go { opacity: 1; }
@@ -1263,3 +1264,12 @@ body.modal-open { overflow: hidden; }
 .ht.gold h3 { color: var(--gold-light); }
 @media (max-width: 960px) { .ht.gold { margin: 0 -1px -1px 0; border-radius: 0 0 14px 0; } }
 @media (max-width: 520px) { .ht.gold { margin: 0 -1px -1px -1px; border-radius: 0 0 14px 14px; } }
+
+/* Walnut pass: buttons and icon circles carry white on the deeper accent */
+.btn { color: #fff; }
+.btn.ghost-dark { color: var(--navy); }
+.btn.ghost-dark:hover { color: #fff; }
+.ic { color: #fff; }
+.site-footer a.pay-link { color: #fff; }
+.mobile-cta .mc-est { color: #fff; }
+.trust-row.hero-trust { border-top-color: var(--gold); }
