@@ -1389,3 +1389,8 @@ h2 .hl { color: var(--sage-dark); }
 .topbar .tb-dot { margin: 0 6px; color: var(--sage-light); }
 .topbar .tb-bar { margin: 0 12px; opacity: 0.4; }
 @media (max-width: 1100px) { .topbar .tb-mid { display: none; } }
+/* mascot: no circle — plain bust over the card corner with a shadow line under him */
+.card-buddy-wrap::before { display: none; }
+.card-buddy-wrap::after { content: ''; position: absolute; left: 22px; top: 232px; width: 168px; height: 18px; border-radius: 50%; z-index: 0;
+  background: radial-gradient(ellipse at center, rgba(8, 18, 33, 0.34) 0, rgba(8, 18, 33, 0.14) 45%, rgba(8, 18, 33, 0) 72%); }
+.card-buddy { z-index: 1; filter: none; -webkit-mask-image: none; mask-image: none; }
