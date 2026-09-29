@@ -376,7 +376,8 @@ const homeBody = `
   <div class="container wide hero-v3">
     <div class="hero-copy enter">
       <p class="eyebrow light">Vancouver, WA · Portland, OR</p>
-      <h1>CUSTOM TILE SHOWERS, BATHROOMS &amp; <span class="gold">GROUT CLEANING</span><span class="h1-states">BUILT FOR WASHINGTON &amp; OREGON HOMES</span></h1>
+      <h1>CUSTOM TILE SHOWERS<br />&amp; <span class="gold">BATHROOM REMODELS</span></h1>
+      <p class="hero-tags"><span>Tile</span><span>Waterproofing</span><span>Floors</span><span>Grout Restoration</span></p>
       <p class="lead">Licensed, bonded tile craftsmen who build showers, bathroom remodels, backsplashes, and heated floors on flood-tested waterproofing, and bring tired tile back with grout cleaning, sealing, and regrouts. Written price in your inbox the same day we measure.</p>
       <div class="hero-btns">
         <a class="btn btn-lg" href="${telHref()}">${ico('phone', 18)} ${SITE.phone}</a>

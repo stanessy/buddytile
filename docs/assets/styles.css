@@ -1341,3 +1341,14 @@ h2 .hl { color: var(--sage-dark); }
 .ht:first-child { border-radius: 14px 0 0 14px; }
 @media (max-width: 960px) { .ht:first-child { border-radius: 14px 0 0 0; } .ht:nth-child(2) { border-radius: 0 14px 0 0; } .ht:nth-child(3) { border-radius: 0 0 0 14px; } }
 @media (max-width: 520px) { .ht:first-child { border-radius: 14px 14px 0 0; } .ht:nth-child(2), .ht:nth-child(3) { border-radius: 0; } }
+
+/* Hero tag row under the headline: the services, quietly, in place of the old states subline */
+.hero-tags { display: flex; flex-wrap: wrap; gap: 6px 0; margin: 4px 0 22px; font-family: 'Bebas Neue', sans-serif; font-size: clamp(15px, 1.45vw, 20px); letter-spacing: 0.14em; color: rgba(255, 255, 255, 0.82); }
+.hero-tags span + span::before { content: '\2022'; margin: 0 12px; color: var(--gold-light); }
+.home-hero.v3 h1 { margin-bottom: 10px; }
+
+@media (max-width: 700px) {
+  .hero-tags { font-size: 12.5px; letter-spacing: 0.09em; gap: 4px 0; }
+  .hero-tags span + span::before { content: none; }
+  .hero-tags span:not(:last-child)::after { content: '\2022'; margin: 0 8px; color: var(--gold-light); }
+}
