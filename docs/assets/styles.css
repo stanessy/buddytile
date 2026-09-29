@@ -1391,6 +1391,6 @@ h2 .hl { color: var(--sage-dark); }
 @media (max-width: 1100px) { .topbar .tb-mid { display: none; } }
 /* mascot: no circle — plain bust over the card corner with a shadow line under him */
 .card-buddy-wrap::before { display: none; }
-.card-buddy-wrap::after { content: ''; position: absolute; left: 22px; top: 232px; width: 168px; height: 18px; border-radius: 50%; z-index: 0;
-  background: radial-gradient(ellipse at center, rgba(8, 18, 33, 0.34) 0, rgba(8, 18, 33, 0.14) 45%, rgba(8, 18, 33, 0) 72%); }
+.card-buddy-wrap::after { content: ''; position: absolute; left: 14px; top: 226px; width: 186px; height: 30px; border-radius: 50%; z-index: 0;
+  background: radial-gradient(ellipse at center, rgba(8, 18, 33, 0.70) 0, rgba(8, 18, 33, 0.40) 34%, rgba(8, 18, 33, 0.12) 60%, rgba(8, 18, 33, 0) 76%); }
 .card-buddy { z-index: 1; filter: none; -webkit-mask-image: none; mask-image: none; }
