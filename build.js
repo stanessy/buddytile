@@ -418,7 +418,7 @@ const homeBody = `
       <p class="eyebrow">Tile work built the right way</p>
       <h2 class="h-xl">Showers and floors that <span class="hl">outlast</span> the house.</h2>
       <p class="sub">Buddy Tile is a family-owned tile contractor serving Vancouver, Camas, and Battle Ground in Washington and the Portland metro in Oregon. We build custom tile showers, bathroom remodels, tub-to-shower conversions, heated floors, and backsplashes, and we bring tired tile back to life with grout cleaning, sealing, and regrouts.</p>
-      <p class="sub">Every shower is built on a full Schluter-system membrane and flood-tested before tile. Every job gets floor runners, dust walls, and a vacuumed site each night. And every price is written down before we start.</p>
+      <p class="sub">Every shower is built on a full RedGard liquid membrane and flood-tested before tile. Every job gets floor runners, dust walls, and a vacuumed site each night. And every price is written down before we start.</p>
       <ul class="check-list">
         ${TRUST.slice(0, 4).map((t) => `<li>${ico('checkCircle', 20)}<div><strong>${esc(t.title)}</strong><span>${esc(t.body)}</span></div></li>`).join('')}
       </ul>
@@ -794,7 +794,7 @@ ${pageHero({
       <ul class="tick-list">
         <li>Free in-home visits in ${c.name}, written estimate the same day</li>
         <li>Licensed, bonded &amp; insured in Washington and Oregon</li>
-        <li>Schluter-system waterproofing on every shower, flood-tested</li>
+        <li>RedGard waterproofing on every shower, flood-tested</li>
         <li>Approve your estimate online; watch daily progress photos</li>
       </ul>
       <p><a class="btn" href="#estimate">Get My ${c.name} Estimate</a></p>

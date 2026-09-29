@@ -26,20 +26,20 @@ const SERVICES = [
     h1: 'Custom Tile Shower Remodels',
     metaTitle: 'Custom Tile Shower Remodel | Vancouver WA & Portland OR | Buddy Tile',
     metaDescription:
-      'Custom tile showers built right: Schluter waterproofing, curbless options, niches, benches, and glass. Free in-home estimates in Vancouver WA and Portland OR.',
+      'Custom tile showers built right: RedGard waterproofing, curbless options, niches, benches, and glass. Free in-home estimates in Vancouver WA and Portland OR.',
     intro:
-      'The shower is the hardest room in the house to get right, and the most expensive to get wrong. We build tile showers on proper waterproofing systems, not shortcuts: full Schluter or equivalent membranes, flood-tested pans, and tile set to TCNA standards.',
+      'The shower is the hardest room in the house to get right, and the most expensive to get wrong. We build tile showers on proper waterproofing systems, not shortcuts: a full RedGard liquid membrane, flood-tested pans, and tile set to TCNA standards.',
     bullets: [
-      'Schluter / HydroBan waterproofing with flood test before tile',
+      'RedGard liquid-membrane waterproofing with a flood test before tile',
       'Curbless and walk-in conversions',
       'Niches, benches, corner shelves, grab bars, planned before demo, not after',
       'Linear or center drains, heated floors, glass enclosures coordinated',
       'Demo to done in days, with daily progress photos to your phone',
     ],
     faqs: [
-      { q: 'How much does a custom tile shower cost in Vancouver WA?', a: 'Most full tile showers run $6,200-$10,500 for labor and waterproofing, depending on size and features like niches, benches, or curbless entries. Tub-to-shower conversions start around $5,600. Finish tile is priced with your selections, and your written in-home estimate is free.' },
+      { q: 'How much does a custom tile shower cost in Vancouver WA?', a: 'Most full tile showers run $7,000-$10,500 for labor and waterproofing, depending on size and features like niches, benches, or curbless entries. Tub-to-shower conversions start around $5,600. Finish tile is priced with your selections, and your written in-home estimate is free.' },
       { q: 'How long does a shower remodel take?', a: 'Most showers run 5-8 working days from demo to grout: tear-out, waterproofing with a flood test, tile, then grout and seal. We protect the path to the room and vacuum the site every night.' },
-      { q: 'Do you use Schluter waterproofing?', a: 'Yes, every shower gets a full membrane system (Schluter Kerdi, GoBoard, or HydroBan), a flood-tested pan, and photos of the waterproofing before tile covers it.' },
+      { q: 'What waterproofing do you use?', a: 'RedGard. Every shower gets a full RedGard liquid membrane over cement board, rolled to the rated thickness, a flood-tested pan, and photos of the waterproofing before tile covers it.' },
       { q: 'Can you convert my tub to a walk-in shower?', a: 'That is one of our most common projects. We remove the tub, rebuild the wet area with proper waterproofing, and tile a walk-in or curbless shower, usually within a week.' },
     ],
     photo: 'real-tile-shower.jpg',
@@ -114,13 +114,13 @@ const SERVICES = [
     slug: 'waterproofing',
     name: 'Shower Waterproofing',
     h1: 'Shower Waterproofing Done Right',
-    metaTitle: 'Shower Waterproofing (Schluter, Kerdi, HydroBan) | Buddy Tile',
+    metaTitle: 'Shower Waterproofing (RedGard Liquid Membrane) | Buddy Tile',
     metaDescription:
-      'Waterproofing is the part of a shower you never see and can never skip. Schluter Kerdi, GoBoard, and HydroBan systems installed and flood-tested.',
+      'Waterproofing is the part of a shower you never see and can never skip. RedGard liquid membrane over cement board, installed and flood-tested.',
     intro:
       "Tile and grout are not waterproof. The membrane behind them is. Most shower failures we're called to fix were tiled beautifully over nothing. We build the system: membrane, pan, drain, seams, and a flood test before a single tile goes up.",
     bullets: [
-      'Schluter Kerdi, GoBoard, HydroBan, matched to your build',
+      'RedGard liquid membrane over cement board, rolled to the rated thickness',
       'Flood-tested pans before tile, every time',
       'Fix-it work: we diagnose and rebuild failed showers',
       'Documentation and photos of the membrane before it disappears behind tile',
