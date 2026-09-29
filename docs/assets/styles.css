@@ -1273,3 +1273,11 @@ body.modal-open { overflow: hidden; }
 .site-footer a.pay-link { color: #fff; }
 .mobile-cta .mc-est { color: #fff; }
 .trust-row.hero-trust { border-top-color: var(--gold); }
+
+/* Phones: show the shower instead of a sliver of window frame, and let it
+   read through the overlay. The photo is stored mirrored, shower on the right. */
+@media (max-width: 700px) {
+  .home-hero.v3 .bg { background-position: 88% 45%; background-size: cover; }
+  .home-hero.v3 .scrim { background: linear-gradient(180deg, rgba(10, 22, 38, 0.86) 0%, rgba(10, 22, 38, 0.62) 45%, rgba(10, 22, 38, 0.58) 100%); }
+  .home-hero.v3 h1, .home-hero.v3 .lead, .home-hero.v3 .h1-states { text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45); }
+}
