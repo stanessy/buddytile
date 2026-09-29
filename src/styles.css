@@ -1341,3 +1341,8 @@ h2 .hl { color: var(--sage-dark); }
 .ht:first-child { border-radius: 14px 0 0 14px; }
 @media (max-width: 960px) { .ht:first-child { border-radius: 14px 0 0 0; } .ht:nth-child(2) { border-radius: 0 14px 0 0; } .ht:nth-child(3) { border-radius: 0 0 0 14px; } }
 @media (max-width: 520px) { .ht:first-child { border-radius: 14px 14px 0 0; } .ht:nth-child(2), .ht:nth-child(3) { border-radius: 0; } }
+
+/* Marble wordmark: the render's cast shadow is stripped from the PNG (it only worked on white);
+   a CSS drop-shadow follows the letter shapes on any background, so the sign reads as 3D on navy. */
+.brand-mark { filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.55)) drop-shadow(0 1px 1px rgba(0, 0, 0, 0.35)); }
+.site-footer .foot-mark { filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.55)); }
