@@ -449,7 +449,7 @@ const homeBody = `
       <a class="btn" href="#estimate" data-open-estimate>Get a Free Estimate</a>
     </div>
     <figure class="intro-photo reveal reveal-img" style="--i:1">
-      <div class="frame"><img src="/assets/img/craft-setting.jpg" alt="Buddy Tile installer setting large-format tile" loading="lazy" /></div>
+      <div class="frame"><img src="/assets/img/intro-redgard-waterproofing.jpg" alt="Buddy Tile installer rolling RedGard waterproofing on a shower before tile" loading="lazy" /></div>
       <figcaption>The work you never see: waterproofing and a flat substrate, photographed before tile covers it.</figcaption>
     </figure>
   </div>
