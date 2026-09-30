@@ -385,7 +385,7 @@ const firstSentence = (t) => {
   const m = String(t || '').match(/^(.+?[.!?])(\s|$)/);
   return m ? m[1] : String(t || '');
 };
-const PROC_PHOTOS = ['process-request-estimate.jpg', 'process-in-home-visit.jpg', 'craft-tile-hands.jpg', 'hero-master-bath-remodel.jpg'];
+const PROC_PHOTOS = ['process-request-estimate.jpg', 'process-in-home-visit.jpg', 'process-approve-phone.jpg', 'hero-master-bath-remodel.jpg'];
 const PROC_ICONS = ['phone', 'pencil', 'hammer', 'smile'];
 const WHY_ICONS = ['home', 'camera', 'lock', 'smile'];
 const BLOG_FALLBACK = ['real-tile-shower.jpg', 'real-kitchen-backsplash.jpg', 'real-floor-tile.jpg'];
