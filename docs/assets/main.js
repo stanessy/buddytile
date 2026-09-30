@@ -208,13 +208,9 @@ function passesHumanCheck(form, statusEl) {
     document.querySelectorAll('[data-show]').forEach(function (el) {
       el.hidden = el.dataset.show.split(' ').indexOf(state.type) === -1;
     });
-    var svg = document.getElementById('ds-preview-shower');
-    if (svg) svg.style.display = isShower ? 'block' : 'none';
     var img = document.getElementById('ds-preview-img');
-    img.hidden = isShower;
-    img.src = state.type === 'floor' ? '/assets/img/bathroom-tile-remodel-vancouver-wa.jpg'
-      : state.type === 'remodel' ? '/assets/img/marble-tile-shower-glass-door.jpg'
-      : '/assets/img/kitchen-tile-backsplash-installation.jpg';
+    var next = '/assets/img/ballpark/' + state.type + '.jpg';
+    if (img.getAttribute('src').indexOf(next) === -1) img.src = next;
 
     var p = priceCents();
     p.total = scoped(p.total);
@@ -222,9 +218,6 @@ function passesHumanCheck(form, statusEl) {
       document.getElementById('ds-areas').innerHTML =
         'Wall area <b>' + p.wallSqft.toFixed(0) + ' sq ft</b> · Floor <b>' + p.floorSqft.toFixed(0) +
         ' sq ft</b> · Total tile <b>' + (p.wallSqft + p.floorSqft).toFixed(0) + ' sq ft</b>';
-      document.getElementById('pv-dw').textContent = state.w + ' in';
-      document.getElementById('pv-dd').textContent = state.d + ' in';
-      document.getElementById('pv-dh').textContent = state.h + ' in';
     }
 
     var lo = Math.round(p.total * D.rangeLo / 100), hi = Math.round(p.total * D.rangeHi / 100);
