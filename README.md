@@ -27,7 +27,7 @@ same forms.
 
 ## Before launch
 
-- Replace `WA reg #PENDING · OR CCB #PENDING` in `src/data.js` (legally required in ads)
+- ~~Replace `WA reg #PENDING · OR CCB #PENDING` in `src/data.js`~~ done: WA reg #BUDDYBL746MO · OR CCB #263768 (legally required in ads)
 - Confirm phone number + hello@buddytile.com mailbox exist
 - Point buddytile.com DNS at the static host; keep `pay.buddytile.com` / `book.buddytile.com`
   reserved as CNAMEs so printed links never expose vendors
