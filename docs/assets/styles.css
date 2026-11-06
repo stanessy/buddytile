@@ -1408,3 +1408,77 @@ h2 .hl { color: var(--sage-dark); }
 .design-preview img { width: 100%; height: auto; aspect-ratio: 7 / 10; object-fit: cover; display: block; border-radius: 8px; }
 .design-chips button.on { color: #fff; }
 @media (max-width: 520px) { #ds-type .project-card img { height: 120px; } #ds-scope .project-card img { height: 96px; } .design-preview img { aspect-ratio: 4 / 3; } }
+
+/* ---- Online booking: pick an estimate visit time inside any lead form (2026-11-05) ---- */
+.lead-form .book { grid-column: 1 / -1; min-width: 0; }
+/* The sites style every button in a lead form as the submit (full width, brand fill):
+   the chips and small controls inside the block opt back out, with enough specificity to win. */
+form.lead-form .book.book button.book-toggle, form.lead-form .book.book button.book-skip,
+form.lead-form .book .book-panel button.book-day, form.lead-form .book .book-panel button.book-time {
+  grid-column: auto; justify-self: auto; width: auto; min-width: 0; margin: 0; box-shadow: none; text-transform: none; letter-spacing: 0;
+}
+form.lead-form .book .book-panel button.book-day { background: #fff; color: var(--navy); border: 1px solid rgba(0, 0, 0, 0.16); }
+form.lead-form .book .book-panel button.book-day.on { background: var(--gold); border-color: var(--gold); color: #fff; }
+form.lead-form .book .book-panel button.book-time { background: #fff; color: var(--navy); border: 1px solid rgba(0, 0, 0, 0.16); }
+form.lead-form .book .book-panel button.book-time.on { background: var(--navy); border-color: var(--navy); color: #fff; }
+form.lead-form .book.book button.book-toggle { width: 100%; background: transparent; color: inherit; border: 1px dashed var(--gold); }
+form.lead-form .book.book button.book-toggle:hover { background: rgba(0, 0, 0, 0.04); border-style: solid; }
+form.lead-form .book.book button.book-skip { background: none; border: 0; padding: 0; color: inherit; }
+.estimate-band form.lead-form .book .book-panel button.book-day.on { background: #fff; border-color: #fff; color: var(--navy); }
+.estimate-band form.lead-form .book .book-panel button.book-time.on { background: var(--gold); border-color: var(--gold); color: #fff; }
+.estimate-band form.lead-form .book.book button.book-toggle:hover { background: rgba(255, 255, 255, 0.06); }
+.book-days, .book-times, .book-panel { min-width: 0; }
+.book-page .two-col > * { min-width: 0; }
+.book-toggle { display: flex; align-items: center; gap: 10px; width: 100%; padding: 12px 14px; border: 1px dashed var(--gold); border-radius: 12px; background: transparent; color: inherit; font: inherit; font-size: 14.5px; font-weight: 700; cursor: pointer; text-align: left; }
+.book-toggle .ico { color: var(--gold); flex: 0 0 auto; }
+.book-toggle span { font-weight: 500; opacity: 0.72; font-size: 13px; margin-left: auto; text-align: right; }
+.book-toggle:hover { border-style: solid; background: rgba(0, 0, 0, 0.04); }
+.book-panel { border: 1px solid rgba(0, 0, 0, 0.12); border-radius: 14px; padding: 14px; background: rgba(0, 0, 0, 0.025); }
+.book-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-weight: 700; font-size: 14.5px; margin-bottom: 10px; }
+.book-head .ico { color: var(--gold); vertical-align: -3px; margin-right: 4px; }
+.book-skip { background: none; border: 0; color: inherit; opacity: 0.72; font: inherit; font-size: 13px; text-decoration: underline; cursor: pointer; padding: 0; white-space: nowrap; }
+.book-skip:hover { opacity: 1; }
+.book-days { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; scroll-snap-type: x proximity; }
+.book-day { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; min-width: 54px; padding: 7px 4px 6px; border-radius: 10px; border: 1px solid rgba(0, 0, 0, 0.16); background: #fff; color: var(--navy); cursor: pointer; font: inherit; line-height: 1.1; scroll-snap-align: center; }
+.book-day span { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.7; }
+.book-day b { font-size: 18px; margin: 3px 0 2px; }
+.book-day small { font-size: 10.5px; opacity: 0.7; }
+.book-day:hover:not(:disabled) { border-color: var(--gold); }
+.book-day.on { background: var(--gold); border-color: var(--gold); color: #fff; }
+.book-day.on span, .book-day.on small { opacity: 0.9; }
+.book-day.off { opacity: 0.35; cursor: default; }
+.book-times { display: grid; grid-template-columns: repeat(auto-fill, minmax(86px, 1fr)); gap: 6px; margin-top: 8px; }
+.book-time { padding: 9px 6px; border-radius: 9px; border: 1px solid rgba(0, 0, 0, 0.16); background: #fff; color: var(--navy); font: inherit; font-weight: 600; font-size: 13.5px; cursor: pointer; }
+.book-time:hover { border-color: var(--gold); }
+.book-time.on { background: var(--navy); border-color: var(--navy); color: #fff; }
+.book-note { font-size: 13.5px; margin: 8px 0 0; opacity: 0.85; }
+.book-pick { margin: 10px 0 0; font-size: 14px; }
+.book-pick .ico { color: var(--gold); vertical-align: -2px; }
+.book-pick small { opacity: 0.65; margin-left: 6px; font-size: 12px; }
+.book-addr { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.book-addr input[name="addressLine1"], .book-addr input[name="bookEmail"] { grid-column: 1 / -1; }
+.book-done { margin: 0; padding: 12px 14px; border-radius: 12px; background: rgba(0, 0, 0, 0.04); border: 1px solid var(--gold); font-size: 14px; }
+.book-done .ico { color: var(--gold); vertical-align: -3px; margin-right: 4px; }
+/* On the dark estimate band the chips invert */
+.estimate-band .book-toggle:hover, .estimate-band .book-panel, .estimate-band .book-done { background: rgba(255, 255, 255, 0.06); }
+.estimate-band .book-panel { border-color: rgba(255, 255, 255, 0.18); }
+.estimate-band .book-day.on { background: #fff; border-color: #fff; color: var(--navy); }
+.estimate-band .book-time.on { background: var(--gold); border-color: var(--gold); color: #fff; }
+.estimate-band .book-addr input { color: #fff; }
+.hero-card .book-toggle, .modal-card .book-toggle { font-size: 13.5px; padding: 10px 12px; }
+@media (max-width: 640px) {
+  .book-addr { grid-template-columns: 1fr; }
+  .book-toggle { flex-wrap: wrap; }
+  .book-toggle span { margin-left: 26px; text-align: left; }
+}
+
+/* Book-a-visit page */
+.book-page .two-col { align-items: start; }
+.book-page .estimate-card { margin: 0; }
+.book-page .steps { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 14px; }
+.book-page .steps li { display: flex; gap: 14px; align-items: flex-start; }
+.book-page .steps .ic { flex: 0 0 auto; }
+.book-page .steps strong { display: block; margin-bottom: 2px; }
+/* Top bar: the booking calendar is one click from every page */
+.topbar .tb-book { color: var(--gold); font-weight: 700; margin-right: 6px; }
+.topbar .tb-book:hover { color: #fff; }

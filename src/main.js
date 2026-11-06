@@ -23,14 +23,28 @@ function passesHumanCheck(form, statusEl) {
   return false;
 }
 
-(function () {
+// ---- Site constants for the shared lead + booking code ----------------------
+var BT_BOOK = {
+  site: 'buddytile.com',
+  phone: '(360) 899-6336',
+  tel: '+13608996336',
+  email: 'info@buddytile.com',
+  okColor: '#A8734B',
+  okHtml: "Got it! We'll reach out the same business day. <img src='/assets/img/buddy-tile-sm.png?v=4' alt='Buddy Tile' style='height:26px;vertical-align:-8px;margin-left:6px'>",
   // Local previews talk to the dev platform; the live site talks to production.
-  var API_BASE =
-    window.BT_API_BASE ||
-    (location.hostname === 'localhost' || location.hostname === '127.0.0.1'
-      ? 'http://localhost:5001'
-      : 'https://buddybuilt.com');
-  var TILE_DIVISION_ID = 1;
+  apiBase: function () { return window.BT_API_BASE || (location.hostname === 'localhost' || location.hostname === '127.0.0.1' ? 'http://localhost:5001' : 'https://buddybuilt.com'); },
+  divisionId: function () { return Promise.resolve(1); },
+};
+// ---- Lead + booking submit (shared across the Buddy brand sites, 2026-11-05) ----
+// Plain lead → POST /api/public/leads. With a visit time picked in the booking
+// block → POST /api/public/book: one call creates the lead, puts the visit on
+// an estimator's calendar, emails the homeowner, and alerts the team.
+(function () {
+  var API_BASE = BT_BOOK.apiBase();
+  var WARN = '#FFB4A2';
+  var contactLine =
+    ' Call <a href="tel:' + BT_BOOK.tel + '" style="color:inherit;font-weight:700;">' + BT_BOOK.phone + '</a> or email <a href="mailto:' +
+    BT_BOOK.email + '" style="color:inherit;font-weight:700;">' + BT_BOOK.email + '</a>.';
 
   document.querySelectorAll('form.lead-form').forEach(function (form) {
     if (form.id === 'ballpark-gate-form' || form.id === 'design-gate-form') return; // gates have their own handlers
@@ -38,13 +52,22 @@ function passesHumanCheck(form, statusEl) {
       e.preventDefault();
       var status = form.querySelector('.form-status');
       var btn = form.querySelector('button[type=submit]');
+      var say = function (color, html) { status.hidden = false; status.style.color = color; status.innerHTML = html; };
       if (!passesHumanCheck(form, status)) return;
       var f = new FormData(form);
-      if (!f.get('phone') && !f.get('email')) {
-        status.hidden = false;
-        status.style.color = '#7A8B6F';
-        status.textContent = 'Please add a phone number or an email so we can reach you about your estimate.';
+      var startAt = (f.get('startAt') || '').trim();
+      var email = (f.get('email') || f.get('bookEmail') || '').trim();
+      var phone = (f.get('phone') || '').trim();
+      if (!phone && !email) {
+        say(WARN, 'Please add a phone number or an email so we can reach you about your estimate.');
         return;
+      }
+      var city = (f.get('city') || f.get('bookCity') || '').split(',')[0].trim();
+      var address = (f.get('addressLine1') || '').trim();
+      var zip = (f.get('zip') || '').replace(/[^0-9]/g, '').slice(0, 5);
+      if (startAt) {
+        if (!phone) { say(WARN, 'A phone number is required to book a visit.'); return; }
+        if (!address || !city) { say(WARN, 'Please add the home address and city for the visit.'); return; }
       }
       var description = [f.get('projectType'), f.get('description')].filter(Boolean).join(', ');
       // Ballpark form: attach the calculator selections + range
@@ -53,45 +76,204 @@ function passesHumanCheck(form, statusEl) {
       }
 
       btn.disabled = true;
-      status.hidden = false;
-      status.style.color = '#fff';
-      status.textContent = 'Sending…';
+      say('#fff', startAt ? 'Booking your visit…' : 'Sending…');
 
-      fetch(API_BASE + '/api/public/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: f.get('name'),
-          phone: f.get('phone') || undefined,
-          email: f.get('email') || undefined,
-          city: (f.get('city') || '').split(',')[0] || undefined,
-          description: description || undefined,
-          divisionId: TILE_DIVISION_ID,
-          website: f.get('website') || undefined,
-          source: 'buddytile.com ' + (form.dataset.context || ''),
-        }),
-      })
+      var payload = {
+        name: f.get('name'),
+        phone: phone || undefined,
+        email: email || undefined,
+        city: city || undefined,
+        addressLine1: address || undefined,
+        zip: zip || undefined,
+        state: zip ? (zip.indexOf('97') === 0 ? 'OR' : 'WA') : undefined,
+        description: description || undefined,
+        website: f.get('website') || undefined,
+        source: BT_BOOK.site + ' ' + (form.dataset.context || ''),
+        startAt: startAt || undefined,
+      };
+
+      BT_BOOK.divisionId()
+        .then(function (divisionId) {
+          payload.divisionId = divisionId || undefined;
+          return fetch(API_BASE + (startAt ? '/api/public/book' : '/api/public/leads'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+        })
         .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
         .then(function (res) {
-          if (res.ok) {
-            status.style.color = '#A8734B';
-            status.innerHTML = "Got it! We'll reach out the same business day. <img src='/assets/img/buddy-tile-sm.png?v=4' alt='Buddy Tile' style='height:26px;vertical-align:-8px;margin-left:6px'>";
+          var d = res.d || {};
+          if (res.ok && startAt) {
+            say(
+              BT_BOOK.okColor,
+              "You're booked for <b>" + d.when + '</b>' + (d.estimator && d.estimator.firstName ? ' with ' + d.estimator.firstName : '') + '.' +
+                (d.confirmationSent ? ' A confirmation is on its way to your inbox.' : " We'll call to confirm the details.")
+            );
             form.reset();
+            if (window.btBookingDone) window.btBookingDone(form, d);
+          } else if (res.ok) {
+            say(BT_BOOK.okColor, BT_BOOK.okHtml);
+            form.reset();
+          } else if (d.code === 'SLOT_TAKEN' && !d.leadSaved) {
+            say(WARN, 'That time was just taken. Pick another one below.');
+            if (window.btBookingRefresh) window.btBookingRefresh(form);
+          } else if (d.leadSaved) {
+            say(BT_BOOK.okColor, "We saved your request but couldn't hold that time. We'll call you to pick one together.");
+            form.reset();
+            if (window.btBookingDone) window.btBookingDone(form, null);
           } else {
-            throw new Error(res.d && res.d.error);
+            throw new Error(d.error);
           }
         })
         .catch(function (err) {
-          status.style.color = '#FFB4A2';
-          status.innerHTML =
-            ((err && err.message) || 'Something went wrong.') +
-            ' Call <a href="tel:+13608996336" style="color:inherit;font-weight:700;">(360) 899-6336</a> or email <a href="mailto:info@buddytile.com" style="color:inherit;font-weight:700;">info@buddytile.com</a>.';
+          say(WARN, ((err && err.message) || 'Something went wrong.') + contactLine);
         })
         .finally(function () {
           btn.disabled = false;
         });
     });
   });
+})();
+
+// ---- Booking block: day strip + time chips inside any lead form -------------
+// Open times come from GET /api/public/availability (Pacific, no names).
+// Picking a time reveals the address fields and flips the button to "Book".
+(function () {
+  var blocks = document.querySelectorAll('.book');
+  if (!blocks.length) return;
+  var API_BASE = BT_BOOK.apiBase();
+  var DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var availPromise = null;
+  function load(force) {
+    if (!availPromise || force) {
+      availPromise = BT_BOOK.divisionId()
+        .then(function (id) {
+          return fetch(API_BASE + '/api/public/availability' + (id ? '?divisionId=' + id : ''), { cache: 'no-store' }).then(function (r) { return r.json(); });
+        })
+        .catch(function () { return { enabled: false, reason: 'We could not load the calendar' }; });
+    }
+    return availPromise;
+  }
+  function each(list, fn) { Array.prototype.forEach.call(list, fn); }
+
+  function init(block) {
+    var form = block.closest('form');
+    if (!form) return;
+    var submit = form.querySelector('button[type=submit]');
+    var submitText = submit ? submit.textContent : '';
+    var toggle = block.querySelector('.book-toggle');
+    var panel = block.querySelector('.book-panel');
+    var days = block.querySelector('.book-days');
+    var times = block.querySelector('.book-times');
+    var note = block.querySelector('.book-note');
+    var pick = block.querySelector('.book-pick');
+    var addr = block.querySelector('.book-addr');
+    var hidden = block.querySelector('input[name=startAt]');
+    var skip = block.querySelector('.book-skip');
+    var state = { data: null, day: null, start: null };
+
+    toggle.addEventListener('click', open);
+    skip.addEventListener('click', function () {
+      clear();
+      panel.hidden = true;
+      toggle.hidden = false;
+      block.classList.remove('is-open');
+    });
+    if (block.hasAttribute('data-open')) open();
+
+    function open() {
+      block.classList.add('is-open');
+      panel.hidden = false;
+      toggle.hidden = true;
+      if (!state.data) render(false);
+    }
+    function render(force) {
+      note.hidden = false;
+      note.textContent = 'Checking open times…';
+      days.innerHTML = '';
+      times.innerHTML = '';
+      load(force).then(function (d) {
+        state.data = d;
+        if (!d.enabled) {
+          note.textContent = (d.reason || 'Online booking is not available right now') + '. Send the form and we will call you to schedule.';
+          return;
+        }
+        var withSlots = d.days.filter(function (x) { return x.slots.length; });
+        if (!withSlots.length) {
+          note.textContent = 'No open times in the next ' + (d.horizonDays || 21) + ' days. Send the form and we will find one together.';
+          return;
+        }
+        note.hidden = true;
+        var first = null;
+        d.days.forEach(function (day) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'book-day' + (day.slots.length ? '' : ' off');
+          b.disabled = !day.slots.length;
+          var ymd = day.date.split('-');
+          b.innerHTML = '<span>' + DOW[day.weekday] + '</span><b>' + Number(ymd[2]) + '</b><small>' + MON[Number(ymd[1]) - 1] + '</small>';
+          b.setAttribute('aria-label', day.label + (day.slots.length ? ', ' + day.slots.length + ' open times' : ', full'));
+          b.addEventListener('click', function () { selectDay(day, b); });
+          days.appendChild(b);
+          if (!first && day.slots.length) first = { day: day, el: b };
+        });
+        if (first) selectDay(first.day, first.el);
+      });
+    }
+    function selectDay(day, el) {
+      state.day = day;
+      each(days.children, function (c) { c.classList.toggle('on', c === el); });
+      times.innerHTML = '';
+      day.slots.forEach(function (s) {
+        var t = document.createElement('button');
+        t.type = 'button';
+        t.className = 'book-time' + (s.start === state.start ? ' on' : '');
+        t.textContent = s.time;
+        t.addEventListener('click', function () { selectTime(s, t, day); });
+        times.appendChild(t);
+      });
+      if (el && el.scrollIntoView) el.scrollIntoView({ block: 'nearest', inline: 'center' });
+    }
+    function selectTime(s, el, day) {
+      state.start = s.start;
+      hidden.value = s.start;
+      each(times.children, function (c) { c.classList.toggle('on', c === el); });
+      pick.hidden = false;
+      pick.querySelector('b').textContent = day.label + ' at ' + s.time;
+      addr.hidden = false;
+      each(addr.querySelectorAll('[data-req]'), function (i) { i.required = true; });
+      if (submit) submit.textContent = 'Book My Free Estimate';
+      var a = addr.querySelector('input[name=addressLine1]');
+      if (a && !a.value) a.focus();
+    }
+    function clear() {
+      state.start = null;
+      hidden.value = '';
+      pick.hidden = true;
+      addr.hidden = true;
+      each(addr.querySelectorAll('[data-req]'), function (i) { i.required = false; });
+      each(times.children, function (c) { c.classList.remove('on'); });
+      if (submit) submit.textContent = submitText;
+    }
+    block._refresh = function () { clear(); render(true); };
+    block._done = function (d) {
+      clear();
+      panel.hidden = true;
+      toggle.hidden = true;
+      var done = block.querySelector('.book-done');
+      if (done) {
+        done.hidden = false;
+        done.innerHTML = d && d.when ? 'Visit booked: <b>' + d.when + '</b>' : 'Request received, we will call you to schedule.';
+      }
+      availPromise = null; // the slot is gone, other forms on the page refetch
+    };
+  }
+  each(blocks, init);
+
+  window.btBookingRefresh = function (form) { var b = form.querySelector('.book'); if (b && b._refresh) b._refresh(); };
+  window.btBookingDone = function (form, d) { var b = form.querySelector('.book'); if (b && b._done) b._done(d); };
 })();
 
 
