@@ -17,6 +17,14 @@ const SITE = {
   legalLine:
     'Buddy Tile is a registered trade name of Buddy Built LLC · WA reg #BUDDYBL746MO · OR CCB #263768',
   serviceAreaBlurb: 'Serving Vancouver, Portland, and the surrounding metro, Washington and Oregon.',
+  // Ad tracking (2026-11-05, from the marketing team's install notes). Blank an id to drop that tag.
+  tracking: {
+    metaPixelId: '3323527621370310',
+    metaDomainVerification: 'g4y41rk9u98ll1hlhdonkpvlq3vchy',
+    googleAdsId: 'AW-18431592834',
+    googleLeadLabel: 'AW-18431592834/mRsgCJ-EsbEdEIKT79RE',
+    googlePhoneLabel: 'AW-18431592834/s80CCKKEsbEdEIKT79RE',
+  },
 };
 
 const SERVICES = [

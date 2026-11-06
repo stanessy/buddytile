@@ -1,5 +1,34 @@
 // Lead form → Buddy Built CRM (division: Buddy Tile). Zero dependencies.
 
+// ---- Ad attribution + conversions (2026-11-05) -------------------------------
+// Google click id saved on landing (90 days) and appended to the lead source so
+// the CRM shows which leads came from Google Ads. Conversions fire ONLY after the
+// platform confirms the lead saved. Ids come from build.js via window.BT_TRACK.
+(function () {
+  try {
+    var p = new URLSearchParams(location.search);
+    var id = p.get('gclid') || p.get('gbraid') || p.get('wbraid');
+    if (id) localStorage.setItem('bt_gclid', JSON.stringify({
+      id: id, kw: p.get('utm_term') || '', lp: location.pathname, ts: Date.now()
+    }));
+  } catch (e) {}
+})();
+function btAttribution() {
+  try {
+    var a = JSON.parse(localStorage.getItem('bt_gclid') || 'null');
+    if (!a || Date.now() - a.ts > 90 * 24 * 3600 * 1000) return '';
+    return ' | google ads | kw: ' + a.kw + ' | gclid: ' + a.id + ' | lp: ' + a.lp;
+  } catch (e) { return ''; }
+}
+// kind: 'Lead' (a saved lead) or 'Schedule' (a booked visit / requested call)
+function btConversion(kind, name) {
+  var T = window.BT_TRACK || {};
+  try {
+    if (window.fbq && T.metaPixelId) fbq('track', kind, { content_name: name });
+    if (window.gtag && T.googleLeadLabel) gtag('event', 'conversion', { 'send_to': T.googleLeadLabel });
+  } catch (e) {}
+}
+
 // ---- Human check: tiny math question bots that blind-POST can't answer ------
 (function () {
   document.querySelectorAll('.human-check').forEach(function (box) {
@@ -88,7 +117,7 @@ var BT_BOOK = {
         state: zip ? (zip.indexOf('97') === 0 ? 'OR' : 'WA') : undefined,
         description: description || undefined,
         website: f.get('website') || undefined,
-        source: BT_BOOK.site + ' ' + (form.dataset.context || ''),
+        source: BT_BOOK.site + ' ' + (form.dataset.context || '') + btAttribution(),
         startAt: startAt || undefined,
       };
 
@@ -105,6 +134,7 @@ var BT_BOOK = {
         .then(function (res) {
           var d = res.d || {};
           if (res.ok && startAt) {
+            btConversion('Schedule', 'Online booking');
             say(
               BT_BOOK.okColor,
               "You're booked for <b>" + d.when + '</b>' + (d.estimator && d.estimator.firstName ? ' with ' + d.estimator.firstName : '') + '.' +
@@ -113,12 +143,14 @@ var BT_BOOK = {
             form.reset();
             if (window.btBookingDone) window.btBookingDone(form, d);
           } else if (res.ok) {
+            btConversion('Lead', 'Contact Form');
             say(BT_BOOK.okColor, BT_BOOK.okHtml);
             form.reset();
           } else if (d.code === 'SLOT_TAKEN' && !d.leadSaved) {
             say(WARN, 'That time was just taken. Pick another one below.');
             if (window.btBookingRefresh) window.btBookingRefresh(form);
           } else if (d.leadSaved) {
+            btConversion('Lead', 'Contact Form');
             say(BT_BOOK.okColor, "We saved your request but couldn't hold that time. We'll call you to pick one together.");
             form.reset();
             if (window.btBookingDone) window.btBookingDone(form, null);
@@ -493,13 +525,14 @@ var BT_BOOK = {
         name: contact.name, email: contact.email, phone: contact.phone,
         description: 'BALLPARK TOOL, ' + (window.__designSummary || ''),
         divisionId: TILE_DIVISION_ID, website: honeypot,
-        source: 'buddytile.com design',
+        source: 'buddytile.com design' + btAttribution(),
         verificationToken: contact.verificationToken,
       });
     }).then(function () {
       verify.hidden = true;
       result.hidden = false;
       render();
+      btConversion('Lead', 'Ballpark Tool');
     }).catch(function (err) {
       showStatus(verifyForm, err.message, false);
     }).then(function () { setBusy(verifyForm, false); });
@@ -533,10 +566,11 @@ var BT_BOOK = {
         phone: contact ? contact.phone : undefined,
         description: 'BALLPARK TOOL, BOOK ESTIMATE, ' + (window.__designSummary || ''),
         divisionId: TILE_DIVISION_ID,
-        source: 'buddytile.com design-book',
+        source: 'buddytile.com design-book' + btAttribution(),
         verificationToken: contact ? contact.verificationToken : undefined,
       }),
     }).then(function (r) {
+      if (r.ok) btConversion('Schedule', 'Ballpark Book Estimate');
       status.textContent = r.ok
         ? "You're booked for a call, we'll reach out the same business day!"
         : 'Something went wrong, please call us.';
@@ -800,3 +834,9 @@ var BT_BOOK = {
     start();
   }
 })();
+
+// ---- Phone taps → Meta 'Contact' (Google's phone conversion is the onclick on every tel: link) ----
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[href^="tel:"]');
+  if (a && window.fbq && window.BT_TRACK && window.BT_TRACK.metaPixelId) fbq('track', 'Contact', { content_name: 'Phone tap' });
+});

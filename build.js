@@ -248,6 +248,50 @@ const footer = `
 <script src="/assets/ballpark-config.js?v=${V}"></script>
 <script src="/assets/main.js?v=${V}" defer></script>`;
 
+// ---- Ad tracking in <head> (Meta Pixel + Google Ads tag), ids live in SITE.tracking ----
+const T = SITE.tracking || {};
+const trackingHead = () => {
+  const out = [];
+  if (T.googleAdsId) {
+    out.push(`<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=${T.googleAdsId}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '${T.googleAdsId}');
+</script>
+<!-- Event snippet for Website phone click conversion -->
+<script>
+function gtag_report_conversion(url) {
+  var done = false;
+  var callback = function () {
+    if (done) return;
+    done = true;
+    if (typeof(url) != 'undefined') {
+      window.location = url;
+    }
+  };
+  gtag('event', 'conversion', {
+      'send_to': '${T.googlePhoneLabel}',
+      'event_callback': callback
+  });
+  setTimeout(callback, 1000); // safety net: still dials if an ad blocker stops Google's script
+  return false;
+}
+</script>`);
+  }
+  if (T.metaPixelId) {
+    out.push(`<!-- Meta Pixel Code -->${T.metaDomainVerification ? `<meta name="facebook-domain-verification" content="${T.metaDomainVerification}" />` : ''}<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init', '${T.metaPixelId}');fbq('track', 'PageView');</script><noscript><img height="1" width="1" style="display:none"src="https://www.facebook.com/tr?id=${T.metaPixelId}&ev=PageView&noscript=1"/></noscript><!-- End Meta Pixel Code -->`);
+  }
+  return out.join('\n');
+};
+// Every tel: link reports the Google phone-click conversion (and still dials on its own after 1s)
+const trackPhoneLinks = (html) =>
+  T.googleAdsId ? html.replace(/<a ([^>]*?)href="(tel:[^"]+)"(?![^>]*onclick=)/g, (m, pre, tel) => `<a ${pre}href="${tel}" onclick="return gtag_report_conversion('${tel}');"`) : html;
+// Lead conversion ids for main.js (fires only after the platform confirms the lead)
+const trackingConfig = () => `<script>window.BT_TRACK = ${JSON.stringify({ googleLeadLabel: T.googleLeadLabel || '', metaPixelId: T.metaPixelId || '' })};</script>`;
+
 const page = ({ url, title, description, jsonLd, body }) => `<!doctype html>
 <html lang="en">
 <head>
@@ -264,6 +308,8 @@ const page = ({ url, title, description, jsonLd, body }) => `<!doctype html>
   <meta property="og:url" content="${SITE.domain}${url}" />
   <meta property="og:type" content="website" />
   ${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ''}
+  ${trackingConfig()}
+  ${trackingHead()}
 </head>
 <body>
 ${header(url === '/')}
@@ -961,7 +1007,7 @@ const bustImages = (html) => html.replace(/\/assets\/img\/([A-Za-z0-9_\-./]+?\.(
 const write = (url, html) => {
   const dir = path.join(OUT, url);
   fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(path.join(dir, 'index.html'), bustImages(html));
+  fs.writeFileSync(path.join(dir, 'index.html'), trackPhoneLinks(bustImages(html)));
 };
 
 const urls = [];
