@@ -1482,3 +1482,95 @@ form.lead-form .book.book button.book-skip { background: none; border: 0; paddin
 /* Top bar: the booking calendar is one click from every page */
 .topbar .tb-book { color: var(--gold); font-weight: 700; margin-right: 6px; }
 .topbar .tb-book:hover { color: #fff; }
+
+/* ---- Split hero + chooser, ported from buddybaths (2026-11-05) ---- */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+/* split hero */
+.split-hero { position: relative; display: flex; align-items: stretch; min-height: min(86vh, 820px); padding: 0; background: var(--deep); }
+.split { position: relative; flex: 1 1 0; display: flex; align-items: center; overflow: hidden; color: #fff; text-decoration: none; transition: flex 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+.split:hover, .split:focus-visible { flex: 1.35 1 0; }
+.split.is-remembered { flex: 1.2 1 0; }
+.split .bg { position: absolute; inset: 0; background-size: cover; background-position: center; transform: scale(1.02); transition: transform 0.9s ease; }
+.split:hover .bg { transform: scale(1.08); }
+.split .scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(3, 24, 41, 0.45) 0%, rgba(3, 24, 41, 0.55) 45%, rgba(3, 24, 41, 0.9) 100%); }
+.split.tilework .scrim { background: linear-gradient(180deg, rgba(14, 26, 20, 0.4) 0%, rgba(14, 26, 20, 0.55) 45%, rgba(11, 34, 51, 0.9) 100%); }
+.split.tilework { --gold: #748568; --gold-soft: #A9BBA0; }
+.split.baths { --gold: #4AA1B4; --gold-soft: #86C7D5; }
+.split-in { position: relative; z-index: 1; padding: clamp(56px, 7vw, 96px) clamp(24px, 5vw, 80px) clamp(48px, 6vw, 80px); max-width: 620px; width: 100%; margin-left: auto; margin-right: auto; }
+.split.tilework .split-in { margin-right: clamp(32px, 4vw, 72px); }
+.split.baths .split-in { margin-left: clamp(32px, 4vw, 72px); }
+.split .eyebrow { display: inline-flex; align-items: center; gap: 6px; color: var(--gold-soft); }
+.split h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.6rem, 4.3vw, 4.6rem); line-height: 0.92; letter-spacing: 0.01em; color: #fff; margin: 8px 0 14px; text-shadow: 0 4px 24px rgba(0, 0, 0, 0.35); }
+.split h2 .gold { color: var(--gold-soft); }
+.split .lead { color: rgba(255, 255, 255, 0.9); font-size: clamp(15px, 1.15vw, 18px); max-width: 30em; margin: 0 0 16px; }
+.split-points { list-style: none; margin: 0 0 24px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.12em; color: rgba(255, 255, 255, 0.85); }
+.split-points li::before { content: '✓'; color: var(--gold-soft); margin-right: 7px; }
+.split .btn { background: var(--gold); color: #fff; }
+.split:hover .btn { filter: brightness(1.08); }
+.remembered-tag { display: none; margin-top: 14px; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.04em; color: var(--gold-soft); }
+.split.is-remembered .remembered-tag { display: inline-flex; }
+/* The pill is a zero-width flex item between the halves, so it rides the seam
+   wherever the flex ratios put it (hover, remembered path) instead of sitting at 50%. */
+.split-mid { position: relative; z-index: 3; flex: 0 0 0; width: 0; display: flex; justify-content: center; align-items: center; overflow: visible; }
+.split-pill { flex: 0 0 auto; display: flex; align-items: center; gap: 10px; background: #fff; color: var(--navy); border-radius: 999px; padding: 8px 20px 8px 8px; box-shadow: 0 14px 30px rgba(3, 24, 41, 0.35); white-space: nowrap; }
+.split-mid img { width: 54px; height: 54px; border-radius: 50%; object-fit: cover; object-position: 50% 0; background: var(--gold); }
+.split-pill > span { display: grid; line-height: 1.15; }
+.split-mid b { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold-dark); }
+.split-mid a { color: var(--navy); font-weight: 800; font-size: 16px; text-decoration: none; }
+@media (max-width: 900px) {
+  .split-hero { flex-direction: column; min-height: 0; }
+  .split, .split:hover, .split.is-remembered { flex: 0 0 auto; min-height: 62vh; }
+  .split-in, .split.tilework .split-in, .split.baths .split-in { margin: 0; max-width: none; }
+  .split-mid { flex: 0 0 auto; width: auto; margin: -30px auto; }
+}
+/* choose section */
+.choose-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.choose-card { background: #fff; border: 1px solid var(--line-strong, #E5E7EB); border-radius: 16px; overflow: hidden; box-shadow: 0 10px 24px rgba(8, 18, 33, 0.06); display: grid; grid-template-rows: auto 1fr; }
+.choose-card.baths { --gold: #4AA1B4; --gold-dark: #38798A; --gold-soft: #86C7D5; }
+.choose-img { position: relative; aspect-ratio: 16 / 8; overflow: hidden; }
+.choose-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.choose-tag { position: absolute; left: 16px; top: 16px; background: var(--gold); color: #fff; font-size: 11.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 11px; border-radius: 999px; }
+.choose-body { padding: 24px 26px 28px; display: grid; gap: 14px; align-content: start; }
+.choose-body h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; letter-spacing: 0.02em; line-height: 1; margin: 0; color: var(--navy); }
+.choose-body dl { margin: 0; display: grid; gap: 8px; }
+.choose-body dl div { display: grid; grid-template-columns: 84px 1fr; gap: 10px; font-size: 14.5px; line-height: 1.4; }
+.choose-body dt { font-weight: 800; color: var(--gold-dark); letter-spacing: 0.04em; text-transform: uppercase; font-size: 12px; padding-top: 2px; }
+.choose-body dd { margin: 0; color: #2A3744; }
+.choose-svcs { list-style: none; margin: 0; padding: 12px 0 0; border-top: 1px solid var(--line-strong, #E5E7EB); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 12px; font-size: 14px; }
+.choose-svcs a { color: var(--navy); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+.choose-svcs .ico { color: var(--gold); }
+.choose-svcs a:hover { color: var(--gold-dark); }
+.choose-body .btn { justify-self: start; background: var(--gold); color: #fff; }
+.all-services .all-switch { font-weight: 800; color: var(--gold-dark); }
+.foot-h3-gap { margin-top: 18px; }
+.site-footer h3 a { color: inherit; text-decoration: none; }
+@media (max-width: 760px) { .choose-grid { grid-template-columns: 1fr; } .choose-svcs { grid-template-columns: 1fr; } }
+
+
+/* ---- Tile ↔ Baths split (2026-11-05) ---------------------------------------- */
+.split-brand { display: block; height: 46px; width: auto; margin: 0 0 10px; }
+.split .btn.btn-lg { pointer-events: none; }
+/* baths half splits into the two Buddy Baths paths, so its buttons are real links */
+.split-btns { display: flex; flex-wrap: wrap; gap: 12px; }
+.split-btns .btn.btn-lg { pointer-events: auto; }
+.split .btn.btn-alt { background: #748568; }
+/* trust strip under the split hero, same as buddybaths */
+.split-hero + .trust-row.hero-trust { background: var(--navy-deep, #081221); border-top: 3px solid var(--sage); }
+.split-hero + .trust-row.hero-trust .container { padding-top: 26px; padding-bottom: 26px; }
+.split-hero + .trust-row.hero-trust span { font-size: 14.5px; }
+.split-hero + .hero-tiles { margin-top: -40px; }
+.ht.gold a { color: inherit; text-decoration: underline; }
+.handoff-band { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 20px; background: #04243A; color: #fff; border-radius: 16px; padding: 18px 22px; margin: 22px 0 4px; }
+.handoff-band img { height: 44px; width: auto; }
+.handoff-band div { display: grid; gap: 2px; font-size: 14.5px; }
+.handoff-band strong { font-size: 16px; }
+.handoff-band span { color: rgba(255, 255, 255, 0.78); }
+.handoff-band .btn { background: #4AA1B4; color: #fff; white-space: nowrap; }
+.handoff-band .btn:hover { background: #38798A; }
+.foot-family { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; padding-top: 18px; margin-top: 18px; border-top: 1px solid rgba(255, 255, 255, 0.12); font-size: 13.5px; }
+.foot-family-label { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.1em; font-size: 15px; color: rgba(255, 255, 255, 0.6); margin-right: 6px; }
+.foot-family a { color: rgba(255, 255, 255, 0.85); text-decoration: none; }
+.foot-family a:hover { color: #fff; text-decoration: underline; }
+.foot-family span[aria-current] { color: var(--gold-soft, #A9BBA0); font-weight: 700; }
+.foot-blurb a { color: inherit; text-decoration: underline; }
+@media (max-width: 760px) { .handoff-band { grid-template-columns: 1fr; text-align: left; } .handoff-band img { height: 36px; } }

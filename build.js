@@ -106,6 +106,10 @@ const ico = (name, size = 24) =>
   `<svg class="ico" viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON_PATHS[name]}</svg>`;
 const iconCircle = (name) => `<span class="ic">${ico(name, 26)}</span>`;
 const telHref = () => `tel:${SITE.phone.replace(/[^0-9+]/g, '')}`;
+// Bathrooms are Buddy Baths (2026-11-05): the tile site leads with the rest of the house
+const TILE_SERVICES = SERVICES.filter((x) => !x.bathroom);
+const BATH_SERVICES = SERVICES.filter((x) => x.bathroom);
+const bathsHref = (path = '/') => `${SITE.bathsUrl}${path}`;
 
 // ---------- shared chrome ----------------------------------------------------
 
@@ -208,11 +212,13 @@ const footer = `
           <img class="foot-mark" src="/assets/img/buddy-tile-wordmark-white.png" alt="Buddy Tile" loading="lazy" />
           <div class="caption">a BUDDY BUILT company</div>
         </div>
-        <p class="foot-blurb">Custom tile showers, bathroom remodels, backsplashes, and heated floors for Vancouver, WA and the Portland, OR metro. Family owned, licensed, bonded, and insured.</p>
+        <p class="foot-blurb">Kitchen backsplashes, tile and heated floors, fireplaces, and grout restoration for Vancouver, WA and the Portland, OR metro. Family owned, licensed, bonded, and insured. Bathrooms by <a href="${bathsHref('/')}">Buddy Baths</a>.</p>
       </div>
       <div>
-        <h3>SERVICES</h3>
-        <ul>${SERVICES.map((s) => `<li><a href="/services/${s.slug}/">${s.name}</a></li>`).join('')}</ul>
+        <h3>TILE SERVICES</h3>
+        <ul>${TILE_SERVICES.map((s) => `<li><a href="/services/${s.slug}/">${s.name}</a></li>`).join('')}</ul>
+        <h3 class="foot-h3-gap"><a href="${bathsHref('/')}">BATHROOMS, BY BUDDY BATHS</a></h3>
+        <ul>${BATH_SERVICES.map((s) => `<li><a href="${bathsHref(s.handoff)}">${s.name}</a></li>`).join('')}</ul>
       </div>
       <div>
         <h3>SERVICE AREA</h3>
@@ -239,6 +245,13 @@ const footer = `
       <p>${SITE.legalLine}</p>
       <p>© ${new Date().getFullYear()} Buddy Built LLC · ${SITE.tagline} · <a href="https://buddybuilt.com">buddybuilt.com</a></p>
     </div>
+  </div>
+  <div class="container foot-family">
+    <span class="foot-family-label">The Buddy family</span>
+    <a href="https://buddybuilt.com" rel="noopener">Buddy Built</a>
+    <span aria-current="page">Buddy Tile</span>
+    <a href="${bathsHref('/')}">Buddy Baths</a>
+    <a href="https://buddyfence.com">Buddy Fence</a>
   </div>
 </footer>
 <div class="mobile-cta">
@@ -458,7 +471,7 @@ const estimateForm = (context, { compact = false, hero = false, book = true } = 
 
 // Homepage v3 (2026-09): contractor-marketing rhythm. Every section carries a
 // photo, an icon, or brand color; Buddy appears three times; one CTA repeats.
-const HOME_SERVICES = ['shower-remodel', 'bathroom-tile', 'kitchen-backsplash', 'heated-floors', 'tub-to-shower', 'grout-cleaning'];
+const HOME_SERVICES = ['kitchen-backsplash', 'floor-tile', 'heated-floors', 'fireplace-tile', 'grout-cleaning', 'tile-repair'];
 const firstSentence = (t) => {
   const m = String(t || '').match(/^(.+?[.!?])(\s|$)/);
   return m ? m[1] : String(t || '');
@@ -467,60 +480,113 @@ const PROC_PHOTOS = ['process-request-estimate.jpg', 'process-in-home-visit.jpg'
 const PROC_ICONS = ['phone', 'pencil', 'hammer', 'smile'];
 const WHY_ICONS = ['home', 'camera', 'lock', 'smile'];
 const BLOG_FALLBACK = ['real-tile-shower.jpg', 'real-kitchen-backsplash.jpg', 'real-floor-tile.jpg'];
-const HOME_FAQS = [...(svc('shower-remodel').faqs || []), ...(svc('grout-cleaning').faqs || []).slice(0, 1), ...(svc('heated-floors').faqs || []).slice(0, 1)];
+const HOME_FAQS = [...(svc('kitchen-backsplash').faqs || []).slice(0, 2), ...(svc('floor-tile').faqs || []).slice(0, 1), ...(svc('grout-cleaning').faqs || []).slice(0, 1), ...(svc('heated-floors').faqs || []).slice(0, 1)];
 const GOOGLE_REVIEWS_URL = GOOGLE_REVIEWS ? GOOGLE_REVIEWS.mapsUrl || `https://www.google.com/maps/place/?q=place_id:${GOOGLE_REVIEWS.placeId}` : 'https://www.google.com/maps/search/Buddy+Tile+Vancouver+WA';
 const cityLink = (c) => `<li><a href="/tile-contractor/${c.slug}/">${ico('check', 14)} ${esc(c.name)}</a></li>`;
 const townItem = (t) => `<li><span>${ico('check', 14)} ${esc(t.name)}</span></li>`;
 
+// ---- Home: split hero, tile on the left, Buddy Baths on the right (2026-11-05) ----
+const splitHero = () => `
+<section class="split-hero" aria-label="Tile work, or a new bathroom">
+  <h1 class="sr-only">Tile Contractor in Vancouver, WA and Portland, OR: Kitchens, Floors, Fireplaces and Grout Restoration. Bathrooms by Buddy Baths.</h1>
+  <a class="split tilework" href="#services">
+    <div class="bg" style="background-image:url('/assets/img/real-kitchen-backsplash.jpg')"></div>
+    <div class="scrim"></div>
+    <div class="split-in">
+      <p class="eyebrow light">${ico('hammer', 14)} Tile for the rest of the house</p>
+      <h2>KITCHENS, FLOORS<br /><span class="gold">&amp; FIREPLACES.</span></h2>
+      <p class="lead">Backsplashes, tile and heated floors, fireplace surrounds, and the repairs, regrouts, and grout cleaning that bring old tile back.</p>
+      <ul class="split-points"><li>Kitchen backsplashes</li><li>Tile &amp; heated floors</li><li>Fireplaces &amp; repairs</li></ul>
+      <span class="btn btn-lg">Explore tile work →</span>
+    </div>
+  </a>
+  <div class="split-mid">
+    <span class="split-pill">
+      <img src="/assets/img/buddy-bust.webp" alt="" aria-hidden="true" width="415" height="440" />
+      <span><b>Not sure which?</b><a href="${telHref()}">${SITE.phone}</a></span>
+    </span>
+  </div>
+  <div class="split baths">
+    <div class="bg" style="background-image:url('/assets/img/baths-custom-bathroom.jpg')"></div>
+    <div class="scrim"></div>
+    <div class="split-in">
+      <img class="split-brand" src="/assets/img/buddy-baths-wordmark-white.png" alt="Buddy Baths" width="486" height="239" />
+      <p class="eyebrow light">${ico('droplet', 14)} Our bathroom brand</p>
+      <h2>SHOWERS<br /><span class="gold">&amp; BATHROOMS.</span></h2>
+      <p class="lead">One-day shower systems and hand-built custom tile bathrooms, from the same family, with one number to call.</p>
+      <ul class="split-points"><li>One-day showers</li><li>Custom tile showers</li><li>Full bathroom remodels</li></ul>
+      <div class="split-btns">
+        <a class="btn btn-lg" href="${bathsHref('/one-day-showers/')}">One-day showers →</a>
+        <a class="btn btn-lg btn-alt" href="${bathsHref('/custom-bathrooms/')}">Custom bathrooms →</a>
+      </div>
+    </div>
+  </div>
+</section>`;
+
+const chooseSection = () => `
+<section class="sec paper choose" id="choose">
+  <div class="container wide">
+    <div class="sec-head center reveal">
+      <p class="eyebrow">Two brands, one family</p>
+      <h2 class="h-xl">Which one is <span class="hl">right for you?</span></h2>
+      <p class="sub">Same owners, same written price, same standard. Buddy Tile handles tile everywhere but the bathroom; Buddy Baths builds the bathroom, whether that is a one-day shower or a full custom remodel.</p>
+    </div>
+    <div class="choose-grid">
+      <div class="choose-card tilework reveal" style="--i:0">
+        <div class="choose-img"><img src="/assets/img/real-kitchen-backsplash.jpg" alt="Buddy Tile kitchen backsplash" loading="lazy" /><span class="choose-tag">Buddy Tile</span></div>
+        <div class="choose-body">
+          <h3>Tile for the rest of the house</h3>
+          <dl>
+            <div><dt>Rooms</dt><dd>Kitchens, living rooms, entries, laundry, hallways</dd></div>
+            <div><dt>Work</dt><dd>Backsplashes, floors, heated floors, fireplaces, repairs, regrouts, grout cleaning</dd></div>
+            <div><dt>Best for</dt><dd>A specific tile look, a floor that lasts, bringing tired tile back</dd></div>
+          </dl>
+          <ul class="choose-svcs">${TILE_SERVICES.map((x) => `<li><a href="/services/${x.slug}/">${ico('check', 14)} ${esc(x.name)}</a></li>`).join('')}</ul>
+          <a class="btn" href="#services">Explore tile work →</a>
+        </div>
+      </div>
+      <div class="choose-card baths reveal" style="--i:1">
+        <div class="choose-img"><img src="/assets/img/baths-one-day-shower.jpg" alt="Buddy Baths one-day shower" loading="lazy" /><span class="choose-tag">Buddy Baths</span></div>
+        <div class="choose-body">
+          <h3>Showers &amp; bathrooms</h3>
+          <dl>
+            <div><dt>Two ways</dt><dd>A new shower in as little as one day, or a custom tile bathroom built from scratch</dd></div>
+            <div><dt>Work</dt><dd>Shower replacements, tub-to-shower, walk-in and accessible, custom tile showers, full remodels</dd></div>
+            <div><dt>Best for</dt><dd>Any bathroom project, from a straight swap to the whole room</dd></div>
+          </dl>
+          <ul class="choose-svcs">
+            <li><a href="${bathsHref('/one-day-showers/')}">${ico('check', 14)} One-day showers</a></li>
+            <li><a href="${bathsHref('/custom-bathrooms/')}">${ico('check', 14)} Custom bathrooms</a></li>
+            ${BATH_SERVICES.map((x) => `<li><a href="${bathsHref(x.handoff)}">${ico('check', 14)} ${esc(x.name)}</a></li>`).join('')}
+          </ul>
+          <a class="btn" href="${bathsHref('/')}">Visit buddybaths.com →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>`;
+
 const homeBody = `
-<div class="home-hero v3">
-  <div class="bg" style="background-image:url('/assets/img/hero-master-bath-remodel.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="container wide hero-v3">
-    <div class="hero-copy enter">
-      <p class="eyebrow light">Vancouver, WA · Portland, OR</p>
-      <h1>CUSTOM TILE SHOWERS<br />&amp; <span class="gold">BATHROOM REMODELS</span></h1>
-      <p class="hero-tags"><span>Tile</span><span>Waterproofing</span><span>Floors</span><span>Grout Restoration</span></p>
-      <p class="lead">Licensed, bonded tile craftsmen who build showers, bathroom remodels, backsplashes, and heated floors on flood-tested waterproofing, and bring tired tile back with grout cleaning, sealing, and regrouts. Written price in your inbox the same day we measure.</p>
-      <div class="hero-btns">
-        <a class="btn btn-lg" href="${telHref()}">${ico('phone', 18)} ${SITE.phone}</a>
-        <a class="btn ghost btn-lg" href="/design/">Instant ballpark price →</a>
-      </div>
-      <div class="hero-proof">
-        ${['Family owned', 'Licensed &amp; bonded', 'Flood-tested waterproofing', 'Same-day written estimates'].map((t) => `<span>${ico('checkCircle', 16)}${t}</span>`).join('')}
-      </div>
-    </div>
-    <div class="hero-side">
-    <div class="hero-card enter" style="--i:2">
-      <span class="card-buddy-wrap"><img class="card-buddy" src="/assets/img/buddy-bust.webp" alt="Buddy, the Buddy Tile mascot, giving a thumbs up" width="415" height="440" /></span>
-      <div class="hero-card-head">
-        <p class="eyebrow">Free Estimate</p>
-        <h3>Tell us about your project.</h3>
-      </div>
-      ${estimateForm('hero', { hero: true })}
-    </div>
-    </div>
+${splitHero()}
+
+<div class="trust-row hero-trust">
+  <div class="container wide">
+    <span>${ico('checkCircle', 22)} Family owned &amp; local</span>
+    <span>${ico('checkCircle', 22)} Licensed &amp; insured</span>
+    <span>${ico('checkCircle', 22)} Flood-tested waterproofing</span>
+    <span>${ico('checkCircle', 22)} Same-day written estimates</span>
   </div>
 </div>
 
-<div class="hero-tiles">
-  <div class="container wide">
-    <div class="ht-grid">
-      <div class="ht">${iconCircle('users')}<h3>Family owned &amp; local</h3><p>You talk to the owner, and the person who quotes your job knows the crew by name.</p></div>
-      <div class="ht">${iconCircle('droplet')}<h3>Flood-tested waterproofing</h3><p>Every shower pan is flood-tested and photographed before a single tile goes on.</p></div>
-      <div class="ht">${iconCircle('file')}<h3>Same-day written estimates</h3><p>We measure in person, and your written price is in your inbox before dinner.</p></div>
-      <div class="ht gold"><div class="big">5–8 <span>days</span></div><h3>For most shower installs</h3><p>Start to finish, with daily photos to your phone. Larger or more complex jobs take longer, and we tell you that before we start.</p></div>
-    </div>
-  </div>
-</div>
+${chooseSection()}
 
 <section class="sec" id="about">
   <div class="container wide intro-grid">
     <div class="reveal">
       <p class="eyebrow">Craftsmanship, not shortcuts</p>
       <h2 class="h-xl">Tile work built to <span class="hl">outlast</span> the house.</h2>
-      <p class="sub">Buddy Tile is a family-owned tile contractor serving Vancouver, Camas, and Battle Ground in Washington and the Portland metro in Oregon. We build custom tile showers, bathroom remodels, tub-to-shower conversions, heated floors, and backsplashes, and we bring tired tile back to life with grout cleaning, sealing, and regrouts.</p>
-      <p class="sub">Every shower is built on a full RedGard liquid membrane and flood-tested before tile. Every job gets floor runners, dust walls, and a vacuumed site each night. And every price is written down before we start.</p>
+      <p class="sub">Buddy Tile is a family-owned tile contractor serving Vancouver, Camas, and Battle Ground in Washington and the Portland metro in Oregon. We tile kitchens, floors, fireplaces, and entries, lay heated floors, and bring tired tile back to life with grout cleaning, sealing, and regrouts. Showers and bathroom remodels are built by our bathroom brand, <a href="${bathsHref('/')}">Buddy Baths</a>.</p>
+      <p class="sub">Every floor goes on a flat, sound substrate with the right membrane for the room. Every job gets floor runners, dust walls, and a vacuumed site each night. And every price is written down before we start.</p>
       <ul class="check-list">
         ${TRUST.slice(0, 4).map((t) => `<li>${ico('checkCircle', 20)}<div><strong>${esc(t.title)}</strong><span>${esc(t.body)}</span></div></li>`).join('')}
       </ul>
@@ -546,7 +612,7 @@ const homeBody = `
   <div class="container wide">
     <div class="sec-head center reveal">
       <p class="eyebrow">What we build</p>
-      <h2 class="h-xl">Showers, floors &amp; backsplashes built for the <span class="hl">Pacific Northwest</span></h2>
+      <h2 class="h-xl">Backsplashes, floors &amp; fireplaces built for the <span class="hl">Pacific Northwest</span></h2>
       <p class="sub">Wet climate, old houses, and a lot of tile that was set over drywall. We build for the room you have, on the waterproofing it should have had.</p>
     </div>
     <div class="svc-cards">
@@ -563,8 +629,9 @@ const homeBody = `
       }).join('')}
     </div>
     <div class="all-services v3 reveal">
-      <span class="all-label">All ${SERVICES.length} services:</span>
-      ${SERVICES.map((x) => `<a href="/services/${x.slug}/">${esc(x.name)}</a>`).join('')}
+      <span class="all-label">All ${TILE_SERVICES.length} tile services:</span>
+      ${TILE_SERVICES.map((x) => `<a href="/services/${x.slug}/">${esc(x.name)}</a>`).join('')}
+      <a class="all-switch" href="${bathsHref('/')}">Showers &amp; bathrooms → Buddy Baths</a>
     </div>
   </div>
 </section>
@@ -615,7 +682,7 @@ ${
 </section>
 
 <section class="why" id="standard">
-  <div class="why-bg" style="background-image:url('/assets/img/real-walkin-shower.jpg')"></div>
+  <div class="why-bg" style="background-image:url('/assets/img/real-floor-tile.jpg')"></div>
   <div class="container wide why-in">
     <div class="sec-head center reveal">
       <p class="eyebrow light">The Buddy standard</p>
@@ -797,6 +864,11 @@ ${pageHero({
   context: `service:${s.slug}`,
 })}
 <div class="container breadcrumbs crumbs-after-hero"><a href="/">Home</a> / <a href="/#services">Services</a> / ${s.name}</div>
+${s.bathroom ? `<div class="container"><div class="handoff-band">
+  <img src="/assets/img/buddy-baths-wordmark-white.png" alt="Buddy Baths" width="486" height="239" loading="lazy" />
+  <div><strong>Showers and bathrooms are now Buddy Baths.</strong><span>Same family, same crews, same number. ${esc(s.name)} lives at buddybaths.com, with one-day shower systems alongside custom tile.</span></div>
+  <a class="btn" href="${bathsHref(s.handoff)}">${esc(s.name)} at Buddy Baths →</a>
+</div></div>` : ''}
 <section style="padding-top:26px;">
   <div class="container two-col">
     <div>
@@ -816,7 +888,7 @@ ${pageHero({
     <h2>MORE FROM BUDDY TILE</h2>
     <hr class="gold-bar" />
     <div class="grid cols-3">
-      ${SERVICES.filter((x) => x.slug !== s.slug)
+      ${TILE_SERVICES.filter((x) => x.slug !== s.slug)
         .slice(0, 3)
         .map((x) => `<a class="card" href="/services/${x.slug}/"><div class="body"><h3>${x.name.toUpperCase()}</h3><div class="go">Learn more →</div></div></a>`)
         .join('')}
@@ -1017,9 +1089,9 @@ const add = (url, opts) => {
 };
 
 add('/', {
-  title: 'Buddy Tile, Custom Tile Showers & Bathroom Remodels | Vancouver WA & Portland OR',
+  title: 'Buddy Tile | Kitchen Backsplashes, Tile Floors, Fireplaces & Grout Restoration | Vancouver WA & Portland OR',
   description:
-    'Custom tile showers, bathroom floors, backsplashes, and heated floors in Vancouver WA and Portland OR. Free in-home estimates, online approval. A Buddy Built company.',
+    'Tile contractor for kitchens, floors, heated floors, fireplaces, and grout restoration in Vancouver WA and Portland OR. Free in-home estimates, online booking. Bathrooms by Buddy Baths. A Buddy Built company.',
   jsonLd: businessLd(),
   body: homeBody,
 });

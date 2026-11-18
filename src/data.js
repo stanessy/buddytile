@@ -17,6 +17,9 @@ const SITE = {
   legalLine:
     'Buddy Tile is a registered trade name of Buddy Built LLC · WA reg #BUDDYBL746MO · OR CCB #263768',
   serviceAreaBlurb: 'Serving Vancouver, Portland, and the surrounding metro, Washington and Oregon.',
+  // Bathrooms and showers are the Buddy Baths brand (2026-11-05): the tile site
+  // hands them off. Bathroom services below carry `bathroom: true` + `handoff`.
+  bathsUrl: 'https://buddybaths.com',
   // Ad tracking (2026-11-05, from the marketing team's install notes). Blank an id to drop that tag.
   tracking: {
     metaPixelId: '3323527621370310',
@@ -30,6 +33,8 @@ const SITE = {
 const SERVICES = [
   {
     slug: 'shower-remodel',
+    bathroom: true,
+    handoff: '/services/custom-tile-showers/',
     name: 'Custom Tile Showers',
     h1: 'Custom Tile Shower Remodels',
     metaTitle: 'Custom Tile Shower Remodel | Vancouver WA & Portland OR | Buddy Tile',
@@ -54,6 +59,8 @@ const SERVICES = [
   },
   {
     slug: 'bathroom-tile',
+    bathroom: true,
+    handoff: '/services/bathroom-tile/',
     name: 'Bathroom Floor & Wall Tile',
     h1: 'Bathroom Floor & Wall Tile Installation',
     metaTitle: 'Bathroom Tile Installation | Vancouver WA & Portland OR | Buddy Tile',
@@ -120,6 +127,8 @@ const SERVICES = [
   },
   {
     slug: 'waterproofing',
+    bathroom: true,
+    handoff: '/services/waterproofing/',
     name: 'Shower Waterproofing',
     h1: 'Shower Waterproofing Done Right',
     metaTitle: 'Shower Waterproofing (RedGard Liquid Membrane) | Buddy Tile',
@@ -164,6 +173,8 @@ const SERVICES = [
   },
   {
     slug: 'tub-to-shower',
+    bathroom: true,
+    handoff: '/services/tub-to-shower-conversion/',
     name: 'Tub-to-Shower Conversions',
     h1: 'Tub-to-Shower Conversion',
     metaTitle: 'Tub to Shower Conversion | Vancouver WA & Portland OR | Buddy Tile',
@@ -187,6 +198,8 @@ const SERVICES = [
   },
   {
     slug: 'walk-in-shower',
+    bathroom: true,
+    handoff: '/services/walk-in-showers/',
     name: 'Walk-In & Curbless Showers',
     h1: 'Walk-In & Curbless Shower Installation',
     metaTitle: 'Walk-In & Curbless Showers | Vancouver WA & Portland OR | Buddy Tile',
