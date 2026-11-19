@@ -856,3 +856,27 @@ var BT_BOOK = {
     start();
   }
 })();
+
+// ---- Materials page: View more opens the rest of a category ----------------
+document.addEventListener('click', function (e) {
+  var btn = e.target.closest && e.target.closest('[data-mat-more]');
+  if (!btn) return;
+  btn.closest('.mat-sec').querySelectorAll('.mat-card[hidden]').forEach(function (el) { el.hidden = false; });
+  btn.parentNode.remove();
+});
+
+// ---- Design options: One-day shower | Custom tile switch -------------------
+(function () {
+  var tabs = document.querySelectorAll('[data-design-pane]');
+  if (!tabs.length) return;
+  function show(name) {
+    tabs.forEach(function (t) { t.setAttribute('aria-selected', String(t.dataset.designPane === name)); });
+    document.querySelectorAll('.design-pane').forEach(function (p) { p.hidden = p.dataset.pane !== name; });
+  }
+  tabs.forEach(function (t) { t.addEventListener('click', function () { show(t.dataset.designPane); }); });
+  // #custom (or a tile category anchor) opens custom; otherwise the path they last chose
+  var h = location.hash.slice(1), saved = null;
+  try { saved = localStorage.getItem('bb_path'); } catch (e) {}
+  if (h === 'custom' || (h && document.querySelector('.design-pane[data-pane="custom"] #' + CSS.escape(h)))) show('custom');
+  else if (saved === 'custom') show('custom');
+})();
