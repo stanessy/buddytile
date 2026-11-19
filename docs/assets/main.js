@@ -840,3 +840,11 @@ document.addEventListener('click', function (e) {
   var a = e.target.closest && e.target.closest('a[href^="tel:"]');
   if (a && window.fbq && window.BT_TRACK && window.BT_TRACK.metaPixelId) fbq('track', 'Contact', { content_name: 'Phone tap' });
 });
+
+// ---- Materials page: View more opens the rest of a category ----------------
+document.addEventListener('click', function (e) {
+  var btn = e.target.closest && e.target.closest('[data-mat-more]');
+  if (!btn) return;
+  btn.closest('.mat-sec').querySelectorAll('.mat-card[hidden]').forEach(function (el) { el.hidden = false; });
+  btn.parentNode.remove();
+});

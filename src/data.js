@@ -55,6 +55,7 @@ const SERVICES = [
       { q: 'What waterproofing do you use?', a: 'RedGard. Every shower gets a full RedGard liquid membrane over cement board, rolled to the rated thickness, a flood-tested pan, and photos of the waterproofing before tile covers it.' },
       { q: 'Can you convert my tub to a walk-in shower?', a: 'That is one of our most common projects. We remove the tub, rebuild the wet area with proper waterproofing, and tile a walk-in or curbless shower, usually within a week.' },
     ],
+    materials: 'mosaic',
     photo: 'real-tile-shower.jpg',
   },
   {
@@ -79,6 +80,7 @@ const SERVICES = [
       { q: 'Can you install large-format tile?', a: 'Yes, large format is most of what we set. It needs flatter substrates, so we self-level and use uncoupling membranes where the floor calls for it.' },
       { q: 'Do you level the floor first?', a: 'Every floor gets checked with a straightedge before tile. If it needs self-leveler or crack isolation, that goes in your estimate up front, not as a surprise later.' },
     ],
+    materials: 'porcelain',
     photo: 'real-bathroom-tile.jpg',
   },
   {
@@ -101,6 +103,7 @@ const SERVICES = [
       { q: 'How long does a backsplash take?', a: 'Most kitchens are done in 1-2 days: set day one, grout day two. You keep your kitchen usable the whole time.' },
       { q: 'Do I need to buy the tile?', a: 'Either way works. Bring your own tile, or we supply it with your selections, the estimate shows both clearly.' },
     ],
+    materials: 'ceramic',
     photo: 'real-kitchen-backsplash.jpg',
   },
   {
@@ -123,6 +126,7 @@ const SERVICES = [
       { q: 'How much does a heated floor cost to run?', a: 'A typical bathroom mat draws about as much as a hair dryer while warming up, and a programmable thermostat only runs it when you use the room. Most homeowners see a few dollars a month.' },
       { q: 'Can you add heat under my existing tile?', a: 'The mat has to go under the tile, so heat gets added when a floor is being redone, which is why we always ask about it before a floor project starts.' },
     ],
+    materials: 'porcelain',
     photo: 'herringbone-tile-floor-portland-or.jpg',
   },
   {
@@ -194,6 +198,7 @@ const SERVICES = [
       { q: 'Does removing a tub hurt resale value?', a: 'Agents generally want at least one tub in the house. If you have a second bathroom with a tub, converting the primary to a walk-in shower usually helps, not hurts.' },
       { q: 'How long is my bathroom out of commission?', a: 'Plan on 5-7 working days from demo to first shower. We seal off the room, protect your floors, and clean up every night.' },
     ],
+    materials: 'ceramic',
     photo: 'tile-shower-remodel-vancouver-wa.jpg',
   },
   {
@@ -218,6 +223,7 @@ const SERVICES = [
       { q: 'Do curbless showers leak?', a: 'Not when the pan is recessed and sloped correctly with the membrane carried out past the glass line. That is exactly the part we photograph and flood-test before tile.' },
       { q: 'Is a curbless shower good for aging in place?', a: 'It is the single best bathroom investment for staying in your home: zero threshold, optional bench and grab bars, and nothing that looks like a hospital.' },
     ],
+    materials: 'porcelain',
     photo: 'real-walkin-shower.jpg',
   },
   {
@@ -287,6 +293,7 @@ const SERVICES = [
       { q: 'Can you tile over my existing floor?', a: 'Sometimes over sound concrete or existing tile; never over floating floors. We check the substrate at the estimate and put the honest prep in writing.' },
       { q: 'What tile is best for entryways and mudrooms?', a: 'Porcelain with a textured finish. It shrugs off water, grit, and dog claws. We will bring samples rated for exactly that abuse.' },
     ],
+    materials: 'porcelain',
     photo: 'real-floor-tile.jpg',
   },
   {
@@ -310,6 +317,7 @@ const SERVICES = [
       { q: 'Can you tile over a brick fireplace?', a: 'Usually yes, sound brick takes a scratch coat or backer and then tile or stone directly, which is far cleaner than demolition.' },
       { q: 'Is it safe to tile around a wood stove or firebox?', a: 'With heat-rated setting materials and correct clearances, yes. We follow the manufacturer clearances for your specific insert or stove.' },
     ],
+    materials: 'stone',
     photo: 'craft-setting.jpg',
   },
 ];

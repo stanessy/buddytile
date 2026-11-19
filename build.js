@@ -6,6 +6,15 @@
 const fs = require('fs');
 const path = require('path');
 const { SITE, SERVICES, CITIES, NEARBY_TOWNS, STEPS, TRUST, PROMISE, TESTIMONIALS, BALLPARK, DESIGNER } = require('./src/data');
+// Dealer material catalog: [{ key, label, items: [{ sku, name, brand, color, material, size, finish, img }] }]
+const MATERIALS = fs.existsSync(path.join(__dirname, 'src/materials.json')) ? JSON.parse(fs.readFileSync(path.join(__dirname, 'src/materials.json'), 'utf8')) : [];
+const matCat = (key) => MATERIALS.find((c) => c.key === key);
+const MAT_TOP = 20;
+const matCard = (m, hidden) => `<figure class="mat-card"${hidden ? ' hidden' : ''}>
+  <img src="/assets/img/materials/${m.img}" alt="${esc(m.name)}" loading="lazy" width="600" height="600" />
+  <figcaption><strong>${esc(m.name)}</strong><span>${esc([m.brand, m.size, m.color].filter(Boolean).join(' · '))}</span></figcaption>
+</figure>`;
+
 // Real jobs from two sources: the platform's portfolio feed (refresh with
 // `node scripts/fetch-projects.js`) plus the hand-curated galleries in
 // projects-manual.json. Platform jobs list first, they're local and dated.
@@ -129,6 +138,7 @@ const header = (isHome) => `
     <nav class="site-nav">
       <a class="hide-m" href="/#services">Services</a>
       <a class="hide-m" href="/projects/">Our Work</a>
+      ${MATERIALS.length ? '<a class="hide-m" href="/materials/">Materials</a>' : ''}
       <a class="hide-m" href="/#reviews">Reviews</a>
       <a class="hide-m" href="/design/">Ballpark Price</a>
       <a class="phone-link" href="${telHref()}">${ico('phone', 16)} ${SITE.phone}</a>
@@ -883,6 +893,13 @@ ${s.bathroom ? `<div class="container"><div class="handoff-band">
     </div>
   </div>
 </section>
+${matCat(s.materials) ? `<section class="sec mat-sec">
+  <div class="container wide">
+    <h2>POPULAR ${esc(matCat(s.materials).label.toUpperCase())} WE INSTALL</h2>
+    <div class="mat-grid">${matCat(s.materials).items.slice(0, 6).map((m) => matCard(m)).join('')}</div>
+    <p class="mat-more-row"><a class="btn ghost" href="/materials/#${s.materials}">See all ${matCat(s.materials).items.length} ${esc(matCat(s.materials).label.toLowerCase())} →</a></p>
+  </div>
+</section>` : ''}
 <section class="alt">
   <div class="container">
     <h2>MORE FROM BUDDY TILE</h2>
@@ -1445,6 +1462,34 @@ add('/book/', {
     'Pick a day and time for your free in-home tile estimate in Vancouver, WA or Portland, OR. Live calendar, instant confirmation, written estimate the same day.',
   jsonLd: businessLd(),
   body: bookBody,
+});
+
+// Materials we install: the top 20 per category show, the rest open with View more.
+const materialsBody = `
+<div class="container breadcrumbs"><a href="/">Home</a> / Materials</div>
+<section style="padding-top:26px;">
+  <div class="container wide">
+    <p class="eyebrow">Samples at your kitchen table</p>
+    <h1>MATERIALS <span class="hl">WE INSTALL</span></h1>
+    <p class="lead" style="max-width:760px;">A look at the tile we supply and install. Your estimator brings samples of the ones you like, and your written price includes the material, the prep, and the install.</p>
+    <p class="mat-jump">${MATERIALS.map((c) => `<a href="#${c.key}">${esc(c.label)}</a>`).join('')}</p>
+  </div>
+</section>
+${MATERIALS.map((c) => `<section class="sec mat-sec" id="${c.key}">
+  <div class="container wide">
+    <h2 class="h-xl">${esc(c.label)}</h2>
+    <div class="mat-grid">${c.items.map((m, i) => matCard(m, i >= MAT_TOP)).join('')}</div>
+    ${c.items.length > MAT_TOP ? `<p class="mat-more-row"><button type="button" class="btn ghost" data-mat-more>View ${c.items.length - MAT_TOP} more ${esc(c.label.toLowerCase())}</button></p>` : ''}
+  </div>
+</section>`).join('\n')}
+<section class="sec navy"><div class="container" style="text-align:center;">
+  <h2 class="h-xl light">See one you like? <span class="hl">We'll bring the sample.</span></h2>
+  <p><a class="btn btn-lg" href="#estimate">Get My Free Estimate</a></p>
+</div></section>`;
+if (MATERIALS.length) add('/materials/', {
+  title: `Tile Materials We Install | Porcelain, Ceramic, Mosaic & Stone | ${SITE.name}`,
+  description: 'Porcelain, ceramic, mosaic, glass, marble, and natural stone tile we supply and install in Vancouver WA and Portland OR. Samples brought to your free in-home estimate.',
+  body: materialsBody,
 });
 
 add('/about/', {
