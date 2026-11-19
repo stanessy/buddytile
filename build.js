@@ -516,8 +516,8 @@ const splitHero = () => `
       <p class="lead">One-day shower systems and hand-built custom tile bathrooms, from the same family, with one number to call.</p>
       <ul class="split-points"><li>One-day showers</li><li>Custom tile showers</li><li>Full bathroom remodels</li></ul>
       <div class="split-btns">
-        <a class="btn btn-lg" href="${bathsHref('/one-day-showers/')}">One-day showers →</a>
-        <a class="btn btn-lg btn-alt" href="${bathsHref('/custom-bathrooms/')}">Custom bathrooms →</a>
+        <a class="btn btn-lg" href="/one-day-showers/">One-day showers →</a>
+        <a class="btn btn-lg btn-alt" href="/custom-bathrooms/">Custom bathrooms →</a>
       </div>
     </div>
   </div>
@@ -555,8 +555,8 @@ const chooseSection = () => `
             <div><dt>Best for</dt><dd>Any bathroom project, from a straight swap to the whole room</dd></div>
           </dl>
           <ul class="choose-svcs">
-            <li><a href="${bathsHref('/one-day-showers/')}">${ico('check', 14)} One-day showers</a></li>
-            <li><a href="${bathsHref('/custom-bathrooms/')}">${ico('check', 14)} Custom bathrooms</a></li>
+            <li><a href="/one-day-showers/">${ico('check', 14)} One-day showers</a></li>
+            <li><a href="/custom-bathrooms/">${ico('check', 14)} Custom bathrooms</a></li>
             ${BATH_SERVICES.map((x) => `<li><a href="${bathsHref(x.handoff)}">${ico('check', 14)} ${esc(x.name)}</a></li>`).join('')}
           </ul>
           <a class="btn" href="${bathsHref('/')}">Visit buddybaths.com →</a>
@@ -1067,6 +1067,8 @@ ${leadForm('about')}`;
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(path.join(OUT, 'assets'), { recursive: true });
 fs.cpSync(path.join(__dirname, 'assets'), path.join(OUT, 'assets'), { recursive: true });
+// Buddy Baths path pages served here too (scripts/sync-baths.js).
+if (fs.existsSync(path.join(__dirname, 'vendor-baths'))) fs.cpSync(path.join(__dirname, 'vendor-baths'), OUT, { recursive: true });
 fs.copyFileSync(path.join(__dirname, 'src/styles.css'), path.join(OUT, 'assets/styles.css'));
 fs.copyFileSync(path.join(__dirname, 'src/main.js'), path.join(OUT, 'assets/main.js'));
 fs.writeFileSync(path.join(OUT, 'assets/ballpark-config.js'), `window.BT_BALLPARK = ${JSON.stringify(BALLPARK)};\nwindow.BT_DESIGNER = ${JSON.stringify(DESIGNER)};`);
